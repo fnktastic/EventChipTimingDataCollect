@@ -13,10 +13,10 @@ namespace ReaderDataCollector.Reading
     {
         private static AutoResetEvent TransferFinishedEvent = new AutoResetEvent(false);
 
-        public static void Download(string fileName)
+        public static void Download(string fileName, string host)
         {
             //Setup a TftpClient instance
-            var client = new TftpClient("localhost");
+            var client = new TftpClient(host);
 
             //Prepare a simple transfer (GET test.dat)
             var transfer = client.Download(fileName);

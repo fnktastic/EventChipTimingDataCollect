@@ -116,7 +116,8 @@ namespace ReaderDataCollector.ViewModel
             {
                 return _downloadRecovery ?? (_downloadRecovery = new RelayCommand(() =>
                 {
-                    Task.Run(() => FTPClient.Download(string.Format("{0}.txt", _reads?.First()?.Salt)));
+                    string fileName = string.Format("{0}.txt", _reads?.First()?.Salt);
+                    Task.Run(() => FTPClient.Download(fileName, _host));
                 }));
             }
         }
