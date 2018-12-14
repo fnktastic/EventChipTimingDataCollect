@@ -50,7 +50,7 @@ namespace ReaderDataCollector.Reading
                             _uiReads.Insert(0,read);
                         }));
 
-                        _readRepository.SaveRead(read);
+                        //_readRepository.SaveRead(read);
                     }
                 }
 
@@ -61,7 +61,7 @@ namespace ReaderDataCollector.Reading
         private Read MappRead(string stringToMap)
         {
             var array = stringToMap.Split('#');
-            if (array.Length == 8)
+            if (array.Length == 9)
             {
                 Console.WriteLine(stringToMap);
                 return new Read()
@@ -73,7 +73,8 @@ namespace ReaderDataCollector.Reading
                     AntennaNumber = array[4],
                     ReaderNumber = array[5],
                     IpAddress = array[6],
-                    UniqueReadingID = array[7]
+                    UniqueReadingID = array[7],
+                    Salt = array[8]
                 };
             }
 
@@ -118,7 +119,8 @@ namespace ReaderDataCollector.Reading
             catch (SocketException)
             {
                 Console.WriteLine("Unable to connect to server");
-                return;
+                Thread.Sleep(250);
+                DoReadingWork(cancellationToken);
             }
             catch (OperationCanceledException)
             {
