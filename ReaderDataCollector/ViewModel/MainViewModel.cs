@@ -10,6 +10,7 @@ using System.Collections.Specialized;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ReaderDataCollector.ViewModel
 {
@@ -115,7 +116,7 @@ namespace ReaderDataCollector.ViewModel
             {
                 return _downloadRecovery ?? (_downloadRecovery = new RelayCommand(() =>
                 {
-                    FTPClient.Download(string.Format("{0}.txt", _reads?.First()?.Salt));
+                    Task.Run(() => FTPClient.Download(string.Format("{0}.txt", _reads?.First()?.Salt)));
                 }));
             }
         }
