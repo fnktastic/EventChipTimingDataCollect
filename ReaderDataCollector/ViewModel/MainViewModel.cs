@@ -4,13 +4,16 @@ using ReaderDataCollector.DataAccess;
 using ReaderDataCollector.Model;
 using ReaderDataCollector.Reading;
 using ReaderDataCollector.Repository;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ReaderDataCollector.ViewModel
 {
@@ -50,6 +53,13 @@ namespace ReaderDataCollector.ViewModel
             set { _totalReadings = value; RaisePropertyChanged("TotalReadings"); }
         }
 
+        private bool _isReadingInProgress;
+        public bool IsReadingInProgress
+        {
+            get { return _isReadingInProgress; }
+            set { _isReadingInProgress = value; RaisePropertyChanged("IsReadingInProgress"); }
+        }
+
         public MainViewModel()
         {
             Database.SetInitializer(new Initializer());
@@ -61,11 +71,56 @@ namespace ReaderDataCollector.ViewModel
 
             Host = "localhost";
             Port = "10000";
+            IsReadingInProgress = false;
         }
 
         public void ContentCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             TotalReadings = Reads.Count().ToString();
+        }
+
+        private void GetReadingsFromFile(string filePath)
+        {
+            var readingsFromFile = new List<Read>();
+            StreamReader fs = new StreamReader(filePath);
+            string s = "";
+            while (s != null)
+            {
+                s = fs.ReadLine();
+                if (!string.IsNullOrEmpty(s))
+                {
+                    var read = ReadingsListener.MappRead(s);
+                    if (read != null)
+                        readingsFromFile.Add(read);
+                }
+            }
+
+            if (readingsFromFile.Count == _reads.Count)
+                return;
+
+            if (readingsFromFile.Count > 0)
+            {
+                var lostReadings = new List<Read>();
+                readingsFromFile.ForEach((x) =>
+                {
+                    if ((_reads.FirstOrDefault(y => y.UniqueReadingID == x.UniqueReadingID)) == null)
+                        lostReadings.Add(x);
+                });
+
+                if (lostReadings.Count > 0)
+                    AddToReads(lostReadings);
+            }
+        }
+
+        private void AddToReads(IEnumerable<Read> reads)
+        {
+            Application.Current.Dispatcher.Invoke((Action)(() =>
+            {
+                foreach (var read in reads)
+                    _reads.Add(read);
+
+                _reads.OrderByDescending(x => x.Time);
+            }));
         }
 
         private RelayCommand _startReadingCommand;
@@ -76,7 +131,8 @@ namespace ReaderDataCollector.ViewModel
                 return _startReadingCommand ?? (_startReadingCommand = new RelayCommand(() =>
                   {
                       readsListener = new ReadingsListener(_host, int.Parse(_port), Reads, _readRepository, _cancellationToken);
-                      readsListener.StartReading();
+                      var worker = readsListener.StartReading();
+                      IsReadingInProgress = true;
                   }));
             }
         }
@@ -88,11 +144,11 @@ namespace ReaderDataCollector.ViewModel
             {
                 return _stopReading ?? (_stopReading = new RelayCommand(() =>
                 {
-                    readsListener.StopWorking();
+                    readsListener.StopReading();
+                    IsReadingInProgress = false;
                 }));
             }
         }
-
 
         private RelayCommand _syncReadingsCommand;
         public RelayCommand SyncReadingsCommand
@@ -116,8 +172,12 @@ namespace ReaderDataCollector.ViewModel
             {
                 return _downloadRecovery ?? (_downloadRecovery = new RelayCommand(() =>
                 {
-                    string fileName = string.Format("{0}.txt", _reads?.First()?.Salt);
-                    Task.Run(() => FTPClient.Download(fileName, _host));
+                    string fileName = string.Format("{0}.txt", _reads?.First()?.TimingPoint);
+                    Task.Run(() => FTPClient.Download(fileName, _host))
+                    .ContinueWith((i) =>
+                    {
+                        GetReadingsFromFile(fileName);
+                    });
                 }));
             }
         }

@@ -16,6 +16,6 @@ namespace ReaderDataCollector.Model
         public string ReaderNumber { get; set; }
         public string IpAddress { get; set; }
         public string UniqueReadingID { get; set; }
-        public string Salt { get; set; }
+        public string TimingPoint { get; set; }
     }
 }

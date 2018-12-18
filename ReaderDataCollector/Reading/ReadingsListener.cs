@@ -58,9 +58,9 @@ namespace ReaderDataCollector.Reading
 
         }
 
-        private Read MappRead(string stringToMap)
-        {
-            var array = stringToMap.Split('#');
+        public static Read MappRead(string stringToMap)
+        {            
+            var array = stringToMap.Replace("@","").Split('#');
             if (array.Length == 9)
             {
                 Console.WriteLine(stringToMap);
@@ -74,7 +74,7 @@ namespace ReaderDataCollector.Reading
                     ReaderNumber = array[5],
                     IpAddress = array[6],
                     UniqueReadingID = array[7],
-                    Salt = array[8]
+                    TimingPoint = array[8]
                 };
             }
 
@@ -88,7 +88,7 @@ namespace ReaderDataCollector.Reading
             return backgoundWorker;
         }
 
-        public void StopWorking()
+        public void StopReading()
         {
             Thread.Sleep(300);
             _cancellationToken.Cancel();
@@ -121,15 +121,24 @@ namespace ReaderDataCollector.Reading
                 Console.WriteLine("Unable to connect to server");
                 Thread.Sleep(250);
                 DoReadingWork(cancellationToken);
+                //DisposeTcpClient();
             }
             catch (OperationCanceledException)
             {
                 Console.WriteLine("Operation canceled");
+                DisposeTcpClient();
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                DisposeTcpClient();
             }
+        }
+
+        private void DisposeTcpClient()
+        {
+            _tcpClient.Close();
+            _tcpClient.Dispose();
         }
     }
 }

@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReaderDataCollector"
+        xmlns:converter="clr-namespace:ReaderDataCollector.Converter"
         mc:Ignorable="d"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
         Title="MainWindow" Height="450" Width="875">
+    <Window.Resources>
+        <converter:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -18,8 +22,8 @@
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0" Height="25">
             <TextBox Text="{Binding Host}" Width="150" Margin="5 0 10 0" VerticalContentAlignment="Center"/>
             <TextBox Text="{Binding Port}" Width="50" Margin="5 0 25 0" VerticalContentAlignment="Center" />
-            <Button Content="Connect" Command="{Binding StartReadingCommand}" Width="100" />
-            <Button Content="Stop Reading" Command="{Binding StopReadingCommand}" Width="100" Margin="25 0 0 0"/>
+            <Button Content="Connect" Command="{Binding StartReadingCommand}" IsEnabled="{Binding IsReadingInProgress, Converter={StaticResource InverseBooleanConverter}}" Width="100" />
+            <Button Content="Stop Reading" Command="{Binding StopReadingCommand}" IsEnabled="{Binding IsReadingInProgress}" Width="100" Margin="25 0 0 0"/>
             <Label Content="Total Readings" Margin="25 0 0 0" />
             <TextBlock Text="{Binding TotalReadings}" VerticalAlignment="Center" Width="25" />
             <Button Content="Sync Readings" Command="{Binding SyncReadingsCommand}" Width="100" Margin="25 0 0 0"/>
