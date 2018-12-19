@@ -5,32 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReaderDataCollector"
         xmlns:converter="clr-namespace:ReaderDataCollector.Converter"
+        xmlns:views="clr-namespace:ReaderDataCollector.View"
         mc:Ignorable="d"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
-        Title="MainWindow" Height="450" Width="875">
-    <Window.Resources>
-        <converter:InverseBooleanConverter x:Key="InverseBooleanConverter" />
-    </Window.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="0.8*" />
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0" Height="25">
-            <TextBox Text="{Binding Host}" Width="150" Margin="5 0 10 0" VerticalContentAlignment="Center"/>
-            <TextBox Text="{Binding Port}" Width="50" Margin="5 0 25 0" VerticalContentAlignment="Center" />
-            <Button Content="Connect" Command="{Binding StartReadingCommand}" IsEnabled="{Binding IsReadingInProgress, Converter={StaticResource InverseBooleanConverter}}" Width="100" />
-            <Button Content="Stop Reading" Command="{Binding StopReadingCommand}" IsEnabled="{Binding IsReadingInProgress}" Width="100" Margin="25 0 0 0"/>
-            <Label Content="Total Readings" Margin="25 0 0 0" />
-            <TextBlock Text="{Binding TotalReadings}" VerticalAlignment="Center" Width="25" />
-            <Button Content="Sync Readings" Command="{Binding SyncReadingsCommand}" Width="100" Margin="25 0 0 0"/>
-            <Button Content="Recover" Command="{Binding DownloadRecovery}" Width="100" Margin="25 0 0 0"/>
-        </StackPanel>
-        <DataGrid ItemsSource="{Binding Reads}" AutoGenerateColumns="True" Grid.Column="0" Grid.Row="1">
-            
-        </DataGrid>
+        Height="600" Width="525"
+        ResizeMode="NoResize"
+        Title="ReadCollector - Event Chip Timing">
+    <Grid Margin="5">
+        <views:ReadersControl />
     </Grid>
 </Window>

@@ -17,5 +17,10 @@ namespace ReaderDataCollector.Model
         public string IpAddress { get; set; }
         public string UniqueReadingID { get; set; }
         public string TimingPoint { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0}\n{1}\n{2}\n{3}\n{4}\n{5}\n{6}\n{7}\n{8}", ID, EPC, Time, PeakRssiInDbm, AntennaNumber, ReaderNumber, IpAddress, UniqueReadingID, TimingPoint);
+        }
     }
 }

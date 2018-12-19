@@ -1,0 +1,162 @@
+﻿<UserControl x:Class="ReaderDataCollector.View.ReadersControl"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ReaderDataCollector.View"
+      mc:Ignorable="d" 
+      xmlns:converter="clr-namespace:ReaderDataCollector.Converter"
+      DataContext="{Binding Reader, Source={StaticResource Locator}}"
+      d:DesignHeight="450" d:DesignWidth="880">
+    <UserControl.Resources>
+        <converter:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </UserControl.Resources>
+    <Grid Width="500" HorizontalAlignment="Left">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0">
+            <Border BorderBrush="LightGray" BorderThickness="0 0 0 1">
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                    <TextBlock Text="Reader" Width="260" HorizontalAlignment="Center" TextAlignment="Center" />
+                    <Border BorderThickness="1 0 0 0" Height="Auto" BorderBrush="LightGray" />
+                    <TextBlock Text="Reads" Width="55" HorizontalAlignment="Center" TextAlignment="Center" />
+                    <Border BorderThickness="1 0 0 0" Height="Auto" BorderBrush="LightGray" />
+                    <TextBlock Text="Last Read" Width="80" HorizontalAlignment="Center" TextAlignment="Center" />
+                    <Border BorderThickness="1 0 0 0" Height="Auto" BorderBrush="LightGray" />
+                    <TextBlock Text="Action" Width="50" HorizontalAlignment="Center" TextAlignment="Right" />
+                </StackPanel>
+            </Border>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="485">
+                <ItemsControl ItemsSource="{Binding Readers}" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border 
+                            Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                            Background="WhiteSmoke" BorderThickness="1" BorderBrush="LightGray"  Margin="2" Padding="5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20" />
+                                        <ColumnDefinition Width="0" />
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="5" />
+                                        <ColumnDefinition Width="120" />
+                                        <ColumnDefinition Width="5" />
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="40" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="80" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="50" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="35"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Column="0" Grid.Row="0" Cursor="Help" BorderBrush="Gray" CornerRadius="0" BorderThickness="1" Height="25" Width="20" Background="White" ToolTip="{Binding ToolTip}">
+                                        <TextBlock Text="{Binding ID}" FontWeight="Black" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <Border Grid.Column="2" Grid.Row="0" CornerRadius="20" Width="33" Height="33">
+                                        <Button 
+                                        Command="{Binding DataContext.StartReaderCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}"
+                                        CommandParameter="{Binding}"
+                                        ToolTip="Reader connect/disconnect"
+                                        VerticalAlignment="Center" 
+                                        HorizontalAlignment="Center" 
+                                        Width="30" Height="30">
+                                            <Ellipse>
+                                                <Ellipse.Style>
+                                                    <Style TargetType="Ellipse">
+                                                        <Setter Property="Height" Value="25" />
+                                                        <Setter Property="Width" Value="25" />
+                                                        <Setter Property="Fill" Value="Yellow" />
+                                                        <Setter Property="Cursor" Value="Hand" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsConnected}" Value="{x:Null}">
+                                                                <Setter Property="Fill" Value="Yellow"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                                                <Setter Property="Fill" Value="Green"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                                                                <Setter Property="Fill" Value="Red"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Ellipse.Style>
+                                            </Ellipse>
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Setter Property="BorderBrush" Value="Transparent"/>
+                                                    <Setter Property="BorderThickness" Value="0" />
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="Transparent" />
+                                                            <Setter Property="BorderBrush" Value="Transparent" />
+                                                            <Setter Property="BorderThickness" Value="0" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="BorderBrush" Value="PowderBlue" />
+                                                <Setter Property="BorderThickness" Value="1" />
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="BorderBrush" Value="LightBlue" />
+                                                        <Setter Property="BorderThickness" Value="4" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                    </Border>
+                                    <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding Host}" IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Enter Host IP" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" Padding="2" />
+                                    <TextBox Grid.Column="6" Grid.Row="0" Text="{Binding Port}" IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Enter Port" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" HorizontalContentAlignment="Center" Padding="2" />
+                                    <TextBox Grid.Column="8" Grid.Row="0" Text="{Binding TotalReadings}" Cursor="Arrow" IsReadOnly="True" ToolTip="{Binding TotalReadings}" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" HorizontalContentAlignment="Center" Padding="2" />
+                                    <TextBox Grid.Column="10" Grid.Row="0" Text="{Binding LastRead}" Cursor="Arrow" IsReadOnly="True" ToolTip="{Binding LastReadToolTip}" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" HorizontalContentAlignment="Center" Padding="2" />
+                                    <Button Grid.Column="12" Grid.Row="0" ToolTip="{Binding ToolTip}" 
+                                    Command="{Binding DataContext.OpenReadsWindowCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}"
+                                    CommandParameter="{Binding}"
+                                    Content="Reads" BorderBrush="LightSkyBlue" />
+                                </Grid>
+                                <Border.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Start Reading" 
+                                              IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBooleanConverter}}"
+                                              CommandParameter="{Binding}"
+                                              Command="{Binding PlacementTarget.Tag.StartReaderCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                        <MenuItem Header="Stop Reading"
+                                              IsEnabled="{Binding IsConnected}"
+                                              CommandParameter="{Binding}"
+                                              Command="{Binding PlacementTarget.Tag.StartReaderCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                        <MenuItem Header="Reads" 
+                                              Command="{Binding PlacementTarget.Tag.OpenReadsWindowCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                              CommandParameter="{Binding}"/>
+                                        <Separator />
+                                        <MenuItem Header="Rewind" 
+                                              Command="{Binding PlacementTarget.Tag.OpenRewindWindowCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                              CommandParameter="{Binding}"/>
+                                        <Separator />
+                                        <MenuItem Header="Ping" />
+                                    </ContextMenu>
+                                </Border.ContextMenu>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center">
+            <Border Background="AliceBlue" Width="480" BorderThickness="0 1 0 0" BorderBrush="LightGray">
+                <Button Content="Add Reader" Command="{Binding AddNewReaderCommand}" Height="30" Width="85" />
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>

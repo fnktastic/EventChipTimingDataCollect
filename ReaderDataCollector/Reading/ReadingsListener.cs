@@ -1,5 +1,6 @@
 ﻿using ReaderDataCollector.Model;
 using ReaderDataCollector.Repository;
+using ReaderDataCollector.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,21 +21,21 @@ namespace ReaderDataCollector.Reading
         private readonly int _port;
         private readonly List<string> _readLines;
         private ObservableCollection<Read> _uiReads;
-        private readonly IReadRepository _readRepository;
         private CancellationTokenSource _cancellationToken;
+        private Reader _reader;
         private Task backgoundWorker;
 
-        public ReadingsListener(string host, int port, ObservableCollection<Read> uiReads, IReadRepository readRepository, CancellationTokenSource cancellationToken)
+        public ReadingsListener(string host, int port, ObservableCollection<Read> uiReads, CancellationTokenSource cancellationToken, Reader reader = null)
         {
             _cancellationToken = cancellationToken;
             _uiReads = uiReads;
             _readLines = new List<string>();
-            _readRepository = readRepository;
             _host = host;
             _port = port;
+            _reader = reader;
         }
 
-        private void CheckStringForReadings(string stringToCheck)
+        private void CheckStringForReadings(string stringToCheck, string tsk)
         {
             var readings = stringToCheck.Split('@');
             foreach (var reading in readings)
@@ -47,10 +48,9 @@ namespace ReaderDataCollector.Reading
                         _readLines.Add(reading);
                         Application.Current.Dispatcher.Invoke((Action)(() =>
                         {
-                            _uiReads.Insert(0,read);
+                            _uiReads.Add(read);
+                            Console.WriteLine("{0} -> {1}", tsk, reading);
                         }));
-
-                        //_readRepository.SaveRead(read);
                     }
                 }
 
@@ -59,8 +59,8 @@ namespace ReaderDataCollector.Reading
         }
 
         public static Read MappRead(string stringToMap)
-        {            
-            var array = stringToMap.Replace("@","").Split('#');
+        {
+            var array = stringToMap.Replace("@", "").Split('#');
             if (array.Length == 9)
             {
                 Console.WriteLine(stringToMap);
@@ -81,11 +81,9 @@ namespace ReaderDataCollector.Reading
             return null;
         }
 
-        public Task StartReading()
+        public Task StartReading(string tsk)
         {
-            _cancellationToken = new CancellationTokenSource();
-            backgoundWorker = Task.Run(() => DoReadingWork(_cancellationToken.Token), _cancellationToken.Token);
-            return backgoundWorker;
+            return backgoundWorker = Task.Run(() => DoReadingWork(_cancellationToken.Token, tsk), _cancellationToken.Token);
         }
 
         public void StopReading()
@@ -94,7 +92,7 @@ namespace ReaderDataCollector.Reading
             _cancellationToken.Cancel();
         }
 
-        private void DoReadingWork(CancellationToken cancellationToken)
+        private void DoReadingWork(CancellationToken cancellationToken, string tsk)
         {
             byte[] data = new byte[10000];
             string stringData;
@@ -104,33 +102,35 @@ namespace ReaderDataCollector.Reading
                 using (NetworkStream ns = _tcpClient.GetStream())
                 {
                     int recvieveLength;
+                    ChangeReaderStatus(true);
                     do
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-
                         ns.Flush();
                         data = new byte[10000];
                         recvieveLength = ns.Read(data, 0, data.Length);
                         stringData = Encoding.ASCII.GetString(data, 0, recvieveLength);
-                        CheckStringForReadings(stringData);
+                        CheckStringForReadings(stringData, tsk);
                     } while (!cancellationToken.IsCancellationRequested);
                 }
             }
             catch (SocketException)
             {
                 Console.WriteLine("Unable to connect to server");
+                ChangeReaderStatus(null);
                 Thread.Sleep(250);
-                DoReadingWork(cancellationToken);
-                //DisposeTcpClient();
+                DoReadingWork(cancellationToken, tsk);
             }
             catch (OperationCanceledException)
             {
                 Console.WriteLine("Operation canceled");
+                ChangeReaderStatus(false);
                 DisposeTcpClient();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ChangeReaderStatus(false);
                 DisposeTcpClient();
             }
         }
@@ -139,6 +139,15 @@ namespace ReaderDataCollector.Reading
         {
             _tcpClient.Close();
             _tcpClient.Dispose();
+        }
+
+        private void ChangeReaderStatus(bool? status)
+        {
+            Application.Current.Dispatcher.Invoke((Action)(() =>
+            {
+                if (_reader != null)
+                    _reader.IsConnected = status;
+            }));
         }
     }
 }

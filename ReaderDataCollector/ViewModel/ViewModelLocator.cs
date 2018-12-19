@@ -9,6 +9,9 @@ namespace ReaderDataCollector.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<ReadingViewModel>();
+            SimpleIoc.Default.Register<ReaderViewModel>();
+            SimpleIoc.Default.Register<RewindViewModel>();
         }
 
         public MainViewModel Main
@@ -16,6 +19,30 @@ namespace ReaderDataCollector.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
+        }
+
+        public ReadingViewModel Reading
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ReadingViewModel>();
+            }
+        }
+
+        public ReaderViewModel Reader
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ReaderViewModel>();
+            }
+        }
+
+        public RewindViewModel Rewind
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<RewindViewModel>();
             }
         }
         
