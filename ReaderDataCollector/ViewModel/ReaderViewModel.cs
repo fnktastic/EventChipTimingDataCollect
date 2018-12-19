@@ -14,7 +14,13 @@ namespace ReaderDataCollector.ViewModel
 {
     public class Reader : ViewModelBase
     {
+        #region fields
+
+        #endregion
+
         #region properties
+        public string FileName { get; private set; } = string.Empty;
+
         private int _id;
         public int ID
         {
@@ -103,6 +109,7 @@ namespace ReaderDataCollector.ViewModel
             {
                 LastRead = lastRead.Time.Split(' ')[1];
                 LastReadToolTip = lastRead.ToString();
+                if (string.IsNullOrEmpty(FileName)) FileName = lastRead.TimingPoint;
             }
             TotalReadings = _reads.Count();
             ToolTip = this.ToString();
@@ -162,11 +169,17 @@ namespace ReaderDataCollector.ViewModel
             {
                 return _openRewindWindowCommand ?? (_openRewindWindowCommand = new RelayCommand<Reader>((reader) =>
                 {
-                    var rewindViewModel = new RewindViewModel();
+                    var rewindViewModel = new RewindViewModel
+                    {
+                        Host = reader.Host,
+                        FileName = reader.FileName,
+                        RecievedReads = reader.Reads
+                    };
+
                     var window = new Window
                     {
                         Title = string.Format("Rewind | Reader {0} - Event Chip Timing", reader.ID),
-                        Height = 510,
+                        Height = 550,
                         Width = 820,
                         Content = new RewindControl(),
                         DataContext = rewindViewModel

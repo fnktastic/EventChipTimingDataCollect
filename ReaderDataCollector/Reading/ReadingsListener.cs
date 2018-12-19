@@ -53,9 +53,7 @@ namespace ReaderDataCollector.Reading
                         }));
                     }
                 }
-
             }
-
         }
 
         public static Read MappRead(string stringToMap)

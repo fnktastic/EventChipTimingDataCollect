@@ -4,13 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReaderDataCollector.View"
+             xmlns:converter="clr-namespace:ReaderDataCollector.Converter"
              mc:Ignorable="d" 
-             Height="450" Width="800"
-             d:DesignHeight="450" d:DesignWidth="800">
+             Height="500" Width="800"
+             d:DesignHeight="500" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:RadioBooleanToIntConverter x:Key="radioBooleanToIntConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="35" />
-            <RowDefinition Height="125" />
+            <RowDefinition Height="150" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -18,28 +22,67 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Margin="0 5" Orientation="Horizontal">
             <Label Content="Reader" />
-            <TextBox Text="{Binding Reader}" Width="125" IsReadOnly="True" />
+            <TextBox Text="{Binding Host, FallbackValue=localhost}" VerticalContentAlignment="Center" Width="125" IsReadOnly="True" Margin="5 0 0 0" />
         </StackPanel>
-        <GroupBox Grid.Row="1" Grid.Column="0" Margin="0 5" Header="Data to retrieve">
+        <GroupBox Grid.Row="1" Grid.Column="0" Margin="0 5" Header="Data to retrieve" IsEnabled="{Binding IsDataExist}">
             <StackPanel Margin="0 5">
-                <RadioButton Content="All" />
+                <RadioButton Content="Only Lost Reads" IsChecked="{Binding Path=ShowMode, Converter={StaticResource radioBooleanToIntConverter}, ConverterParameter=1}" />
                 <Rectangle Height="5" />
-                <RadioButton Content="With a rabge using date and time" />
+                <RadioButton Content="With a rabge using date and time" IsChecked="{Binding Path=ShowMode, Converter={StaticResource radioBooleanToIntConverter}, ConverterParameter=2}" />
                 <Rectangle Height="5" />
-                <RadioButton Content="Only Lost" />
+                <RadioButton Content="All Reads" IsChecked="{Binding Path=ShowMode, Converter={StaticResource radioBooleanToIntConverter}, ConverterParameter=3}" />
+                <Rectangle Height="32" />
+                <Button Content="Apply" Command="{Binding ShowCommand}" Width="75" HorizontalAlignment="Left" />
             </StackPanel>
         </GroupBox>
         <GroupBox Grid.Row="2" Grid.Column="0" Margin="0 5 0 0" Header="Preview">
             <StackPanel Height="Auto" Margin="0 10 0 0">
                 <StackPanel Orientation="Horizontal" Height="30" VerticalAlignment="Top">
-                    <Button Content="Preview Data" Width="120" />
+                    <Button Content="Get Data" Command="{Binding DownloadRecovery}" Width="120" BorderBrush="CadetBlue" Background="LightBlue" />
                     <Rectangle Width="20" />
-                    <Button Content="Clear" Width="120" />
+                    <Button Content="Clear" Width="120" Command="{Binding ClearCommand}" IsEnabled="{Binding IsDataExist}" BorderBrush="OrangeRed" />
                     <Rectangle Width="20" />
-                    <Button Content="Accept Data Now" Width="120" />
+                    <Button Content="Accept Data Now" Command="{Binding AcceptDataCommand}" Width="120" IsEnabled="{Binding IsDataExist}" BorderBrush="Green" Background="LightGreen" />
+                    <TextBlock Text="{Binding RetrievedReadsCount, FallbackValue=Test}"  TextAlignment="Left" FontWeight="Black" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15 0 0 0" Width="300" />
                 </StackPanel>
-                <DataGrid Margin="0 10 0 0" Height="210" >
-
+                <DataGrid ItemsSource="{Binding Reads}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0 10 0 0" Height="235" >
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Chip Code" Width="0.25*" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding EPC}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Time" Width="0.25*" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Time}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Reader №" Width="0.1*" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding ReaderNumber}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Antenna" Width="0.1*" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding AntennaNumber}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Unique ID" Width="0.3*" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding UniqueReadingID}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
         </GroupBox>

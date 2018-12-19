@@ -129,20 +129,20 @@
                                 <Border.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Start Reading" 
-                                              IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBooleanConverter}}"
-                                              CommandParameter="{Binding}"
-                                              Command="{Binding PlacementTarget.Tag.StartReaderCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                                  IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBooleanConverter}}"
+                                                  CommandParameter="{Binding}"
+                                                  Command="{Binding PlacementTarget.Tag.StartReaderCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                                         <MenuItem Header="Stop Reading"
-                                              IsEnabled="{Binding IsConnected}"
-                                              CommandParameter="{Binding}"
-                                              Command="{Binding PlacementTarget.Tag.StartReaderCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                                  IsEnabled="{Binding IsConnected}"
+                                                  CommandParameter="{Binding}"
+                                                  Command="{Binding PlacementTarget.Tag.StartReaderCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                                         <MenuItem Header="Reads" 
-                                              Command="{Binding PlacementTarget.Tag.OpenReadsWindowCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                              CommandParameter="{Binding}"/>
+                                                  Command="{Binding PlacementTarget.Tag.OpenReadsWindowCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                                  CommandParameter="{Binding}"/>
                                         <Separator />
                                         <MenuItem Header="Rewind" 
-                                              Command="{Binding PlacementTarget.Tag.OpenRewindWindowCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                              CommandParameter="{Binding}"/>
+                                                  Command="{Binding PlacementTarget.Tag.OpenRewindWindowCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                                  CommandParameter="{Binding}"/>
                                         <Separator />
                                         <MenuItem Header="Ping" />
                                     </ContextMenu>

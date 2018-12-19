@@ -33,7 +33,7 @@ namespace ReaderDataCollector.Reading
             //Wait for the transfer to finish
             TransferFinishedEvent.WaitOne();
 
-            using (var fileStream = new FileStream(fileName, FileMode.Append))
+            using (var fileStream = new FileStream(fileName, FileMode.Create))
             {
                 stream.WriteTo(fileStream);
             }

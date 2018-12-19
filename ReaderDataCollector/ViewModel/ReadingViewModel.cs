@@ -93,50 +93,6 @@ namespace ReaderDataCollector.ViewModel
         {
             TotalReadings = Reads.Count().ToString();
         }
-
-        private void GetReadingsFromFile(string filePath)
-        {
-            var readingsFromFile = new List<Read>();
-            StreamReader fs = new StreamReader(filePath);
-            string s = "";
-            while (s != null)
-            {
-                s = fs.ReadLine();
-                if (!string.IsNullOrEmpty(s))
-                {
-                    var read = ReadingsListener.MappRead(s);
-                    if (read != null)
-                        readingsFromFile.Add(read);
-                }
-            }
-
-            if (readingsFromFile.Count == _reads.Count)
-                return;
-
-            if (readingsFromFile.Count > 0)
-            {
-                var lostReadings = new List<Read>();
-                readingsFromFile.ForEach((x) =>
-                {
-                    if ((_reads.FirstOrDefault(y => y.UniqueReadingID == x.UniqueReadingID)) == null)
-                        lostReadings.Add(x);
-                });
-
-                if (lostReadings.Count > 0)
-                    AddToReads(lostReadings);
-            }
-        }
-
-        private void AddToReads(IEnumerable<Read> reads)
-        {
-            Application.Current.Dispatcher.Invoke((Action)(() =>
-            {
-                foreach (var read in reads)
-                    _reads.Add(read);
-
-                _reads.OrderByDescending(x => x.Time);
-            }));
-        }
         #endregion
 
         #region commands
@@ -215,23 +171,6 @@ namespace ReaderDataCollector.ViewModel
                     {
                         _readRepository.SaveRead(read);
                     }
-                }));
-            }
-        }
-
-        private RelayCommand _downloadRecovery;
-        public RelayCommand DownloadRecovery
-        {
-            get
-            {
-                return _downloadRecovery ?? (_downloadRecovery = new RelayCommand(() =>
-                {
-                    string fileName = string.Format("{0}.txt", _reads?.First()?.TimingPoint);
-                    Task.Run(() => FTPClient.Download(fileName, _host))
-                    .ContinueWith((i) =>
-                    {
-                        GetReadingsFromFile(fileName);
-                    });
                 }));
             }
         }

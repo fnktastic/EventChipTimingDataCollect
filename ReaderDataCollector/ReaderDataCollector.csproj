@@ -90,6 +90,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\InverseBooleanConverter.cs" />
+    <Compile Include="Converter\RadioBooleanToIntConverter.cs" />
     <Compile Include="DataAccess\Context.cs" />
     <Compile Include="Model\Read.cs" />
     <Compile Include="Reading\FTPClient.cs" />
