@@ -6,8 +6,7 @@
       xmlns:local="clr-namespace:ReaderDataCollector.View"
       mc:Ignorable="d" 
       xmlns:converter="clr-namespace:ReaderDataCollector.Converter"
-      DataContext="{Binding Reader, Source={StaticResource Locator}}"
-      d:DesignHeight="450" d:DesignWidth="880">
+      DataContext="{Binding Reader, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <converter:InverseBooleanConverter x:Key="InverseBooleanConverter" />
     </UserControl.Resources>
@@ -80,10 +79,10 @@
                                                                 <Setter Property="Fill" Value="Yellow"/>
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding IsConnected}" Value="True">
-                                                                <Setter Property="Fill" Value="Green"/>
+                                                                <Setter Property="Fill" Value="SpringGreen"/>
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding IsConnected}" Value="False">
-                                                                <Setter Property="Fill" Value="Red"/>
+                                                                <Setter Property="Fill" Value="OrangeRed"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>

@@ -84,6 +84,13 @@ namespace ReaderDataCollector.ViewModel
             set { _toolTip = value; RaisePropertyChanged("ToolTip"); }
         }
 
+        private string _timingPoint;
+        public string TimingPoint
+        {
+            get { return _timingPoint; }
+            set { _timingPoint = value; RaisePropertyChanged("TimingPoint"); }
+        }
+
         public CancellationTokenSource CancellationTokenSource { get; set; }
         public Task Task { get; set; }
         #endregion
@@ -110,6 +117,7 @@ namespace ReaderDataCollector.ViewModel
                 LastRead = lastRead.Time.Split(' ')[1];
                 LastReadToolTip = lastRead.ToString();
                 if (string.IsNullOrEmpty(FileName)) FileName = lastRead.TimingPoint;
+                if (string.IsNullOrEmpty(TimingPoint)) TimingPoint = lastRead.TimingPoint.Split('_')?[0];
             }
             TotalReadings = _reads.Count();
             ToolTip = this.ToString();
@@ -136,7 +144,8 @@ namespace ReaderDataCollector.ViewModel
         {
             Readers = new ObservableCollection<Reader>()
             {
-                new Reader() { ID = 1, Host="localhost", Port = "10000", IsConnected = false }
+                new Reader() { ID = 1, Host="localhost", Port = "10000", IsConnected = false },
+                new Reader() { ID = 2, Host="localhost", Port = "10000", IsConnected = false }
             };
         }
         #endregion
@@ -150,6 +159,8 @@ namespace ReaderDataCollector.ViewModel
                 return _openReadsWindowCommand ?? (_openReadsWindowCommand = new RelayCommand<Reader>((reader) =>
                 {
                     var readingViewModel = new ReadingViewModel(reader.Reads);
+                    readingViewModel.TimingPoint = reader.TimingPoint;
+                    readingViewModel.TotalReadings = reader.TotalReadings.ToString();
                     var window = new Window
                     {
                         Title = string.Format("Reads | Reader {0} - Event Chip Timing", reader.ID),

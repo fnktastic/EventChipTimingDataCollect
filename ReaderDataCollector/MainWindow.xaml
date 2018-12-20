@@ -10,7 +10,7 @@
         DataContext="{Binding Main, Source={StaticResource Locator}}"
         Height="600" Width="525"
         ResizeMode="NoResize"
-        Title="ReadCollector - Event Chip Timing">
+        Title="Read Collector - Event Chip Timing">
     <Grid Margin="5">
         <views:ReadersControl />
     </Grid>
