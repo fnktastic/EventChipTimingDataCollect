@@ -5,6 +5,7 @@ using ReaderDataCollector.Reading;
 using ReaderDataCollector.View;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -114,7 +115,7 @@ namespace ReaderDataCollector.ViewModel
             var lastRead = _reads.LastOrDefault();
             if (lastRead != null)
             {
-                LastRead = lastRead.Time.Split(' ')[1];
+                LastRead = lastRead.Time.ToString("HH:mm:ss:fff", CultureInfo.InvariantCulture);
                 LastReadToolTip = lastRead.ToString();
                 if (string.IsNullOrEmpty(FileName)) FileName = lastRead.TimingPoint;
                 if (string.IsNullOrEmpty(TimingPoint)) TimingPoint = lastRead.TimingPoint.Split('_')?[0];

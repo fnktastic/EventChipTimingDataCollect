@@ -51,7 +51,7 @@
                 <DataGridTemplateColumn Header="Time" Width="0.25*" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Time}" />
+                            <TextBlock Text="{Binding Time, StringFormat=\{0:dd.MM.yy HH:mm:ss:fff\}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

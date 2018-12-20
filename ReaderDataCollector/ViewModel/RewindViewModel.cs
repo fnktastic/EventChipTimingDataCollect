@@ -34,7 +34,12 @@ namespace ReaderDataCollector.ViewModel
         public int ShowMode
         {
             get { return _showMode; }
-            set { _showMode = value; RaisePropertyChanged("ShowMode"); }
+            set
+            {
+                _showMode = value;
+                Show();
+                RaisePropertyChanged("ShowMode");
+            }
         }
 
         private string _retrievedReadsCount;
@@ -225,7 +230,7 @@ namespace ReaderDataCollector.ViewModel
                     }
                 }));
             }
-        }        
+        }
         #endregion
     }
 }

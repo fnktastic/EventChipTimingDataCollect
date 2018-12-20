@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using Tftp.Net;
 
 namespace ReaderDataCollector.Reading
@@ -12,30 +13,34 @@ namespace ReaderDataCollector.Reading
     public class FTPClient
     {
         private static AutoResetEvent TransferFinishedEvent = new AutoResetEvent(false);
+        private static MemoryStream ms = null;
 
         public static void Download(string fileName, string host)
         {
-            //Setup a TftpClient instance
-            var client = new TftpClient(host);
-
-            //Prepare a simple transfer (GET test.dat)
-            var transfer = client.Download(fileName);
-
-            //Capture the events that may happen during the transfer
-            transfer.OnProgress += new TftpProgressHandler(transfer_OnProgress);
-            transfer.OnFinished += new TftpEventHandler(transfer_OnFinshed);
-            transfer.OnError += new TftpErrorHandler(transfer_OnError);
-
-            //Start the transfer and write the data that we're downloading into a memory stream
-            MemoryStream stream = new MemoryStream();
-            transfer.Start(stream);
-
-            //Wait for the transfer to finish
-            TransferFinishedEvent.WaitOne();
-
-            using (var fileStream = new FileStream(fileName, FileMode.Create))
+            try
             {
-                stream.WriteTo(fileStream);
+                var client = new TftpClient(host);
+
+                var transfer = client.Download(fileName);
+
+                transfer.OnProgress += new TftpProgressHandler(transfer_OnProgress);
+                transfer.OnFinished += new TftpEventHandler(transfer_OnFinshed);
+                transfer.OnError += new TftpErrorHandler(transfer_OnError);
+
+                ms = new MemoryStream();
+                transfer.Start(ms);
+                TransferFinishedEvent.WaitOne();
+                ms.Seek(0, SeekOrigin.Begin);
+                using (var fs = new FileStream(fileName, FileMode.Create))
+                {
+                    ms = new MemoryStream(ms.ToArray());
+                    ms.CopyTo(fs);
+                    fs.Flush();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("{0}\n{1}", ex.Message, ex.StackTrace));
             }
         }
 

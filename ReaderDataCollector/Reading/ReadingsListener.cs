@@ -66,7 +66,7 @@ namespace ReaderDataCollector.Reading
                 {
                     ID = 0,
                     EPC = array[1],
-                    Time = array[2],
+                    Time = DateTime.Parse(array[2]),
                     PeakRssiInDbm = array[3],
                     AntennaNumber = array[4],
                     ReaderNumber = array[5],

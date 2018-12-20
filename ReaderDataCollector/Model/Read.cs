@@ -10,7 +10,7 @@ namespace ReaderDataCollector.Model
     {
         public int ID { get; set; }
         public string EPC { get; set; }
-        public string Time { get; set; }
+        public DateTime Time { get; set; }
         public string PeakRssiInDbm { get; set; }
         public string AntennaNumber { get; set; }
         public string ReaderNumber { get; set; }
