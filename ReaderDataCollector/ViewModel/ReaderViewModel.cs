@@ -159,7 +159,10 @@ namespace ReaderDataCollector.ViewModel
                 return _openReadsWindowCommand ?? (_openReadsWindowCommand = new RelayCommand<Reader>((reader) =>
                 {
                     var readingViewModel = new ReadingViewModel(reader.Reads);
-                    readingViewModel.TimingPoint = reader.TimingPoint;
+                    if(reader.Reads.Count == 0)
+                        readingViewModel.TimingPoint = "<unknown>";
+                    if (reader.Reads.Count > 0)
+                        readingViewModel.TimingPoint = reader.TimingPoint;
                     readingViewModel.TotalReadings = reader.TotalReadings.ToString();
                     var window = new Window
                     {
