@@ -12,34 +12,39 @@
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="0.3*" />
+            <ColumnDefinition Width="0.7*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition Height="0.8*" />
         </Grid.RowDefinitions>
-        <Border Grid.Column="0" Grid.Row="0" BorderBrush="LightGray" BorderThickness="0 0 0 1">
-        <Grid Height="25" Margin="0 5 0 0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250" />
-                <ColumnDefinition Width="250" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition  Height="25"/>
-            </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
-                <Label Content="Timing Point:" />
-                <TextBlock Text="{Binding TimingPoint, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center" Width="100" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
-                <Label Content="Total Readings:" />
-                <TextBlock Text="{Binding TotalReadings, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center" Width="100" />
-            </StackPanel>
-            <Button Grid.Column="2" Grid.Row="0" Content="Save to DB" HorizontalAlignment="Right" Command="{Binding SyncReadingsCommand}" IsEnabled="{Binding IsReadingInProgress, Converter={StaticResource InverseBooleanConverter}}" Width="100" Margin="25 0 0 0"/>
-        </Grid>
+        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0 0 0 1">
+            <Grid Height="25" Margin="0 5 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition  Height="25"/>
+                </Grid.RowDefinitions>
+                <Button Grid.Column="2" Grid.Row="0" Content="Save to DB" HorizontalAlignment="Right" Command="{Binding SyncReadingsCommand}" IsEnabled="{Binding IsReadingInProgress, Converter={StaticResource InverseBooleanConverter}}" Width="100" Margin="25 0 0 0"/>
+            </Grid>
         </Border>
-        <DataGrid Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Reads}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0 10 0 0">
+        <GroupBox Grid.Column="0" Grid.Row="1" Header="Reader Details">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                    <Label Content="Total Readings:" />
+                    <TextBlock Height="13" Text="{Binding TotalReadings, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center" Width="100" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+                    <Label Content="Timing Point:" />
+                    <TextBlock Height="13" Text="{Binding TimingPoint, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center" Width="100" />
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <DataGrid Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Reads}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0 10 0 0">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Chip Code" Width="0.25*" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>

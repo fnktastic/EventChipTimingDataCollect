@@ -7,8 +7,7 @@ namespace ReaderDataCollector.Reading
 {
     public class TcpFileReciever
     {
-        const int PORT_NO = 5000;
-        const string SERVER_IP = "127.0.0.1";
+        const int PORT = 5000;
         static TcpClient client = new TcpClient();
 
         public static void GetFile(string fileName, string host)
@@ -18,16 +17,13 @@ namespace ReaderDataCollector.Reading
                 if (host.Equals("localhost"))
                     host = "127.0.0.1";
 
-                //---create a TCPClient object at the IP and port no.---
-                client = new TcpClient(SERVER_IP, PORT_NO);
+                client = new TcpClient(host, PORT);
                 NetworkStream nwStream = client.GetStream();
                 byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(fileName);
 
-                //---send the text---
                 Console.WriteLine("Sending : " + fileName);
                 nwStream.Write(bytesToSend, 0, bytesToSend.Length);
 
-                //---read back the text---
                 byte[] bytesToRead = new byte[client.ReceiveBufferSize];
                 int bytesRead = nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize);
 
