@@ -77,9 +77,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Tftp.Net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tftp.Net.1.1.0.0\lib\Tftp.Net.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -93,7 +90,7 @@
     <Compile Include="Converter\RadioBooleanToIntConverter.cs" />
     <Compile Include="DataAccess\Context.cs" />
     <Compile Include="Model\Read.cs" />
-    <Compile Include="Reading\FTPClient.cs" />
+    <Compile Include="Reading\TcpFileReciever.cs" />
     <Compile Include="Reading\ReadingsListener.cs" />
     <Compile Include="Repository\IReadRepository.cs" />
     <Compile Include="Repository\ReadRepository.cs" />

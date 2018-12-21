@@ -15,7 +15,7 @@ namespace ReaderDataCollector.Reading
 {
     class ReadingsListener
     {
-        private TcpClient _tcpClient;
+        private System.Net.Sockets.TcpClient _tcpClient;
 
         private readonly string _host;
         private readonly int _port;
@@ -96,7 +96,7 @@ namespace ReaderDataCollector.Reading
             string stringData;
             try
             {
-                using (_tcpClient = new TcpClient(_host, _port))
+                using (_tcpClient = new System.Net.Sockets.TcpClient(_host, _port))
                 using (NetworkStream ns = _tcpClient.GetStream())
                 {
                     int recvieveLength;

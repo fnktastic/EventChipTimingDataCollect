@@ -19,7 +19,7 @@ namespace ReaderDataCollector.ViewModel
         private List<Read> _readingsFromFile;
         #endregion
 
-        #region
+        #region properties
         public string FileName { private get; set; }
         public ObservableCollection<Read> RecievedReads { get; set; }
 
@@ -170,7 +170,7 @@ namespace ReaderDataCollector.ViewModel
                     }
                     IsDataExist = false;
                     string fileName = string.Format("{0}.txt", FileName);
-                    Task.Run(() => FTPClient.Download(fileName, Host))
+                    Task.Run(() => TcpFileReciever.GetFile(fileName, Host))
                     .ContinueWith((i) =>
                     {
                         GetReadingsFromFile(fileName);

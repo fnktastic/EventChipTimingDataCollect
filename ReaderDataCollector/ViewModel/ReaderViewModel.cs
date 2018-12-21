@@ -146,7 +146,7 @@ namespace ReaderDataCollector.ViewModel
             Readers = new ObservableCollection<Reader>()
             {
                 new Reader() { ID = 1, Host="localhost", Port = "10000", IsConnected = false },
-                new Reader() { ID = 2, Host="localhost", Port = "10000", IsConnected = false }
+                new Reader() { ID = 2, Host="192.168.1.102", Port = "10000", IsConnected = false }
             };
         }
         #endregion
