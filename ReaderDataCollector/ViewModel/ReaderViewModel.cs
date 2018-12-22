@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using ReaderDataCollector.Model;
 using ReaderDataCollector.Reading;
 using ReaderDataCollector.View;
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Globalization;
@@ -92,6 +93,13 @@ namespace ReaderDataCollector.ViewModel
             set { _timingPoint = value; RaisePropertyChanged("TimingPoint"); }
         }
 
+        private DateTime? _startedDateTime;
+        public DateTime? StartedDateTime
+        {
+            get { return _startedDateTime; }
+            set { _startedDateTime = value; RaisePropertyChanged("StartedDateTime"); }
+        }
+
         public CancellationTokenSource CancellationTokenSource { get; set; }
         public Task Task { get; set; }
         #endregion
@@ -159,12 +167,7 @@ namespace ReaderDataCollector.ViewModel
             {
                 return _openReadsWindowCommand ?? (_openReadsWindowCommand = new RelayCommand<Reader>((reader) =>
                 {
-                    var readingViewModel = new ReadingViewModel(reader.Reads);
-                    if(reader.Reads.Count == 0)
-                        readingViewModel.TimingPoint = "<unknown>";
-                    if (reader.Reads.Count > 0)
-                        readingViewModel.TimingPoint = reader.TimingPoint;
-                    readingViewModel.TotalReadings = reader.TotalReadings.ToString();
+                    var readingViewModel = new ReadingViewModel(reader);
                     var window = new Window
                     {
                         Title = string.Format("Reads | Reader {0} - Event Chip Timing", reader.ID),
@@ -223,6 +226,8 @@ namespace ReaderDataCollector.ViewModel
                         });
 
                         reader.Task.Start();
+                        if (reader.StartedDateTime == null)
+                            reader.StartedDateTime = DateTime.Now;
                     }
                     if (reader.IsConnected == true)
                     {
@@ -241,7 +246,7 @@ namespace ReaderDataCollector.ViewModel
                 return _addNewReaderCommand ?? (_addNewReaderCommand = new RelayCommand(() =>
                 {
                     int maxIndex = _readers.Max(x => x.ID);
-                    _readers.Add(new Reader() { IsConnected = false, ID = maxIndex + 1 });
+                    _readers.Add(new Reader() { IsConnected = false, ID = maxIndex + 1, StartedDateTime = null });
                 }));
             }
         }

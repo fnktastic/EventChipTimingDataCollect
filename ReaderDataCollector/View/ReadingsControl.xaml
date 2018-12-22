@@ -16,8 +16,7 @@
             <ColumnDefinition Width="0.7*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="0.8*" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="0 0 0 1">
             <Grid Height="25" Margin="0 5 0 0">
@@ -29,24 +28,77 @@
                 <Grid.RowDefinitions>
                     <RowDefinition  Height="25"/>
                 </Grid.RowDefinitions>
-                <Button Grid.Column="2" Grid.Row="0" Content="Save to DB" HorizontalAlignment="Right" Command="{Binding SyncReadingsCommand}" IsEnabled="{Binding IsReadingInProgress, Converter={StaticResource InverseBooleanConverter}}" Width="100" Margin="25 0 0 0"/>
+                <Button Grid.Column="2" Grid.Row="0" Content="Save to DB" HorizontalAlignment="Right" Command="{Binding SyncReadingsCommand}" IsEnabled="{Binding IsReadingInProgress, Converter={StaticResource InverseBooleanConverter}}"  Margin="25 0 0 0"/>
             </Grid>
         </Border>
-        <GroupBox Grid.Column="0" Grid.Row="1" Header="Reader Details">
+        <GroupBox Grid.Column="0" Grid.Row="0" Header="Reader Details">
             <StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
-                    <Label Content="Total Readings:" />
-                    <TextBlock Height="13" Text="{Binding TotalReadings, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center" Width="100" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+                <StackPanel Orientation="Horizontal">
                     <Label Content="Timing Point:" />
-                    <TextBlock Height="13" Text="{Binding TimingPoint, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center" Width="100" />
+                    <TextBlock Height="14" Text="{Binding TimingPoint, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Total Reads:" />
+                    <TextBlock Height="14" Text="{Binding TotalReadings, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Unique Reads:" />
+                    <TextBlock Height="14" Text="{Binding UniqueReads, FallbackValue=Test?}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="IP:" />
+                    <TextBlock Height="14" Text="{Binding IP, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Started:" />
+                    <TextBlock Height="14" Text="{Binding Started, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Duration:" />
+                    <TextBlock Height="14" Text="{Binding Duration,  StringFormat=\{0: HH:mm:ss:fff\}, FallbackValue=Test?}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Status:" />
+                    <TextBlock Height="14" Text="{Binding Status, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
+                </StackPanel>
+                <GroupBox Header="Last Read Details">
+                    <GroupItem>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25" />
+                                <RowDefinition Height="25" />
+                                <RowDefinition Height="25" />
+                                <RowDefinition Height="25" />
+                                <RowDefinition Height="25" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Text="{Binding LastRead.EPC}" />
+                            <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Text="{Binding LastRead.Time}" />
+                            <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Text="{Binding LastRead.PeakRssiInDbm}" />
+                            <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Text="{Binding LastRead.AntennaNumber}" />
+                            <TextBlock Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" Text="{Binding LastRead.ReaderNumber}" />
+                        </Grid>
+                    </GroupItem>
+                </GroupBox>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Recovery File:" />
+                    <TextBlock Cursor="Help" 
+                               ToolTip="Recovery File for current Reading Session stores at the BOX and in special Folder on this PC" Height="14" 
+                               Text="{Binding RecoveryFile, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
                 </StackPanel>
             </StackPanel>
         </GroupBox>
-        <DataGrid Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Reads}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0 10 0 0">
+        <GroupBox Header="Live Reads" Grid.Column="1" Grid.Row="1" >
+        <DataGrid       
+            ItemsSource="{Binding Reads}" 
+            AutoGenerateColumns="False" 
+            EnableColumnVirtualization="True" EnableRowVirtualization="True"
+            VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+            CanUserAddRows="False" Margin="0 0 0 0">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Chip Code" Width="0.25*" IsReadOnly="True">
+                <DataGridTemplateColumn Header="Chip Code" Width="0.2*" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding EPC}" />
@@ -74,7 +126,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Peak Rssi In Dbm" Width="0.1*" IsReadOnly="True">
+                <DataGridTemplateColumn Header="Peak Rssi In Dbm" Width="0.15*" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding PeakRssiInDbm}" />
@@ -90,5 +142,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        </GroupBox>
     </Grid>
 </UserControl>

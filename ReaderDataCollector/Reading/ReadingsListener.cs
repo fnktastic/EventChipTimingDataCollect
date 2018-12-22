@@ -101,6 +101,7 @@ namespace ReaderDataCollector.Reading
                 {
                     int recvieveLength;
                     ChangeReaderStatus(true);
+                    //SetStartTime(DateTime.Now);
                     do
                     {
                         cancellationToken.ThrowIfCancellationRequested();
@@ -145,6 +146,15 @@ namespace ReaderDataCollector.Reading
             {
                 if (_reader != null)
                     _reader.IsConnected = status;
+            }));
+        }
+
+        private void SetStartTime(DateTime dateTime)
+        {
+            Application.Current.Dispatcher.Invoke((Action)(() =>
+            {
+                if (_reader != null)
+                    _reader.StartedDateTime = dateTime;
             }));
         }
     }

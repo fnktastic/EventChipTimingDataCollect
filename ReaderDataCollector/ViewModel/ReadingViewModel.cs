@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Data.Entity;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -46,12 +47,83 @@ namespace ReaderDataCollector.ViewModel
             get { return _timingPoint; }
             set { _timingPoint = value; RaisePropertyChanged("TimingPoint"); }
         }
+
+        private string _ip;
+        public string IP
+        {
+            get { return _ip; }
+            set { _ip = value; RaisePropertyChanged("IP"); }
+        }
+
+        private int _uniqueReads;
+        public int UniqueReads
+        {
+            get { return _uniqueReads; }
+            set { _uniqueReads = value; RaisePropertyChanged("UniqueReads"); }
+        }
+
+        private DateTime _started;
+        public DateTime Started
+        {
+            get { return _started; }
+            set { _started = value; RaisePropertyChanged("Started"); }
+        }
+
+        private DateTime _duration;
+        public DateTime Duration
+        {
+            get { return _duration; }
+            set { _duration = value; RaisePropertyChanged("Duration"); }
+        }
+
+        private string _status;
+        public string Status
+        {
+            get { return _status; }
+            set { _status = value; RaisePropertyChanged("Status"); }
+        }
+
+        private string _recoveryFile;
+        public string RecoveryFile
+        {
+            get { return _recoveryFile; }
+            set { _recoveryFile = value; RaisePropertyChanged("RecoveryFile"); }
+        }
+
+        private Read _lastRead;
+        public Read LastRead
+        {
+            get { return _lastRead; }
+            set { _lastRead = value; RaisePropertyChanged("LastRead"); }
+        }
         #endregion
 
         #region constructor
-        public ReadingViewModel(ObservableCollection<Read> reads)
+        public ReadingViewModel(Reader reader)
         {
-            Reads = reads;
+            Reads = reader.Reads;
+            LastRead = Reads.LastOrDefault();
+            if (reader.Reads.Count == 0)
+                TimingPoint = "<unknown>";
+            if (reader.Reads.Count > 0)
+                TimingPoint = reader.TimingPoint;
+            TotalReadings = reader.TotalReadings.ToString();
+            IP = LastRead.IpAddress;
+            if (reader.IsConnected == true)
+                Status = "Connected";
+            else if (reader.IsConnected == true)
+                Status = "Disconnected";
+            else
+                Status = "Waiting for the BOX...";
+            if (reader.StartedDateTime != null)
+            {
+                Started = (DateTime)reader.StartedDateTime;
+                Duration = DateTime.Now.AddTicks(-_started.Ticks);
+            }
+            RecoveryFile = reader.FileName;
+            UniqueReads = GetUniqueReads();
+
+
             Reads.CollectionChanged += ContentCollectionChanged;
         }
 
@@ -70,6 +142,13 @@ namespace ReaderDataCollector.ViewModel
         public void ContentCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             TotalReadings = Reads.Count().ToString();
+            Duration = DateTime.Now.AddTicks(-_started.Ticks);
+            UniqueReads = GetUniqueReads();
+        }
+
+        private int GetUniqueReads()
+        {
+            return _reads.Select(x => x.EPC).Distinct().Count();
         }
         #endregion
 
