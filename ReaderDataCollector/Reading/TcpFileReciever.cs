@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ReaderDataCollector.Reading
 {
@@ -10,7 +11,7 @@ namespace ReaderDataCollector.Reading
         const int PORT = 5000;
         static TcpClient client = new TcpClient();
 
-        public static void GetFile(string fileName, string host)
+        public static bool GetFile(string fileName, string host)
         {
             try
             {
@@ -29,16 +30,22 @@ namespace ReaderDataCollector.Reading
 
                 int sizeOfFile = int.Parse(Encoding.ASCII.GetString(bytesToRead, 0, bytesRead));
                 byte[] bytesOfFile = new byte[sizeOfFile];
+
+                if (sizeOfFile != bytesOfFile.Length)
+                    return false;
+
                 nwStream.Read(bytesOfFile, 0, sizeOfFile);
 
                 Console.WriteLine("Received : " + Encoding.ASCII.GetString(bytesOfFile, 0, sizeOfFile));
                 Write(fileName, bytesOfFile);
-                Console.ReadLine();
                 client.Close();
+
+                return true;
             }
              catch (Exception ex)
             {
                 Console.WriteLine("{0}\n{1}", ex.Message, ex.StackTrace);
+                return false;
             }
         }
 

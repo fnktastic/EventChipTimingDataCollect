@@ -12,6 +12,7 @@ namespace ReaderDataCollector.ViewModel
             SimpleIoc.Default.Register<ReadingViewModel>();
             SimpleIoc.Default.Register<ReaderViewModel>();
             SimpleIoc.Default.Register<RewindViewModel>();
+            SimpleIoc.Default.Register<PingViewModel>();
         }
 
         public MainViewModel Main
@@ -43,6 +44,14 @@ namespace ReaderDataCollector.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<RewindViewModel>();
+            }
+        }
+
+        public PingViewModel PingViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<PingViewModel>();
             }
         }
         

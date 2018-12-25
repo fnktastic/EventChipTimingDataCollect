@@ -90,15 +90,20 @@
     <Compile Include="Converter\RadioBooleanToIntConverter.cs" />
     <Compile Include="DataAccess\Context.cs" />
     <Compile Include="Model\Read.cs" />
+    <Compile Include="Model\Reader.cs" />
     <Compile Include="Reading\TcpFileReciever.cs" />
     <Compile Include="Reading\ReadingsListener.cs" />
     <Compile Include="Repository\IReadRepository.cs" />
     <Compile Include="Repository\ReadRepository.cs" />
+    <Compile Include="ViewModel\PingViewModel.cs" />
     <Compile Include="ViewModel\ReaderViewModel.cs" />
     <Compile Include="ViewModel\ReadingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\RewindViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\PingControl.xaml.cs">
+      <DependentUpon>PingControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ReadersControl.xaml.cs">
       <DependentUpon>ReadersControl.xaml</DependentUpon>
     </Compile>
@@ -120,6 +125,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\PingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\ReadersControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

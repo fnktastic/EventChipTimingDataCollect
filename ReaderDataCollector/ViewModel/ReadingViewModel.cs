@@ -22,6 +22,7 @@ namespace ReaderDataCollector.ViewModel
     public class ReadingViewModel : ViewModelBase
     {
         #region fields
+        private const string UNKNOWN = "<unknown>";
         private readonly Context _context;
         private readonly IReadRepository _readRepository;
         #endregion
@@ -62,15 +63,17 @@ namespace ReaderDataCollector.ViewModel
             set { _uniqueReads = value; RaisePropertyChanged("UniqueReads"); }
         }
 
-        private DateTime _started;
-        public DateTime Started
+        private DateTime startedDateTime;
+        private string _started;
+        public string Started
         {
             get { return _started; }
             set { _started = value; RaisePropertyChanged("Started"); }
         }
 
-        private DateTime _duration;
-        public DateTime Duration
+        private DateTime duration;
+        private string _duration;
+        public string Duration
         {
             get { return _duration; }
             set { _duration = value; RaisePropertyChanged("Duration"); }
@@ -101,30 +104,7 @@ namespace ReaderDataCollector.ViewModel
         #region constructor
         public ReadingViewModel(Reader reader)
         {
-            Reads = reader.Reads;
-            LastRead = Reads.LastOrDefault();
-            if (reader.Reads.Count == 0)
-                TimingPoint = "<unknown>";
-            if (reader.Reads.Count > 0)
-                TimingPoint = reader.TimingPoint;
-            TotalReadings = reader.TotalReadings.ToString();
-            IP = LastRead.IpAddress;
-            if (reader.IsConnected == true)
-                Status = "Connected";
-            else if (reader.IsConnected == true)
-                Status = "Disconnected";
-            else
-                Status = "Waiting for the BOX...";
-            if (reader.StartedDateTime != null)
-            {
-                Started = (DateTime)reader.StartedDateTime;
-                Duration = DateTime.Now.AddTicks(-_started.Ticks);
-            }
-            RecoveryFile = reader.FileName;
-            UniqueReads = GetUniqueReads();
-
-
-            Reads.CollectionChanged += ContentCollectionChanged;
+            Init(reader);
         }
 
         [PreferredConstructor]
@@ -139,11 +119,72 @@ namespace ReaderDataCollector.ViewModel
         #endregion
 
         #region methods
+        private void Init(Reader reader)
+        {
+            Started = UNKNOWN;
+            Duration = UNKNOWN;
+            if (reader.StartedDateTime != null)
+            {
+                startedDateTime = (DateTime)reader.StartedDateTime;
+                Started = startedDateTime.ToString("dd.MM.yy HH:mm:ss:fff", CultureInfo.InvariantCulture);
+            }
+
+            Reads = reader.Reads;
+            LastRead = Reads.LastOrDefault();
+
+            if (reader.Reads.Count == 0)
+                TimingPoint = UNKNOWN;
+
+            if (reader.Reads.Count > 0)
+                TimingPoint = reader.TimingPoint;
+
+            TotalReadings = reader.TotalReadings.ToString();
+            IP = reader.Host;
+
+            if (reader.IsConnected == true)
+            {
+                Status = "Connected";
+            }
+            else if (reader.IsConnected == false)
+                Status = "Disconnected";
+            else
+                Status = "Waiting for the BOX...";
+
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    if (Started != UNKNOWN)
+                    {
+                        var tempDuration = DateTime.UtcNow.AddTicks(-startedDateTime.Ticks);
+                        Application.Current.Dispatcher.Invoke((Action)(() =>
+                        {
+                            Duration = tempDuration.ToString("HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                        }));
+                    }
+
+                    Thread.Sleep(100);
+                }
+            });
+
+            if (string.IsNullOrEmpty(reader.FileName))
+                RecoveryFile = UNKNOWN;
+            else
+                RecoveryFile = reader.FileName;
+
+            UniqueReads = GetUniqueReads();
+
+
+            Reads.CollectionChanged += ContentCollectionChanged;
+        }
+
         public void ContentCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             TotalReadings = Reads.Count().ToString();
-            Duration = DateTime.Now.AddTicks(-_started.Ticks);
+            duration = DateTime.UtcNow.AddTicks(-startedDateTime.Ticks);
+            Duration = duration.ToString("HH:mm:ss:fff", CultureInfo.InvariantCulture);
             UniqueReads = GetUniqueReads();
+            LastRead = e.NewItems.Cast<Read>().FirstOrDefault();//SyncRoot;
         }
 
         private int GetUniqueReads()

@@ -28,7 +28,6 @@
                 <Grid.RowDefinitions>
                     <RowDefinition  Height="25"/>
                 </Grid.RowDefinitions>
-                <Button Grid.Column="2" Grid.Row="0" Content="Save to DB" HorizontalAlignment="Right" Command="{Binding SyncReadingsCommand}" IsEnabled="{Binding IsReadingInProgress, Converter={StaticResource InverseBooleanConverter}}"  Margin="25 0 0 0"/>
             </Grid>
         </Border>
         <GroupBox Grid.Column="0" Grid.Row="0" Header="Reader Details">
@@ -88,60 +87,61 @@
                                ToolTip="Recovery File for current Reading Session stores at the BOX and in special Folder on this PC" Height="14" 
                                Text="{Binding RecoveryFile, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
                 </StackPanel>
+                <Button Grid.Column="2" Grid.Row="0" Content="Save to DB" HorizontalAlignment="Center" Command="{Binding SyncReadingsCommand}" IsEnabled="{Binding IsReadingInProgress, Converter={StaticResource InverseBooleanConverter}}"  Margin="0 25 0 0"/>
             </StackPanel>
         </GroupBox>
         <GroupBox Header="Live Reads" Grid.Column="1" Grid.Row="1" >
-        <DataGrid       
+            <DataGrid       
             ItemsSource="{Binding Reads}" 
             AutoGenerateColumns="False" 
             EnableColumnVirtualization="True" EnableRowVirtualization="True"
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
             CanUserAddRows="False" Margin="0 0 0 0">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Chip Code" Width="0.2*" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding EPC}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Time" Width="0.25*" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Time, StringFormat=\{0:dd.MM.yy HH:mm:ss:fff\}}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Reader №" Width="0.1*" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding ReaderNumber}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Antenna" Width="0.1*" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding AntennaNumber}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Peak Rssi In Dbm" Width="0.15*" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding PeakRssiInDbm}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Unique ID" Width="0.2*" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding UniqueReadingID}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Chip Code" Width="0.2*" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding EPC}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Time" Width="0.25*" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Time, StringFormat=\{0:dd.MM.yy HH:mm:ss:fff\}}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Reader №" Width="0.1*" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ReaderNumber}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Antenna" Width="0.1*" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding AntennaNumber}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Peak Rssi In Dbm" Width="0.15*" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding PeakRssiInDbm}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Unique ID" Width="0.2*" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding UniqueReadingID}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
         </GroupBox>
     </Grid>
 </UserControl>

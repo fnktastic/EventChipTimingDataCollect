@@ -165,7 +165,7 @@ namespace ReaderDataCollector.ViewModel
                 {
                     if (string.IsNullOrEmpty(FileName) || string.IsNullOrEmpty(Host))
                     {
-                        MessageBox.Show("The Reader has not been run. \nRun the Reader first to get some Readings.", "Warning");
+                        MessageBox.Show("The Reader is not running. \nRun the Reader first to get some Reads.", "Warning");
                         return;
                     }
                     IsDataExist = false;
@@ -173,14 +173,19 @@ namespace ReaderDataCollector.ViewModel
                     Task.Run(() => TcpFileReciever.GetFile(fileName, Host))
                     .ContinueWith((i) =>
                     {
-                        GetReadingsFromFile(fileName);
-                        if (_readingsFromFile.Count > 0)
+                        if (i.Result == true)
                         {
-                            IsDataExist = true;
-                            ShowMode = 3;
-                            MessageBox.Show(string.Format("Recieved Reads - {0}", _readingsFromFile.Count), "Complete!");
-                            Show();
+                            GetReadingsFromFile(fileName);
+                            if (_readingsFromFile.Count > 0)
+                            {
+                                IsDataExist = true;
+                                ShowMode = 3;
+                                MessageBox.Show(string.Format("Recieved Reads - {0}", _readingsFromFile.Count), "Complete!");
+                                Show();
+                            }
                         }
+                        if (i.Result == false)
+                            MessageBox.Show(string.Format("Something went wrong. Please try again this operation."), "Error!");
                     });
                 }));
             }
