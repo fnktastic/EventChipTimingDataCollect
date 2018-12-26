@@ -164,7 +164,7 @@ namespace ReaderDataCollector.ViewModel
                     var window = new Window
                     {
                         Title = string.Format("Set Clock | Reader {0} - Event Chip Timing", reader.ID),
-                        Width = 450,
+                        Width = 350,
                         Height = 350,
                         Content = new SetClockControl(),
                         ResizeMode = ResizeMode.NoResize,

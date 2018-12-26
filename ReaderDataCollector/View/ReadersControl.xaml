@@ -116,8 +116,8 @@
                                             </Style>
                                         </Border.Style>
                                     </Border>
-                                    <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding Host}" IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Enter Host IP" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" Padding="2" />
-                                    <TextBox Grid.Column="6" Grid.Row="0" Text="{Binding Port}" IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Enter Port" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" HorizontalContentAlignment="Center" Padding="2" />
+                                    <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding Host, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Enter Host IP" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" Padding="2" />
+                                    <TextBox Grid.Column="6" Grid.Row="0" Text="{Binding Port, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Enter Port" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" HorizontalContentAlignment="Center" Padding="2" />
                                     <TextBox Grid.Column="8" Grid.Row="0" Text="{Binding TotalReadings}" Cursor="Arrow" IsReadOnly="True" ToolTip="{Binding TotalReadings}" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" HorizontalContentAlignment="Center" Padding="2" />
                                     <TextBox Grid.Column="10" Grid.Row="0" Text="{Binding LastRead}" Cursor="Arrow" IsReadOnly="True" ToolTip="{Binding LastReadToolTip}" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" HorizontalContentAlignment="Center" Padding="2" />
                                     <Button Grid.Column="12" Grid.Row="0" ToolTip="{Binding ToolTip}" 
