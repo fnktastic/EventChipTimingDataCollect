@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReaderDataCollector.View"
              xmlns:converter="clr-namespace:ReaderDataCollector.Converter"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="880">
     <UserControl.Resources>
@@ -49,11 +51,11 @@
                     <TextBlock Height="14" Text="{Binding IP, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Started:" />
+                    <Label Content="Reading Started:" />
                     <TextBlock Height="14" Text="{Binding Started, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Duration:" />
+                    <Label Content="Reading Duration:" />
                     <TextBlock Height="14" Text="{Binding Duration,  StringFormat=\{0: HH:mm:ss:fff\}, FallbackValue=Test?}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
@@ -91,11 +93,13 @@
         </GroupBox>
         <GroupBox Header="Live Reads" Grid.Column="1" Grid.Row="1" >
             <DataGrid       
-            ItemsSource="{Binding Reads}" 
-            AutoGenerateColumns="False" 
-            EnableColumnVirtualization="True" EnableRowVirtualization="True"
-            VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-            CanUserAddRows="False" Margin="0 0 0 0">
+                ItemsSource="{Binding Reads}"
+                SelectedItem="{Binding LastRead, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                AutoGenerateColumns="False" 
+                x:Name="MainDataGrid"
+                EnableColumnVirtualization="True" EnableRowVirtualization="True"
+                VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                CanUserAddRows="False" Margin="0 0 0 0">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Chip Code" Width="0.2*" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
@@ -140,6 +144,13 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <cmd:EventToCommand 
+                            Command="{Binding DataGridLoadedCommand}"
+                            CommandParameter="{Binding ElementName=MainDataGrid}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </DataGrid>
         </GroupBox>
     </Grid>

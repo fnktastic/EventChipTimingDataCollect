@@ -3,19 +3,18 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using ReaderDataCollector.DataAccess;
 using ReaderDataCollector.Model;
-using ReaderDataCollector.Reading;
 using ReaderDataCollector.Repository;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ReaderDataCollector.ViewModel
 {
@@ -25,6 +24,7 @@ namespace ReaderDataCollector.ViewModel
         private const string UNKNOWN = "<unknown>";
         private readonly Context _context;
         private readonly IReadRepository _readRepository;
+        private DataGrid dataGrid;
         #endregion
 
         #region properties
@@ -121,6 +121,9 @@ namespace ReaderDataCollector.ViewModel
         #region methods
         private void Init(Reader reader)
         {
+            Reads = reader.Reads;
+            LastRead = Reads.LastOrDefault();
+
             Started = UNKNOWN;
             Duration = UNKNOWN;
             if (reader.StartedDateTime != null)
@@ -128,9 +131,6 @@ namespace ReaderDataCollector.ViewModel
                 startedDateTime = (DateTime)reader.StartedDateTime;
                 Started = startedDateTime.ToString("dd.MM.yy HH:mm:ss:fff", CultureInfo.InvariantCulture);
             }
-
-            Reads = reader.Reads;
-            LastRead = Reads.LastOrDefault();
 
             if (reader.Reads.Count == 0)
                 TimingPoint = UNKNOWN;
@@ -159,7 +159,8 @@ namespace ReaderDataCollector.ViewModel
                         var tempDuration = DateTime.UtcNow.AddTicks(-startedDateTime.Ticks);
                         Application.Current.Dispatcher.Invoke((Action)(() =>
                         {
-                            Duration = tempDuration.ToString("HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                            if (reader.IsConnected == true)
+                                Duration = tempDuration.ToString("HH:mm:ss:fff", CultureInfo.InvariantCulture);
                         }));
                     }
 
@@ -173,18 +174,23 @@ namespace ReaderDataCollector.ViewModel
                 RecoveryFile = reader.FileName;
 
             UniqueReads = GetUniqueReads();
-
-
-            Reads.CollectionChanged += ContentCollectionChanged;
         }
 
         public void ContentCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            TotalReadings = Reads.Count().ToString();
-            duration = DateTime.UtcNow.AddTicks(-startedDateTime.Ticks);
-            Duration = duration.ToString("HH:mm:ss:fff", CultureInfo.InvariantCulture);
-            UniqueReads = GetUniqueReads();
-            LastRead = e.NewItems.Cast<Read>().FirstOrDefault();//SyncRoot;
+            try
+            {
+                TotalReadings = Reads.Count().ToString();
+                duration = DateTime.UtcNow.AddTicks(-startedDateTime.Ticks);
+                Duration = duration.ToString("HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                UniqueReads = GetUniqueReads();
+                LastRead = e.NewItems.Cast<Read>().FirstOrDefault();//SyncRoot;  
+                dataGrid.ScrollIntoView(LastRead);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(string.Format("{0}\n{1}", ex.Message, ex.StackTrace));
+            }
         }
 
         private int GetUniqueReads()
@@ -194,6 +200,25 @@ namespace ReaderDataCollector.ViewModel
         #endregion
 
         #region commands
+        private RelayCommand<DataGrid> _dataGridLoadedCommand;
+        public RelayCommand<DataGrid> DataGridLoadedCommand
+        {
+            get
+            {
+                return _dataGridLoadedCommand ?? (_dataGridLoadedCommand = new RelayCommand<DataGrid>((datagrid) =>
+                {
+                    dataGrid = datagrid;
+                    if (dataGrid == null || dataGrid.ItemsSource == null) return;
+
+                    var sourceCollection = dataGrid.ItemsSource as ObservableCollection<Read>;
+                    if (sourceCollection == null) return;
+
+                    sourceCollection.CollectionChanged +=
+                        new NotifyCollectionChangedEventHandler(ContentCollectionChanged);
+
+                }));
+            }
+        }
         #endregion
     }
 }

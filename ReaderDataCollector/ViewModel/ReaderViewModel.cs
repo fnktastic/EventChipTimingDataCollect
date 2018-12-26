@@ -165,7 +165,7 @@ namespace ReaderDataCollector.ViewModel
                     {
                         Title = string.Format("Set Clock | Reader {0} - Event Chip Timing", reader.ID),
                         Width = 450,
-                        Height = 500,
+                        Height = 350,
                         Content = new SetClockControl(),
                         ResizeMode = ResizeMode.NoResize,
                         DataContext = pingViewModel

@@ -4,9 +4,35 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReaderDataCollector.View"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             mc:Ignorable="d">
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25">
+            <TextBlock Text="Current BOX Time:" VerticalAlignment="Center" Margin="0 0 15 0" FontSize="18" />
+            <TextBox Text="{Binding CurrentBoxTime, FallbackValue=22:13:15}" Width="80" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="18" FontWeight="Black" />
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Text="Set Manual Time" FontSize="18" VerticalAlignment="Center"/>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" Margin="0 0 0 10">
+                <TextBox Text="{Binding Hours, FallbackValue=02}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="50" FontSize="18" />
+                <TextBlock Text=":" FontSize="18" Margin="5 0" VerticalAlignment="Center" />
+                <TextBox Text="{Binding Minutes, FallbackValue=48}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="50" FontSize="18" />
+                <TextBlock Text=":" FontSize="18" Margin="5 0" VerticalAlignment="Center" />
+                <TextBox Text="{Binding Seconds,FallbackValue=23}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="50" FontSize="18" />
+            </StackPanel>
+            <Button Content="Set" Width="75" Height="30" Command="{Binding SetManualTimeCommand}" />
+            <TextBlock Text="OR" TextAlignment="Center" Margin="10 15 10 0" />
+            <TextBlock Text="Synchronize Time with current Machine" TextAlignment="Center" Margin="10 0 10 10" />
+            <Button Content="Synchronize" Width="100" Height="30" Command="{Binding SetManualTimeCommand}" />
+        </StackPanel>
     </Grid>
 </UserControl>
