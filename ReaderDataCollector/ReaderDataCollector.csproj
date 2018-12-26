@@ -100,6 +100,7 @@
     <Compile Include="ViewModel\ReadingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\RewindViewModel.cs" />
+    <Compile Include="ViewModel\SetClockViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\PingControl.xaml.cs">
       <DependentUpon>PingControl.xaml</DependentUpon>
@@ -112,6 +113,9 @@
     </Compile>
     <Compile Include="View\RewindControl.xaml.cs">
       <DependentUpon>RewindControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SetClockControl.xaml.cs">
+      <DependentUpon>SetClockControl.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -138,6 +142,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RewindControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SetClockControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

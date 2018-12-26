@@ -73,11 +73,11 @@
                                 <RowDefinition Height="25" />
                                 <RowDefinition Height="25" />
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Text="{Binding LastRead.EPC}" />
-                            <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Text="{Binding LastRead.Time}" />
-                            <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Text="{Binding LastRead.PeakRssiInDbm}" />
-                            <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Text="{Binding LastRead.AntennaNumber}" />
-                            <TextBlock Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" Text="{Binding LastRead.ReaderNumber}" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" FontSize="16" Text="{Binding LastRead.EPC}" />
+                            <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" FontSize="16" Text="{Binding StringFormat=\{0:dd.MM.yy HH:mm:ss:fff\}, Path=LastRead.Time}" />
+                            <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Text="{Binding StringFormat=Signal Power {0}, Path=LastRead.PeakRssiInDbm}" />
+                            <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Text="{Binding StringFormat=Antenna {0}, Path=LastRead.AntennaNumber}" />
+                            <TextBlock Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" Text="{Binding StringFormat=Reader {0}, Path=LastRead.ReaderNumber}" />
                         </Grid>
                     </GroupItem>
                 </GroupBox>
@@ -87,7 +87,6 @@
                                ToolTip="Recovery File for current Reading Session stores at the BOX and in special Folder on this PC" Height="14" 
                                Text="{Binding RecoveryFile, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
                 </StackPanel>
-                <Button Grid.Column="2" Grid.Row="0" Content="Save to DB" HorizontalAlignment="Center" Command="{Binding SyncReadingsCommand}" IsEnabled="{Binding IsReadingInProgress, Converter={StaticResource InverseBooleanConverter}}"  Margin="0 25 0 0"/>
             </StackPanel>
         </GroupBox>
         <GroupBox Header="Live Reads" Grid.Column="1" Grid.Row="1" >

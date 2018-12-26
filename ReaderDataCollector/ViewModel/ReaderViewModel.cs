@@ -152,6 +152,29 @@ namespace ReaderDataCollector.ViewModel
                 }));
             }
         }
+
+        private RelayCommand<Reader> _setClockCommand;
+        public RelayCommand<Reader> SetClockCommand
+        {
+            get
+            {
+                return _setClockCommand ?? (_setClockCommand = new RelayCommand<Reader>((Reader reader) =>
+                {
+                    var pingViewModel = new SetClockViewModel(reader);
+                    var window = new Window
+                    {
+                        Title = string.Format("Set Clock | Reader {0} - Event Chip Timing", reader.ID),
+                        Width = 450,
+                        Height = 500,
+                        Content = new SetClockControl(),
+                        ResizeMode = ResizeMode.NoResize,
+                        DataContext = pingViewModel
+                    };
+
+                    window.ShowDialog();
+                }));
+            }
+        }
         #endregion
     }
 }

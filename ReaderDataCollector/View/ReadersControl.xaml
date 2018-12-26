@@ -144,7 +144,9 @@
                                         <MenuItem Header="Ping" 
                                                   Command="{Binding PlacementTarget.Tag.PingCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                                   CommandParameter="{Binding}"/>
-                                        <MenuItem Header="Set Clock" />
+                                        <MenuItem Header="Set Clock" 
+                                                  Command="{Binding PlacementTarget.Tag.SetClockCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                                  CommandParameter="{Binding}"/>
                                         <Separator/>
                                         <MenuItem Header="Details" 
                                                   Command="{Binding PlacementTarget.Tag.OpenReadsWindowCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"

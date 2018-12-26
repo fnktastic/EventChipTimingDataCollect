@@ -194,20 +194,6 @@ namespace ReaderDataCollector.ViewModel
         #endregion
 
         #region commands
-        private RelayCommand _syncReadingsCommand;
-        public RelayCommand SyncReadingsCommand
-        {
-            get
-            {
-                return _syncReadingsCommand ?? (_syncReadingsCommand = new RelayCommand(() =>
-                {
-                    foreach (var read in Reads)
-                    {
-                        _readRepository.SaveRead(read);
-                    }
-                }));
-            }
-        }
         #endregion
     }
 }

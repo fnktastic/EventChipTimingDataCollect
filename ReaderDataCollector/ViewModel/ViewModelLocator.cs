@@ -13,6 +13,7 @@ namespace ReaderDataCollector.ViewModel
             SimpleIoc.Default.Register<ReaderViewModel>();
             SimpleIoc.Default.Register<RewindViewModel>();
             SimpleIoc.Default.Register<PingViewModel>();
+            SimpleIoc.Default.Register<SetClockViewModel>();
         }
 
         public MainViewModel Main
@@ -55,6 +56,14 @@ namespace ReaderDataCollector.ViewModel
             }
         }
         
+        public SetClockViewModel SetClockViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<SetClockViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels
