@@ -32,7 +32,7 @@
             <Button Content="Set" Width="75" Height="30" Command="{Binding SetManualTimeCommand}" />
             <TextBlock Text="OR" TextAlignment="Center" Margin="10 15 10 0" />
             <TextBlock Text="Synchronize Time with current Machine" TextAlignment="Center" Margin="10 0 10 10" />
-            <Button Content="Synchronize" Width="100" Height="30" Command="{Binding SetManualTimeCommand}" />
+            <Button Content="Synchronize" Width="100" Height="30" Command="{Binding SetSystemTimeCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>
