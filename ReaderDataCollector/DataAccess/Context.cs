@@ -13,6 +13,7 @@ namespace ReaderDataCollector.DataAccess
         public Context() : base("reads") { }
 
         public DbSet<Read> Reads { get; set; }
+        public DbSet<Model.Reading> Readers { get; set; }
     }
 
     public class Initializer : DropCreateDatabaseIfModelChanges<Context>

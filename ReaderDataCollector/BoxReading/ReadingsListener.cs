@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ReaderDataCollector.Reading
+namespace ReaderDataCollector.BoxReading
 {
     class ReadingsListener
     {
@@ -22,10 +22,10 @@ namespace ReaderDataCollector.Reading
         private readonly List<string> _readLines;
         private ObservableCollection<Read> _uiReads;
         private CancellationTokenSource _cancellationToken;
-        private Reader _reader;
+        private Model.Reading _reader;
         private Task backgoundWorker;
 
-        public ReadingsListener(string host, int port, ObservableCollection<Read> uiReads, CancellationTokenSource cancellationToken, Reader reader = null)
+        public ReadingsListener(string host, int port, ObservableCollection<Read> uiReads, CancellationTokenSource cancellationToken, Reading reader = null)
         {
             _cancellationToken = cancellationToken;
             _uiReads = uiReads;
@@ -96,12 +96,11 @@ namespace ReaderDataCollector.Reading
             string stringData;
             try
             {
-                using (_tcpClient = new System.Net.Sockets.TcpClient(_host, _port))
+                using (_tcpClient = new TcpClient(_host, _port))
                 using (NetworkStream ns = _tcpClient.GetStream())
                 {
                     int recvieveLength;
                     ChangeReaderStatus(true);
-                    //SetStartTime(DateTime.Now);
                     do
                     {
                         cancellationToken.ThrowIfCancellationRequested();
@@ -117,7 +116,7 @@ namespace ReaderDataCollector.Reading
             {
                 Console.WriteLine("Unable to connect to server");
                 ChangeReaderStatus(null);
-                Thread.Sleep(250);
+                //Thread.Sleep(250);
                 DoReadingWork(cancellationToken, tsk);
             }
             catch (OperationCanceledException)

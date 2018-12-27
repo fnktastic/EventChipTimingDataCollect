@@ -1,6 +1,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
+using ReaderDataCollector.BoxReading;
 using ReaderDataCollector.DataAccess;
 using ReaderDataCollector.Model;
 using ReaderDataCollector.Repository;
@@ -21,7 +22,6 @@ namespace ReaderDataCollector.ViewModel
     public class ReadingViewModel : ViewModelBase
     {
         #region fields
-        private const string UNKNOWN = "<unknown>";
         private readonly Context _context;
         private readonly IReadRepository _readRepository;
         private DataGrid dataGrid;
@@ -102,9 +102,9 @@ namespace ReaderDataCollector.ViewModel
         #endregion
 
         #region constructor
-        public ReadingViewModel(Reader reader)
+        public ReadingViewModel(Reading reading)
         {
-            Init(reader);
+            Init(reading);
         }
 
         [PreferredConstructor]
@@ -119,33 +119,33 @@ namespace ReaderDataCollector.ViewModel
         #endregion
 
         #region methods
-        private void Init(Reader reader)
+        private void Init(Reading reading)
         {
-            Reads = reader.Reads;
+            Reads = reading.Reads;
             LastRead = Reads.LastOrDefault();
 
-            Started = UNKNOWN;
-            Duration = UNKNOWN;
-            if (reader.StartedDateTime != null)
+            Started = Consts.UNKNOWN;
+            Duration = Consts.UNKNOWN;
+            if (reading.StartedDateTime != null)
             {
-                startedDateTime = (DateTime)reader.StartedDateTime;
+                startedDateTime = (DateTime)reading.StartedDateTime;
                 Started = startedDateTime.ToString("dd.MM.yy HH:mm:ss:fff", CultureInfo.InvariantCulture);
             }
 
-            if (reader.Reads.Count == 0)
-                TimingPoint = UNKNOWN;
+            if (reading.Reads.Count == 0)
+                TimingPoint = Consts.UNKNOWN;
 
-            if (reader.Reads.Count > 0)
-                TimingPoint = reader.TimingPoint;
+            if (reading.Reads.Count > 0)
+                TimingPoint = reading.TimingPoint;
 
-            TotalReadings = reader.TotalReadings.ToString();
-            IP = reader.Host;
+            TotalReadings = reading.TotalReadings.ToString();
+            IP = reading.Reader.Host;
 
-            if (reader.IsConnected == true)
+            if (reading.IsConnected == true)
             {
                 Status = "Connected";
             }
-            else if (reader.IsConnected == false)
+            else if (reading.IsConnected == false)
                 Status = "Disconnected";
             else
                 Status = "Waiting for the BOX...";
@@ -154,12 +154,12 @@ namespace ReaderDataCollector.ViewModel
             {
                 while (true)
                 {
-                    if (Started != UNKNOWN)
+                    if (Started != Consts.UNKNOWN)
                     {
                         var tempDuration = DateTime.UtcNow.AddTicks(-startedDateTime.Ticks);
                         Application.Current.Dispatcher.Invoke((Action)(() =>
                         {
-                            if (reader.IsConnected == true)
+                            if (reading.IsConnected == true)
                                 Duration = tempDuration.ToString("HH:mm:ss:fff", CultureInfo.InvariantCulture);
                         }));
                     }
@@ -168,10 +168,10 @@ namespace ReaderDataCollector.ViewModel
                 }
             });
 
-            if (string.IsNullOrEmpty(reader.FileName))
-                RecoveryFile = UNKNOWN;
+            if (string.IsNullOrEmpty(reading.FileName))
+                RecoveryFile = Consts.UNKNOWN;
             else
-                RecoveryFile = reader.FileName;
+                RecoveryFile = reading.FileName;
 
             UniqueReads = GetUniqueReads();
         }
@@ -182,7 +182,7 @@ namespace ReaderDataCollector.ViewModel
             {
                 TotalReadings = Reads.Count().ToString();
                 duration = DateTime.UtcNow.AddTicks(-startedDateTime.Ticks);
-                Duration = duration.ToString("HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                Duration = duration.ToString(Consts.TIME_MILLISECONDS_FORMAT, CultureInfo.InvariantCulture);
                 UniqueReads = GetUniqueReads();
                 LastRead = e.NewItems.Cast<Read>().FirstOrDefault();//SyncRoot;  
                 dataGrid.ScrollIntoView(LastRead);

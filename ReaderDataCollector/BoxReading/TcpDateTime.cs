@@ -2,23 +2,21 @@
 using System.Net.Sockets;
 using System.Text;
 
-namespace ReaderDataCollector.Reading
+namespace ReaderDataCollector.BoxReading
 {
     public class TcpDateTime
     {
-        const int PORT = 5001;
         static TcpClient client = new TcpClient();
-
         public static string BoxTime { get; private set; }
 
         public static string GetBoxTime(string host, string action)
         {
             try
             {
-                if (host.Equals("localhost"))
-                    host = "127.0.0.1";
+                if (host.Equals(Consts.LOCALHOST))
+                    host = Consts.LOCALHOST_IP;
 
-                client = new TcpClient(host, PORT);
+                client = new TcpClient(host, Consts.TIME_PORT);
                 NetworkStream nwStream = client.GetStream();
                 byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(action);
 
@@ -45,10 +43,10 @@ namespace ReaderDataCollector.Reading
         {
             try
             {
-                if (host.Equals("localhost"))
-                    host = "127.0.0.1";
+                if (host.Equals(Consts.LOCALHOST))
+                    host = Consts.LOCALHOST_IP;
 
-                client = new TcpClient(host, PORT);
+                client = new TcpClient(host, Consts.TIME_PORT);
                 NetworkStream nwStream = client.GetStream();
                 byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(action);
 

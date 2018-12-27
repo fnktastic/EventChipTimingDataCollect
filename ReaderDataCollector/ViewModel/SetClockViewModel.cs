@@ -1,13 +1,10 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
+using ReaderDataCollector.BoxReading;
 using ReaderDataCollector.Model;
-using ReaderDataCollector.Reading;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,7 +13,7 @@ namespace ReaderDataCollector.ViewModel
 {
     public class SetClockViewModel : ViewModelBase
     {
-        private readonly Reader _reader;
+        private readonly Reading _reading;
         private DateTime _time;
         private Task _timeWorker;
         private CancellationTokenSource _cancellationTokenSource;
@@ -35,9 +32,9 @@ namespace ReaderDataCollector.ViewModel
             set { _currentBoxTime = value; RaisePropertyChanged("CurrentBoxTime"); }
         }
 
-        public SetClockViewModel(Reader reader)
+        public SetClockViewModel(Reading reading)
         {
-            _reader = reader;
+            _reading = reading;
             ManualTime = DateTime.Now;
             GetBoxTime();
         }
@@ -47,12 +44,10 @@ namespace ReaderDataCollector.ViewModel
 
         private DateTime ParseTime(string timeString)
         {
-            string format = "HH:mm:ss";
             CultureInfo provider = CultureInfo.InvariantCulture;
-
             try
             {
-                DateTime result = DateTime.ParseExact(timeString, format, provider);
+                DateTime result = DateTime.ParseExact(timeString, Consts.TIME_FORMAT, provider);
                 return result;
             }
             catch (FormatException)
@@ -65,7 +60,7 @@ namespace ReaderDataCollector.ViewModel
         private void GetBoxTime()
         {
             string action = string.Format("t1@{0}", 1);
-            string timeString = TcpDateTime.GetBoxTime(_reader.Host, action);
+            string timeString = TcpDateTime.GetBoxTime(_reading.Reader.Host, action);
             _cancellationTokenSource = new CancellationTokenSource();
             try
             {
@@ -77,7 +72,7 @@ namespace ReaderDataCollector.ViewModel
                         _cancellationTokenSource.Token.ThrowIfCancellationRequested();
                         Application.Current.Dispatcher.Invoke((Action)(() =>
                         {
-                            CurrentBoxTime = _time.ToString("HH:mm:ss");
+                            CurrentBoxTime = _time.ToString(Consts.TIME_FORMAT);
                         }));
                         _time = _time.AddSeconds(1);
                         Thread.Sleep(1000);
@@ -99,8 +94,8 @@ namespace ReaderDataCollector.ViewModel
             {
                 return _setManualTimeCommand ?? (_setManualTimeCommand = new RelayCommand(() =>
                 {
-                    string action = string.Format("t2@{0}", _manualTime.ToString("HH:mm:ss"));
-                    TcpDateTime.SetTime(_reader.Host, action);
+                    string action = string.Format("t2@{0}", _manualTime.ToString(Consts.TIME_FORMAT));
+                    TcpDateTime.SetTime(_reading.Reader.Host, action);
                     _cancellationTokenSource.Cancel();
                     _timeWorker.Wait();
                     GetBoxTime();
@@ -115,8 +110,8 @@ namespace ReaderDataCollector.ViewModel
             {
                 return _setSystemTimeCommand ?? (_setSystemTimeCommand = new RelayCommand(() =>
                 {
-                    string action = string.Format("t2@{0}", DateTime.Now.ToString("HH:mm:ss"));
-                    TcpDateTime.SetTime(_reader.Host, action);
+                    string action = string.Format("t2@{0}", DateTime.Now.ToString(Consts.TIME_FORMAT));
+                    TcpDateTime.SetTime(_reading.Reader.Host, action);
                     _cancellationTokenSource.Cancel();
                     _timeWorker.Wait();
                     GetBoxTime();

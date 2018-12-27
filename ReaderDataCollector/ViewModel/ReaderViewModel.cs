@@ -1,7 +1,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using ReaderDataCollector.BoxReading;
 using ReaderDataCollector.Model;
-using ReaderDataCollector.Reading;
 using ReaderDataCollector.View;
 using System;
 using System.Collections.ObjectModel;
@@ -18,37 +18,37 @@ namespace ReaderDataCollector.ViewModel
         #endregion
 
         #region properties
-        private ObservableCollection<Reader> _readers;
-        public ObservableCollection<Reader> Readers
+        private ObservableCollection<Reading> _readings;
+        public ObservableCollection<Reading> Readings
         {
-            get { return _readers; }
-            set { _readers = value; RaisePropertyChanged("Readers"); }
+            get { return _readings; }
+            set { _readings = value; RaisePropertyChanged("Readings"); }
         }
         #endregion
 
         #region constructor
         public ReaderViewModel()
         {
-            Readers = new ObservableCollection<Reader>()
+            Readings = new ObservableCollection<Reading>()
             {
-                new Reader() { ID = 1, Host="localhost", Port = "10000", IsConnected = false },
-                new Reader() { ID = 2, Host="192.168.1.102", Port = "10000", IsConnected = false }
+                new Reading() { ID = 1, Reader = new Reader() { Host="localhost", Port = "10000" }, IsConnected = false },
+                new Reading() { ID = 2, Reader = new Reader() { Host="192.168.1.102", Port = "10000" }, IsConnected = false }
             };
         }
         #endregion
 
         #region commands
-        private RelayCommand<Reader> _openReadsWindowCommand;
-        public RelayCommand<Reader> OpenReadsWindowCommand
+        private RelayCommand<Reading> _openReadsWindowCommand;
+        public RelayCommand<Reading> OpenReadsWindowCommand
         {
             get
             {
-                return _openReadsWindowCommand ?? (_openReadsWindowCommand = new RelayCommand<Reader>((reader) =>
+                return _openReadsWindowCommand ?? (_openReadsWindowCommand = new RelayCommand<Reading>((reading) =>
                 {
-                    var readingViewModel = new ReadingViewModel(reader);
+                    var readingViewModel = new ReadingViewModel(reading);
                     var window = new Window
                     {
-                        Title = string.Format("Reads | Reader {0} - Event Chip Timing", reader.ID),
+                        Title = string.Format("Reads | Reader {0} - Event Chip Timing", reading.ID),
                         Content = new ReadingsControl(),
                         DataContext = readingViewModel
                     };
@@ -58,23 +58,23 @@ namespace ReaderDataCollector.ViewModel
             }
         }
 
-        private RelayCommand<Reader> _openRewindWindowCommand;
-        public RelayCommand<Reader> OpenRewindWindowCommand
+        private RelayCommand<Reading> _openRewindWindowCommand;
+        public RelayCommand<Reading> OpenRewindWindowCommand
         {
             get
             {
-                return _openRewindWindowCommand ?? (_openRewindWindowCommand = new RelayCommand<Reader>((reader) =>
+                return _openRewindWindowCommand ?? (_openRewindWindowCommand = new RelayCommand<Reading>((reading) =>
                 {
                     var rewindViewModel = new RewindViewModel
                     {
-                        Host = reader.Host,
-                        FileName = reader.FileName,
-                        RecievedReads = reader.Reads
+                        Host = reading.Reader.Host,
+                        FileName = reading.FileName,
+                        RecievedReads = reading.Reads
                     };
 
                     var window = new Window
                     {
-                        Title = string.Format("Rewind | Reader {0} - Event Chip Timing", reader.ID),
+                        Title = string.Format("Rewind | Reader {0} - Event Chip Timing", reading.ID),
                         Height = 550,
                         Width = 820,
                         Content = new RewindControl(),
@@ -86,32 +86,32 @@ namespace ReaderDataCollector.ViewModel
             }
         }
 
-        private RelayCommand<Reader> _startReaderCommand;
-        public RelayCommand<Reader> StartReaderCommand
+        private RelayCommand<Reading> _startReaderCommand;
+        public RelayCommand<Reading> StartReaderCommand
         {
             get
             {
-                return _startReaderCommand ?? (_startReaderCommand = new RelayCommand<Reader>((reader) =>
+                return _startReaderCommand ?? (_startReaderCommand = new RelayCommand<Reading>((reading) =>
                 {
-                    if (reader.IsConnected != true)
+                    if (reading.IsConnected != true)
                     {
-                        reader.CancellationTokenSource = new CancellationTokenSource();
-                        reader.IsConnected = null;
-                        reader.Task = new Task(() =>
+                        reading.CancellationTokenSource = new CancellationTokenSource();
+                        reading.IsConnected = null;
+                        reading.Task = new Task(() =>
                         {
-                            var _readsListener = new ReadingsListener(reader.Host, int.Parse(reader.Port), reader.Reads, reader.CancellationTokenSource, reader);
-                            _readsListener.StartReading(string.Format("Reader {0} has been read.", reader.ID));
+                            var _readsListener = new ReadingsListener(reading.Reader.Host, int.Parse(reading.Reader.Port), reading.Reads, reading.CancellationTokenSource, reading);
+                            _readsListener.StartReading(string.Format("Reader {0} has been read.", reading.ID));
                         });
 
-                        if (reader.StartedDateTime == null)
-                            reader.StartedDateTime = DateTime.UtcNow;
+                        if (reading.StartedDateTime == null)
+                            reading.StartedDateTime = DateTime.UtcNow;
 
-                        reader.Task.Start();
+                        reading.Task.Start();
                     }
-                    if (reader.IsConnected == true)
+                    if (reading.IsConnected == true)
                     {
-                        reader.CancellationTokenSource.Cancel();
-                        reader.IsConnected = false;
+                        reading.CancellationTokenSource.Cancel();
+                        reading.IsConnected = false;
                     }
                 }));
             }
@@ -124,23 +124,23 @@ namespace ReaderDataCollector.ViewModel
             {
                 return _addNewReaderCommand ?? (_addNewReaderCommand = new RelayCommand(() =>
                 {
-                    int maxIndex = _readers.Max(x => x.ID);
-                    _readers.Add(new Reader() { IsConnected = false, ID = maxIndex + 1, StartedDateTime = null });
+                    int maxIndex = _readings.Max(x => x.ID);
+                    _readings.Add(new Reading() { IsConnected = false, ID = maxIndex + 1, Reader = new Reader(), StartedDateTime = null });
                 }));
             }
         }
 
-        private RelayCommand<Reader> _pingCommand;
-        public RelayCommand<Reader> PingCommand
+        private RelayCommand<Reading> _pingCommand;
+        public RelayCommand<Reading> PingCommand
         {
             get
             {
-                return _pingCommand ?? (_pingCommand = new RelayCommand<Reader>((Reader reader) =>
+                return _pingCommand ?? (_pingCommand = new RelayCommand<Reading>((reading) =>
                 {
-                    var pingViewModel = new PingViewModel(reader);
+                    var pingViewModel = new PingViewModel(reading);
                     var window = new Window
                     {
-                        Title = string.Format("Ping | Reader {0} - Event Chip Timing", reader.ID),
+                        Title = string.Format("Ping | Reader {0} - Event Chip Timing", reading.ID),
                         Content = new PingControl(),
                         Height = 360,
                         Width = 340,
@@ -153,17 +153,17 @@ namespace ReaderDataCollector.ViewModel
             }
         }
 
-        private RelayCommand<Reader> _setClockCommand;
-        public RelayCommand<Reader> SetClockCommand
+        private RelayCommand<Reading> _setClockCommand;
+        public RelayCommand<Reading> SetClockCommand
         {
             get
             {
-                return _setClockCommand ?? (_setClockCommand = new RelayCommand<Reader>((Reader reader) =>
+                return _setClockCommand ?? (_setClockCommand = new RelayCommand<Reading>((reading) =>
                 {
-                    var pingViewModel = new SetClockViewModel(reader);
+                    var pingViewModel = new SetClockViewModel(reading);
                     var window = new Window
                     {
-                        Title = string.Format("Set Clock | Reader {0} - Event Chip Timing", reader.ID),
+                        Title = string.Format("Set Clock | Reader {0} - Event Chip Timing", reading.ID),
                         Width = 350,
                         Height = 350,
                         Content = new SetClockControl(),

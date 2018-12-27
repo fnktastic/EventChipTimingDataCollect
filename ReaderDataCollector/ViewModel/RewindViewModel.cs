@@ -1,13 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using ReaderDataCollector.BoxReading;
 using ReaderDataCollector.Model;
-using ReaderDataCollector.Reading;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -115,9 +113,6 @@ namespace ReaderDataCollector.ViewModel
 
         private void ShowLostOnly()
         {
-            /*if (_readingsFromFile.Count == RecievedReads.Count)
-                return;*/
-
             if (_readingsFromFile.Count > 0)
             {
                 _reads.Clear();
@@ -137,21 +132,15 @@ namespace ReaderDataCollector.ViewModel
 
         private void ClearUIReads()
         {
-            Application.Current.Dispatcher.Invoke((Action)(() =>
-            {
-                _reads.Clear();
-            }));
+            _reads.Clear();
         }
 
         private void AddToReads(IEnumerable<Read> reads)
         {
-            Application.Current.Dispatcher.Invoke((Action)(() =>
-            {
-                foreach (var read in reads)
-                    _reads.Add(read);
+            foreach (var read in reads)
+                _reads.Add(read);
 
-                _reads.OrderByDescending(x => x.Time);
-            }));
+            _reads.OrderByDescending(x => x.Time);
         }
         #endregion
 

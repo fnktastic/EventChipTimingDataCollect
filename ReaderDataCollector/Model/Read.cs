@@ -38,21 +38,21 @@ namespace ReaderDataCollector.Model
         }
 
         private string _antennaNumber;
-        public string AntennaNumber
+        public string AntennaNumber // Reading
         {
             get { return _antennaNumber; }
             set { _antennaNumber = value; RaisePropertyChanged("AntennaNumber"); }
         }
 
         private string _readerNumber;
-        public string ReaderNumber
+        public string ReaderNumber // Reader
         {
             get { return _readerNumber; }
             set { _readerNumber = value; RaisePropertyChanged("ReaderNumber"); }
         }
 
         private string _ipAddress;
-        public string IpAddress
+        public string IpAddress // Reader
         {
             get { return _ipAddress; }
             set { _ipAddress = value; RaisePropertyChanged("IpAddress"); }
@@ -65,12 +65,15 @@ namespace ReaderDataCollector.Model
             set { _uniqueReadingID = value; RaisePropertyChanged("UniqueReadingID"); }
         }
 
-        private string _timingPoint;
+        private string _timingPoint; // Reading
         public string TimingPoint
         {
             get { return _timingPoint; }
             set { _timingPoint = value; RaisePropertyChanged("TimingPoint"); }
         }
+
+        public int ReadingID { get; set; }
+        public virtual Reading Reader { get; set; }
 
         public override string ToString()
         {

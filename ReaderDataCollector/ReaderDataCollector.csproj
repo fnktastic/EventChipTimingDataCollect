@@ -109,9 +109,11 @@
     <Compile Include="DataAccess\Context.cs" />
     <Compile Include="Model\Read.cs" />
     <Compile Include="Model\Reader.cs" />
-    <Compile Include="Reading\TcpDateTime.cs" />
-    <Compile Include="Reading\TcpFileReciever.cs" />
-    <Compile Include="Reading\ReadingsListener.cs" />
+    <Compile Include="Model\Reading.cs" />
+    <Compile Include="BoxReading\Consts.cs" />
+    <Compile Include="BoxReading\TcpDateTime.cs" />
+    <Compile Include="BoxReading\TcpFileReciever.cs" />
+    <Compile Include="BoxReading\ReadingsListener.cs" />
     <Compile Include="Repository\IReadRepository.cs" />
     <Compile Include="Repository\ReadRepository.cs" />
     <Compile Include="ViewModel\PingViewModel.cs" />

@@ -4,21 +4,20 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReaderDataCollector.Reading
+namespace ReaderDataCollector.BoxReading
 {
     public class TcpFileReciever
     {
-        const int PORT = 5000;
         static TcpClient client = new TcpClient();
 
         public static bool GetFile(string fileName, string host)
         {
             try
             {
-                if (host.Equals("localhost"))
-                    host = "127.0.0.1";
+                if (host.Equals(Consts.LOCALHOST))
+                    host = Consts.LOCALHOST_IP;
 
-                client = new TcpClient(host, PORT);
+                client = new TcpClient(host, Consts.FILE_PORT);
                 NetworkStream nwStream = client.GetStream();
                 byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(fileName);
 
