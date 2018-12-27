@@ -46,7 +46,7 @@ namespace ReaderDataCollector.ViewModel
 
                     if (PingHost(reading.Reader.Host) == true)
                         info += string.Format(" OK");
-                    else if (PingHostViaTcp(reading.Reader.Host, int.Parse(reading.Reader.Port)) == true)
+                    else if (PingHostViaTcp(reading.Reader.Host, Consts.PING_PORT) == true)
                         info += string.Format(" OK");
                     else
                         info += string.Format(" Request Timeout.");

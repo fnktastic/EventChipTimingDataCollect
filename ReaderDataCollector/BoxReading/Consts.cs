@@ -8,6 +8,7 @@ namespace ReaderDataCollector.BoxReading
 {
     public static class Consts
     {
+        public const int PING_PORT = 5001;
         public const int TIME_PORT = 5001;
         public const int FILE_PORT = 5000;
         public const string LOCALHOST = "localhost";
