@@ -50,7 +50,14 @@ namespace ReaderDataCollector.BoxReading
 
         public static void Write(string fileName, byte[] bytes)
         {
-            File.WriteAllBytes(fileName, bytes);
+            try
+            {
+                File.WriteAllBytes(fileName, bytes);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("{0}\n{1}", ex.Message, ex.StackTrace);
+            }
         }
     }
 }
