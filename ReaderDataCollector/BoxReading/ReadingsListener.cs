@@ -22,7 +22,7 @@ namespace ReaderDataCollector.BoxReading
         private readonly List<string> _readLines;
         private ObservableCollection<Read> _uiReads;
         private CancellationTokenSource _cancellationToken;
-        private Model.Reading _reader;
+        private Reading _reader;
         private Task backgoundWorker;
 
         public ReadingsListener(string host, int port, ObservableCollection<Read> uiReads, CancellationTokenSource cancellationToken, Reading reader = null)
@@ -116,7 +116,7 @@ namespace ReaderDataCollector.BoxReading
             {
                 Console.WriteLine("Unable to connect to server");
                 ChangeReaderStatus(null);
-                //Thread.Sleep(250);
+                Thread.Sleep(250);
                 DoReadingWork(cancellationToken, tsk);
             }
             catch (OperationCanceledException)
