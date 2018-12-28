@@ -158,13 +158,12 @@ namespace ReaderDataCollector.ViewModel
                         return;
                     }
                     IsDataExist = false;
-                    string fileName = string.Format("{0}.txt", FileName);
-                    Task.Run(() => TcpFileReciever.GetFile(fileName, Host))
+                    Task.Run(() => TcpFileReciever.GetFile(FileName, Host))
                     .ContinueWith((i) =>
                     {
                         if (i.Result == true)
                         {
-                            GetReadingsFromFile(fileName);
+                            GetReadingsFromFile(FileName);
                             if (_readingsFromFile.Count > 0)
                             {
                                 IsDataExist = true;

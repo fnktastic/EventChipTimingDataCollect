@@ -2,10 +2,8 @@
 using GalaSoft.MvvmLight.Ioc;
 using ReaderDataCollector.BoxReading;
 using ReaderDataCollector.Model;
+using ReaderDataCollector.Utils;
 using System;
-using System.Diagnostics;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -44,9 +42,9 @@ namespace ReaderDataCollector.ViewModel
 
                     info = string.Empty;
 
-                    if (PingHost(reading.Reader.Host) == true)
+                    if (PingUtil.PingHost(reading.Reader.Host) == true)
                         info += string.Format(" OK");
-                    else if (PingHostViaTcp(reading.Reader.Host, Consts.PING_PORT) == true)
+                    else if (PingUtil.PingHostViaTcp(reading.Reader.Host, Consts.PING_PORT) == true)
                         info += string.Format(" OK");
                     else
                         info += string.Format(" Request Timeout.");
@@ -66,45 +64,5 @@ namespace ReaderDataCollector.ViewModel
 
         [PreferredConstructor]
         public PingViewModel() { }
-
-        public static bool PingHostViaTcp(string hostUri, int portNumber)
-        {
-            try
-            {
-                using (var client = new TcpClient(hostUri, portNumber))
-                    return true;
-            }
-            catch (SocketException ex)
-            {
-                Debug.WriteLine("Error pinging host:'" + hostUri + ":" + portNumber.ToString() + "'");
-                return false;
-            }
-        }
-
-        public static bool PingHost(string host)
-        {
-            bool pingable = false;
-            Ping pinger = null;
-
-            try
-            {
-                pinger = new Ping();
-                PingReply reply = pinger.Send(host);
-                pingable = reply.Status == IPStatus.Success;
-            }
-            catch (PingException)
-            {
-                // Discard PingExceptions and return false;
-            }
-            finally
-            {
-                if (pinger != null)
-                {
-                    pinger.Dispose();
-                }
-            }
-
-            return pingable;
-        }
     }
 }

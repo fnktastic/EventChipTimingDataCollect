@@ -16,5 +16,6 @@ namespace ReaderDataCollector.BoxReading
         public const string TIME_FORMAT = "HH:mm:ss";
         public const string TIME_MILLISECONDS_FORMAT = "HH:mm:ss:fff";
         public const string UNKNOWN = "<unknown>";
+        public const string STOP = "!STOP!";
     }
 }

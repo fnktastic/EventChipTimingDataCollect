@@ -40,7 +40,7 @@ namespace ReaderDataCollector.Model
             set { _timingPoint = value; RaisePropertyChanged("TimingPoint"); }
         } // Reading
 
-        public string FileName { get; private set; } = string.Empty; // Reading
+        public string FileName { get; set; } = string.Empty; // Reading
 
         private DateTime? _startedDateTime;
         public DateTime? StartedDateTime
@@ -119,8 +119,7 @@ namespace ReaderDataCollector.Model
             {
                 LastRead = lastRead.Time.ToString("HH:mm:ss:fff", CultureInfo.InvariantCulture);
                 LastReadToolTip = lastRead.ToString();
-                if (string.IsNullOrEmpty(FileName)) FileName = lastRead.TimingPoint;
-                if (string.IsNullOrEmpty(TimingPoint)) TimingPoint = lastRead.TimingPoint.Split('_')?[0];
+                if (string.IsNullOrEmpty(TimingPoint)) TimingPoint = lastRead.TimingPoint;
             }
             TotalReadings = _reads.Count();
             ToolTip = this.ToString();

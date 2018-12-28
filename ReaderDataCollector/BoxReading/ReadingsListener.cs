@@ -1,5 +1,6 @@
 ﻿using ReaderDataCollector.Model;
 using ReaderDataCollector.Repository;
+using ReaderDataCollector.Utils;
 using ReaderDataCollector.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -22,17 +23,22 @@ namespace ReaderDataCollector.BoxReading
         private readonly List<string> _readLines;
         private ObservableCollection<Read> _uiReads;
         private CancellationTokenSource _cancellationToken;
-        private Reading _reader;
+        private Reading _reading;
         private Task backgoundWorker;
 
-        public ReadingsListener(string host, int port, ObservableCollection<Read> uiReads, CancellationTokenSource cancellationToken, Reading reader = null)
+        public ReadingsListener(string host, int port, ObservableCollection<Read> uiReads, CancellationTokenSource cancellationToken, Reading reading = null)
         {
             _cancellationToken = cancellationToken;
             _uiReads = uiReads;
             _readLines = new List<string>();
             _host = host;
             _port = port;
-            _reader = reader;
+            _reading = reading;
+        }
+
+        private void SetRecoveryFileName(string recoveryFileName)
+        {
+            _reading.FileName = recoveryFileName;
         }
 
         private void CheckStringForReadings(string stringToCheck, string tsk)
@@ -81,7 +87,16 @@ namespace ReaderDataCollector.BoxReading
 
         public Task StartReading(string tsk)
         {
-            return backgoundWorker = Task.Run(() => DoReadingWork(_cancellationToken.Token, tsk), _cancellationToken.Token);
+            bool isPingable = false;
+            while (!isPingable && !_cancellationToken.IsCancellationRequested)
+            {
+                isPingable = PingUtil.PingHostViaTcp(_reading.Reader.Host, int.Parse(_reading.Reader.Port));
+            }
+
+            if (isPingable)
+                return backgoundWorker = Task.Run(() => DoReadingWork(_cancellationToken.Token, tsk), _cancellationToken.Token);
+
+            return backgoundWorker;
         }
 
         public void StopReading()
@@ -108,6 +123,17 @@ namespace ReaderDataCollector.BoxReading
                         data = new byte[10000];
                         recvieveLength = ns.Read(data, 0, data.Length);
                         stringData = Encoding.ASCII.GetString(data, 0, recvieveLength);
+                        if (stringData.Contains("$_"))
+                        {
+                            SetRecoveryFileName(stringData);
+                            continue;
+                        }
+                        if (stringData == Consts.STOP)
+                        {
+                            ChangeReaderStatus(false);
+                            break;
+                        }
+
                         CheckStringForReadings(stringData, tsk);
                     } while (!cancellationToken.IsCancellationRequested);
                 }
@@ -143,8 +169,8 @@ namespace ReaderDataCollector.BoxReading
         {
             Application.Current.Dispatcher.Invoke((Action)(() =>
             {
-                if (_reader != null)
-                    _reader.IsConnected = status;
+                if (_reading != null)
+                    _reading.IsConnected = status;
             }));
         }
 
@@ -152,8 +178,8 @@ namespace ReaderDataCollector.BoxReading
         {
             Application.Current.Dispatcher.Invoke((Action)(() =>
             {
-                if (_reader != null)
-                    _reader.StartedDateTime = dateTime;
+                if (_reading != null)
+                    _reading.StartedDateTime = dateTime;
             }));
         }
     }

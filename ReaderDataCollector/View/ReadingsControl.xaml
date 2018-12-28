@@ -83,10 +83,10 @@
                         </Grid>
                     </GroupItem>
                 </GroupBox>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal"  Height="25">
                     <Label Content="Recovery File:" />
                     <TextBlock Cursor="Help" 
-                               ToolTip="Recovery File for current Reading Session stores at the BOX and in special Folder on this PC" Height="14" 
+                               ToolTip="Recovery File for current Reading Session stores at the BOX and in special Folder on this PC"
                                Text="{Binding RecoveryFile, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
                 </StackPanel>
             </StackPanel>

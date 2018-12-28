@@ -93,7 +93,7 @@ namespace ReaderDataCollector.ViewModel
             {
                 return _startReaderCommand ?? (_startReaderCommand = new RelayCommand<Reading>((reading) =>
                 {
-                    if (reading.IsConnected != true)
+                    if (reading.IsConnected == false)
                     {
                         reading.CancellationTokenSource = new CancellationTokenSource();
                         reading.IsConnected = null;
@@ -108,7 +108,7 @@ namespace ReaderDataCollector.ViewModel
 
                         reading.Task.Start();
                     }
-                    if (reading.IsConnected == true)
+                    else
                     {
                         reading.CancellationTokenSource.Cancel();
                         reading.IsConnected = false;
