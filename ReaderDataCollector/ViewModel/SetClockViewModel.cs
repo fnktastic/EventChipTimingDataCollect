@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Ioc;
 using ReaderDataCollector.BoxReading;
 using ReaderDataCollector.Model;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,9 +51,10 @@ namespace ReaderDataCollector.ViewModel
                 DateTime result = DateTime.ParseExact(timeString, Consts.TIME_FORMAT, provider);
                 return result;
             }
-            catch (FormatException)
+            catch (FormatException ex)
             {
                 Console.WriteLine("{0} is not in the correct format.", timeString);
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(ParseTime), ex.Message, ex.StackTrace));
                 return DateTime.Now;
             }
         }
@@ -81,9 +83,10 @@ namespace ReaderDataCollector.ViewModel
 
                 _timeWorker.Start();
             }
-            catch (FormatException)
+            catch (FormatException ex)
             {
                 Console.WriteLine("{0} is not in the correct format.", timeString);
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(GetBoxTime), ex.Message, ex.StackTrace));
             }
         }
 

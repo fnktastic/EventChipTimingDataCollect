@@ -5,6 +5,7 @@ using ReaderDataCollector.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -41,60 +42,78 @@ namespace ReaderDataCollector.BoxReading
             _reading.FileName = recoveryFileName;
         }
 
-        private void CheckStringForReadings(string stringToCheck, string tsk)
+        private void CheckStringForReadings(string stringToCheck)
         {
-            var readings = stringToCheck.Split('@');
-            foreach (var reading in readings)
+            try
             {
-                if (reading.Length > 0)
+                var readings = stringToCheck.Split('@');
+                foreach (var reading in readings)
                 {
-                    var read = MappRead(reading);
-                    if (read != null)
+                    if (reading.Length > 0)
                     {
-                        _readLines.Add(reading);
-                        Application.Current.Dispatcher.Invoke((Action)(() =>
+                        var read = MappRead(reading);
+                        if (read != null)
                         {
-                            _uiReads.Add(read);
-                            Console.WriteLine("{0} -> {1}", tsk, reading);
-                        }));
+                            _readLines.Add(reading);
+                            Application.Current.Dispatcher.Invoke((Action)(() =>
+                            {
+                                _uiReads.Add(read);
+                            }));
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(CheckStringForReadings), ex.Message, ex.StackTrace));
             }
         }
 
         public static Read MappRead(string stringToMap)
         {
-            var array = stringToMap.Replace("@", "").Split('#');
-            if (array.Length == 9)
+            try
             {
-                Console.WriteLine(stringToMap);
-                return new Read()
+                var array = stringToMap.Replace("@", "").Split('#');
+                if (array.Length == 9)
                 {
-                    ID = 0,
-                    EPC = array[1],
-                    Time = DateTime.Parse(array[2]),
-                    PeakRssiInDbm = array[3],
-                    AntennaNumber = array[4],
-                    ReaderNumber = array[5],
-                    IpAddress = array[6],
-                    UniqueReadingID = array[7],
-                    TimingPoint = array[8]
-                };
+                    return new Read()
+                    {
+                        ID = 0,
+                        EPC = array[1],
+                        Time = DateTime.Parse(array[2]),
+                        PeakRssiInDbm = array[3],
+                        AntennaNumber = array[4],
+                        ReaderNumber = array[5],
+                        IpAddress = array[6],
+                        UniqueReadingID = array[7],
+                        TimingPoint = array[8]
+                    };
+                }
             }
-
+            catch(Exception ex)
+            {
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(MappRead), ex.Message, ex.StackTrace));
+            }
             return null;
         }
 
-        public Task StartReading(string tsk)
+        public Task StartReading()
         {
-            bool isPingable = false;
-            while (!isPingable && !_cancellationToken.IsCancellationRequested)
+            try
             {
-                isPingable = PingUtil.PingHostViaTcp(_reading.Reader.Host, int.Parse(_reading.Reader.Port));
-            }
+                bool isPingable = false;
+                while (!isPingable && !_cancellationToken.IsCancellationRequested)
+                {
+                    isPingable = PingUtil.PingHostViaTcp(_reading.Reader.Host, int.Parse(_reading.Reader.Port));
+                }
 
-            if (isPingable)
-                return backgoundWorker = Task.Run(() => DoReadingWork(_cancellationToken.Token, tsk), _cancellationToken.Token);
+                if (isPingable)
+                    return backgoundWorker = Task.Run(() => DoReadingWork(_cancellationToken.Token), _cancellationToken.Token);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(StartReading), ex.Message, ex.StackTrace));
+            }
 
             return backgoundWorker;
         }
@@ -105,7 +124,7 @@ namespace ReaderDataCollector.BoxReading
             _cancellationToken.Cancel();
         }
 
-        private void DoReadingWork(CancellationToken cancellationToken, string tsk)
+        private void DoReadingWork(CancellationToken cancellationToken)
         {
             byte[] data = new byte[10000];
             string stringData;
@@ -134,26 +153,27 @@ namespace ReaderDataCollector.BoxReading
                             break;
                         }
 
-                        CheckStringForReadings(stringData, tsk);
+                        CheckStringForReadings(stringData);
                     } while (!cancellationToken.IsCancellationRequested);
                 }
             }
-            catch (SocketException)
+            catch (SocketException ex)
             {
                 Console.WriteLine("Unable to connect to server");
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(DoReadingWork), ex.Message, ex.StackTrace));
                 ChangeReaderStatus(null);
                 Thread.Sleep(250);
-                DoReadingWork(cancellationToken, tsk);
+                DoReadingWork(cancellationToken);
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException ex)
             {
-                Console.WriteLine("Operation canceled");
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(DoReadingWork), ex.Message, ex.StackTrace));
                 ChangeReaderStatus(false);
                 DisposeTcpClient();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(DoReadingWork), ex.Message, ex.StackTrace));
                 ChangeReaderStatus(false);
                 DisposeTcpClient();
             }
@@ -161,8 +181,15 @@ namespace ReaderDataCollector.BoxReading
 
         private void DisposeTcpClient()
         {
-            _tcpClient.Close();
-            _tcpClient.Dispose();
+            try
+            {
+                _tcpClient.Close();
+                _tcpClient.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(DisposeTcpClient), ex.Message, ex.StackTrace));
+            }
         }
 
         private void ChangeReaderStatus(bool? status)

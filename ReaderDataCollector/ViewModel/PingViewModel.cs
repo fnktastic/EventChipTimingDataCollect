@@ -4,6 +4,7 @@ using ReaderDataCollector.BoxReading;
 using ReaderDataCollector.Model;
 using ReaderDataCollector.Utils;
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,38 +29,45 @@ namespace ReaderDataCollector.ViewModel
 
         public PingViewModel(Reading reading)
         {
-            Host = string.Format("Pinging {0}", reading.Reader.Host);
-            Task.Run(() =>
+            try
             {
-                while (true)
+                Host = string.Format("Pinging {0}", reading.Reader.Host);
+                Task.Run(() =>
                 {
-                    string info = string.Empty;
-                    info += string.Format("{0}: Pinging {1}...", DateTime.Now.ToString(Consts.TIME_FORMAT), reading.Reader.Host);
-                    Application.Current.Dispatcher.Invoke((Action)(() =>
+                    while (true)
                     {
-                        PingInfo += info;
-                    }));
+                        string info = string.Empty;
+                        info += string.Format("{0}: Pinging {1}...", DateTime.Now.ToString(Consts.TIME_FORMAT), reading.Reader.Host);
+                        Application.Current.Dispatcher.Invoke((Action)(() =>
+                        {
+                            PingInfo += info;
+                        }));
 
-                    info = string.Empty;
+                        info = string.Empty;
 
-                    if (PingUtil.PingHost(reading.Reader.Host) == true)
-                        info += string.Format(" OK");
-                    else if (PingUtil.PingHostViaTcp(reading.Reader.Host, Consts.PING_PORT) == true)
-                        info += string.Format(" OK");
-                    else
-                        info += string.Format(" Request Timeout.");
+                        if (PingUtil.PingHost(reading.Reader.Host) == true)
+                            info += string.Format(" OK");
+                        else if (PingUtil.PingHostViaTcp(reading.Reader.Host, Consts.PING_PORT) == true)
+                            info += string.Format(" OK");
+                        else
+                            info += string.Format(" Request Timeout.");
 
-                    info += Environment.NewLine;
-                    Thread.Sleep(50);
+                        info += Environment.NewLine;
+                        Thread.Sleep(50);
 
-                    Application.Current.Dispatcher.Invoke((Action)(() =>
-                    {
-                        PingInfo += info;
-                    }));
+                        Application.Current.Dispatcher.Invoke((Action)(() =>
+                        {
+                            PingInfo += info;
+                        }));
 
-                    Thread.Sleep(1500);
-                }
-            });
+                        Thread.Sleep(1500);
+                    }
+                });
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(PingViewModel), ex.Message, ex.StackTrace));
+            }
         }
 
         [PreferredConstructor]

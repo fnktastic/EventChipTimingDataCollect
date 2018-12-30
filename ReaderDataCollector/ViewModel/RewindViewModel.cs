@@ -2,8 +2,10 @@
 using GalaSoft.MvvmLight.Command;
 using ReaderDataCollector.BoxReading;
 using ReaderDataCollector.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -85,49 +87,77 @@ namespace ReaderDataCollector.ViewModel
 
         private void GetReadingsFromFile(string filePath)
         {
-            _readingsFromFile.Clear();
-            StreamReader fs = new StreamReader(filePath);
-            string s = "";
-            while (s != null)
+            try
             {
-                s = fs.ReadLine();
-                if (!string.IsNullOrEmpty(s))
+                _readingsFromFile.Clear();
+                StreamReader fs = new StreamReader(filePath);
+                string s = "";
+                while (s != null)
                 {
-                    var read = ReadingsListener.MappRead(s);
-                    if (read != null)
-                        _readingsFromFile.Add(read);
+                    s = fs.ReadLine();
+                    if (!string.IsNullOrEmpty(s))
+                    {
+                        var read = ReadingsListener.MappRead(s);
+                        if (read != null)
+                            _readingsFromFile.Add(read);
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(GetReadingsFromFile), ex.Message, ex.StackTrace));
             }
         }
         private void ShowAll()
         {
-            Reads = new ObservableCollection<Read>(_readingsFromFile);
-            RetrievedReadsCount = string.Format("All Reads - {0}", _reads.Count());
+            try
+            {
+                Reads = new ObservableCollection<Read>(_readingsFromFile);
+                RetrievedReadsCount = string.Format("All Reads - {0}", _reads.Count());
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(ShowAll), ex.Message, ex.StackTrace));
+            }
         }
 
         private void ShowInDateRange()
         {
+            try
+            { 
             Reads = new ObservableCollection<Read>(_readingsFromFile);
             RetrievedReadsCount = string.Format("In Range Reads - {0}", _reads.Count());
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(ShowInDateRange), ex.Message, ex.StackTrace));
+            }
         }
 
         private void ShowLostOnly()
         {
-            if (_readingsFromFile.Count > 0)
+            try
             {
-                _reads.Clear();
-                var lostReadings = new List<Read>();
-                _readingsFromFile.ForEach((x) =>
+                if (_readingsFromFile.Count > 0)
                 {
-                    if ((RecievedReads.FirstOrDefault(y => y.UniqueReadingID == x.UniqueReadingID)) == null)
-                        lostReadings.Add(x);
-                });
+                    _reads.Clear();
+                    var lostReadings = new List<Read>();
+                    _readingsFromFile.ForEach((x) =>
+                    {
+                        if ((RecievedReads.FirstOrDefault(y => y.UniqueReadingID == x.UniqueReadingID)) == null)
+                            lostReadings.Add(x);
+                    });
 
-                if (lostReadings.Count > 0)
-                    AddToReads(lostReadings);
+                    if (lostReadings.Count > 0)
+                        AddToReads(lostReadings);
+                }
+
+                RetrievedReadsCount = string.Format("Lost Reads - {0}", _reads.Count());
             }
-
-            RetrievedReadsCount = string.Format("Lost Reads - {0}", _reads.Count());
+            catch (Exception ex)
+            {
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(ShowLostOnly), ex.Message, ex.StackTrace));
+            }
         }
 
         private void ClearUIReads()
@@ -137,11 +167,18 @@ namespace ReaderDataCollector.ViewModel
 
         private void AddToReads(IEnumerable<Read> reads)
         {
-            foreach (var read in reads)
-                _reads.Add(read);
+            try
+            {
+                foreach (var read in reads)
+                    _reads.Add(read);
 
-            _reads.OrderByDescending(x => x.Time);
-        }
+                _reads.OrderByDescending(x => x.Time);
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(AddToReads), ex.Message, ex.StackTrace));
+            }
+}
         #endregion
 
         #region commands
@@ -152,29 +189,36 @@ namespace ReaderDataCollector.ViewModel
             {
                 return _downloadRecovery ?? (_downloadRecovery = new RelayCommand(() =>
                 {
-                    if (string.IsNullOrEmpty(FileName) || string.IsNullOrEmpty(Host))
+                    try
                     {
-                        MessageBox.Show("The Reader is not running. \nRun the Reader first to get some Reads.", "Warning");
-                        return;
-                    }
-                    IsDataExist = false;
-                    Task.Run(() => TcpFileReciever.GetFile(FileName, Host))
-                    .ContinueWith((i) =>
-                    {
-                        if (i.Result == true)
+                        if (string.IsNullOrEmpty(FileName) || string.IsNullOrEmpty(Host))
                         {
-                            GetReadingsFromFile(FileName);
-                            if (_readingsFromFile.Count > 0)
-                            {
-                                IsDataExist = true;
-                                ShowMode = 3;
-                                MessageBox.Show(string.Format("Recieved Reads - {0}", _readingsFromFile.Count), "Complete!");
-                                Show();
-                            }
+                            MessageBox.Show("The Reader is not running. \nRun the Reader first to get some Reads.", "Warning");
+                            return;
                         }
-                        if (i.Result == false)
-                            MessageBox.Show(string.Format("Something went wrong. Please try again this operation."), "Error!");
-                    });
+                        IsDataExist = false;
+                        Task.Run(() => TcpFileReciever.GetFile(FileName, Host))
+                        .ContinueWith((i) =>
+                        {
+                            if (i.Result == true)
+                            {
+                                GetReadingsFromFile(FileName);
+                                if (_readingsFromFile.Count > 0)
+                                {
+                                    IsDataExist = true;
+                                    ShowMode = 3;
+                                    MessageBox.Show(string.Format("Recieved Reads - {0}", _readingsFromFile.Count), "Complete!");
+                                    Show();
+                                }
+                            }
+                            if (i.Result == false)
+                                MessageBox.Show(string.Format("Something went wrong. Please try again this operation."), "Error!");
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(this.DownloadRecovery), ex.Message, ex.StackTrace));
+                    }
                 }));
             }
         }

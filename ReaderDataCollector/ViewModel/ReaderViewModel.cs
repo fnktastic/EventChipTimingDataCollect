@@ -100,7 +100,7 @@ namespace ReaderDataCollector.ViewModel
                         reading.Task = new Task(() =>
                         {
                             var _readsListener = new ReadingsListener(reading.Reader.Host, int.Parse(reading.Reader.Port), reading.Reads, reading.CancellationTokenSource, reading);
-                            _readsListener.StartReading(string.Format("Reader {0} has been read.", reading.ID));
+                            _readsListener.StartReading();
                         });
 
                         if (reading.StartedDateTime == null)

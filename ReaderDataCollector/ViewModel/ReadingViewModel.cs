@@ -71,7 +71,7 @@ namespace ReaderDataCollector.ViewModel
             set { _started = value; RaisePropertyChanged("Started"); }
         }
 
-        private DateTime duration;
+        private string duration;
         private string _duration;
         public string Duration
         {
@@ -121,59 +121,66 @@ namespace ReaderDataCollector.ViewModel
         #region methods
         private void Init(Reading reading)
         {
-            Reads = reading.Reads;
-            LastRead = Reads.LastOrDefault();
-
-            Started = Consts.UNKNOWN;
-            Duration = Consts.UNKNOWN;
-            if (reading.StartedDateTime != null)
+            try
             {
-                startedDateTime = (DateTime)reading.StartedDateTime;
-                Started = startedDateTime.ToString("dd.MM.yy HH:mm:ss:fff", CultureInfo.InvariantCulture);
-            }
+                Reads = reading.Reads;
+                LastRead = Reads.LastOrDefault();
 
-            if (reading.Reads.Count == 0)
-                TimingPoint = Consts.UNKNOWN;
-
-            if (reading.Reads.Count > 0)
-                TimingPoint = reading.TimingPoint;
-
-            TotalReadings = reading.TotalReadings.ToString();
-            IP = reading.Reader.Host;
-
-            if (reading.IsConnected == true)
-            {
-                Status = "Connected";
-            }
-            else if (reading.IsConnected == false)
-                Status = "Disconnected";
-            else
-                Status = "Waiting for the BOX...";
-
-            Task.Run(() =>
-            {
-                while (true)
+                Started = Consts.UNKNOWN;
+                Duration = Consts.UNKNOWN;
+                if (reading.StartedDateTime != null)
                 {
-                    if (Started != Consts.UNKNOWN)
-                    {
-                        var tempDuration = DateTime.UtcNow.AddTicks(-startedDateTime.Ticks);
-                        Application.Current.Dispatcher.Invoke((Action)(() =>
-                        {
-                            if (reading.IsConnected == true)
-                                Duration = tempDuration.ToString("HH:mm:ss:fff", CultureInfo.InvariantCulture);
-                        }));
-                    }
-
-                    Thread.Sleep(100);
+                    startedDateTime = (DateTime)reading.StartedDateTime;
+                    Started = startedDateTime.ToString("dd.MM.yy HH:mm:ss:fff", CultureInfo.InvariantCulture);
                 }
-            });
 
-            if (string.IsNullOrEmpty(reading.FileName))
-                RecoveryFile = Consts.UNKNOWN;
-            else
-                RecoveryFile = reading.FileName;
+                if (reading.Reads.Count == 0)
+                    TimingPoint = Consts.UNKNOWN;
 
-            UniqueReads = GetUniqueReads();
+                if (reading.Reads.Count > 0)
+                    TimingPoint = reading.TimingPoint;
+
+                TotalReadings = reading.TotalReadings.ToString();
+                IP = reading.Reader.Host;
+
+                if (reading.IsConnected == true)
+                {
+                    Status = "Connected";
+                }
+                else if (reading.IsConnected == false)
+                    Status = "Disconnected";
+                else
+                    Status = "Waiting for the BOX...";
+
+                Task.Run(() =>
+                {
+                    while (true)
+                    {
+                        if (Started != Consts.UNKNOWN)
+                        {
+                            var tempDuration = DateTime.UtcNow.AddTicks(-startedDateTime.Ticks);
+                            Application.Current.Dispatcher.Invoke((Action)(() =>
+                            {
+                                if (reading.IsConnected == true)
+                                    Duration = tempDuration.ToString("HH:mm:ss:fff", CultureInfo.InvariantCulture);
+                            }));
+                        }
+
+                        Thread.Sleep(100);
+                    }
+                });
+
+                if (string.IsNullOrEmpty(reading.FileName))
+                    RecoveryFile = Consts.UNKNOWN;
+                else
+                    RecoveryFile = reading.FileName;
+
+                UniqueReads = GetUniqueReads();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(this.Init), ex.Message, ex.StackTrace));
+            }
         }
 
         public void ContentCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -181,21 +188,30 @@ namespace ReaderDataCollector.ViewModel
             try
             {
                 TotalReadings = Reads.Count().ToString();
-                duration = DateTime.UtcNow.AddTicks(-startedDateTime.Ticks);
-                Duration = duration.ToString(Consts.TIME_MILLISECONDS_FORMAT, CultureInfo.InvariantCulture);
+                duration = DateTime.UtcNow.AddTicks(-startedDateTime.Ticks).ToString(Consts.TIME_MILLISECONDS_FORMAT, CultureInfo.InvariantCulture);
+                Duration = duration;
                 UniqueReads = GetUniqueReads();
                 LastRead = e.NewItems.Cast<Read>().FirstOrDefault();//SyncRoot;  
                 dataGrid.ScrollIntoView(LastRead);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(string.Format("{0}\n{1}", ex.Message, ex.StackTrace));
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(ContentCollectionChanged), ex.Message, ex.StackTrace));
             }
         }
 
         private int GetUniqueReads()
         {
-            return _reads.Select(x => x.EPC).Distinct().Count();
+            try
+            {
+                return _reads.Select(x => x.EPC).Distinct().Count();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(GetUniqueReads), ex.Message, ex.StackTrace));
+            }
+
+            return 0;
         }
         #endregion
 
