@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ReaderDataCollector.View.ReadingsControl"
+﻿   <UserControl x:Class="ReaderDataCollector.View.ReadingsControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -85,9 +85,16 @@
                 </GroupBox>
                 <StackPanel Orientation="Horizontal"  Height="25">
                     <Label Content="Recovery File:" />
-                    <TextBlock Cursor="Help" 
+                    <Button Command="{Binding OpenRecoveryFile}" Background="Transparent" BorderThickness="0">
+                        <TextBlock Cursor="Hand" 
                                ToolTip="Recovery File for current Reading Session stores at the BOX and in special Folder on this PC"
                                Text="{Binding RecoveryFile, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
+                        <Button.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Open Folder" Command="{Binding OpenFolderCommand}" />
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                    </Button>
                 </StackPanel>
             </StackPanel>
         </GroupBox>

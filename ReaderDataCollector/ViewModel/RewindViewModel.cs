@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using ReaderDataCollector.BoxReading;
 using ReaderDataCollector.Model;
+using ReaderDataCollector.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -103,7 +104,7 @@ namespace ReaderDataCollector.ViewModel
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(GetReadingsFromFile), ex.Message, ex.StackTrace));
             }
@@ -115,7 +116,7 @@ namespace ReaderDataCollector.ViewModel
                 Reads = new ObservableCollection<Read>(_readingsFromFile);
                 RetrievedReadsCount = string.Format("All Reads - {0}", _reads.Count());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(ShowAll), ex.Message, ex.StackTrace));
             }
@@ -124,9 +125,9 @@ namespace ReaderDataCollector.ViewModel
         private void ShowInDateRange()
         {
             try
-            { 
-            Reads = new ObservableCollection<Read>(_readingsFromFile);
-            RetrievedReadsCount = string.Format("In Range Reads - {0}", _reads.Count());
+            {
+                Reads = new ObservableCollection<Read>(_readingsFromFile);
+                RetrievedReadsCount = string.Format("In Range Reads - {0}", _reads.Count());
             }
             catch (Exception ex)
             {
@@ -174,11 +175,11 @@ namespace ReaderDataCollector.ViewModel
 
                 _reads.OrderByDescending(x => x.Time);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(string.Format("{0}:  {1}\n{2}", nameof(AddToReads), ex.Message, ex.StackTrace));
             }
-}
+        }
         #endregion
 
         #region commands
@@ -202,7 +203,7 @@ namespace ReaderDataCollector.ViewModel
                         {
                             if (i.Result == true)
                             {
-                                GetReadingsFromFile(FileName);
+                                GetReadingsFromFile(PathUtil.GetReaderRecoveryFilePath(Host, FileName));
                                 if (_readingsFromFile.Count > 0)
                                 {
                                     IsDataExist = true;

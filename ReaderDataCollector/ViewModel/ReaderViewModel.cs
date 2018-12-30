@@ -31,7 +31,7 @@ namespace ReaderDataCollector.ViewModel
         {
             Readings = new ObservableCollection<Reading>()
             {
-                new Reading() { ID = 1, Reader = new Reader() { Host="localhost", Port = "10000" }, IsConnected = false },
+                new Reading() { ID = 1, Reader = new Reader() { Host="127.0.0.1", Port = "10000" }, IsConnected = false },
                 new Reading() { ID = 2, Reader = new Reader() { Host="192.168.1.102", Port = "10000" }, IsConnected = false }
             };
         }

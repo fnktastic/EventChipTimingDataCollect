@@ -116,6 +116,7 @@
     <Compile Include="BoxReading\ReadingsListener.cs" />
     <Compile Include="Repository\IReadRepository.cs" />
     <Compile Include="Repository\ReadRepository.cs" />
+    <Compile Include="Utils\PathUtil.cs" />
     <Compile Include="Utils\PingUtil.cs" />
     <Compile Include="ViewModel\PingViewModel.cs" />
     <Compile Include="ViewModel\ReaderViewModel.cs" />

@@ -5,12 +5,14 @@ using ReaderDataCollector.BoxReading;
 using ReaderDataCollector.DataAccess;
 using ReaderDataCollector.Model;
 using ReaderDataCollector.Repository;
+using ReaderDataCollector.Utils;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -188,7 +190,8 @@ namespace ReaderDataCollector.ViewModel
             try
             {
                 TotalReadings = Reads.Count().ToString();
-                duration = DateTime.UtcNow.AddTicks(-startedDateTime.Ticks).ToString(Consts.TIME_MILLISECONDS_FORMAT, CultureInfo.InvariantCulture);
+
+                duration = (DateTime.UtcNow - startedDateTime).ToString();
                 Duration = duration;
                 UniqueReads = GetUniqueReads();
                 LastRead = e.NewItems.Cast<Read>().FirstOrDefault();//SyncRoot;  
@@ -216,6 +219,35 @@ namespace ReaderDataCollector.ViewModel
         #endregion
 
         #region commands
+
+        private RelayCommand _openRecoveryFile;
+        public RelayCommand OpenRecoveryFile
+        {
+            get
+            {
+                return _openRecoveryFile ?? (_openRecoveryFile = new RelayCommand(() =>
+                {
+                    if(!string.IsNullOrEmpty(_recoveryFile))
+                    if (TcpFileReciever.GetFile(_recoveryFile, IP))
+                        Process.Start(PathUtil.GetReaderRecoveryFilePath(IP, _recoveryFile));
+                }));
+            }
+        }
+
+        private RelayCommand _openFolderCommand;
+        public RelayCommand OpenFolderCommand
+        {
+            get
+            {
+                return _openFolderCommand ?? (_openFolderCommand = new RelayCommand(() =>
+                {
+                    if (!string.IsNullOrEmpty(_recoveryFile))
+                        Process.Start(PathUtil.GetReaderRecoveryFolder(IP));
+                }));
+            }
+        }
+        
+
         private RelayCommand<DataGrid> _dataGridLoadedCommand;
         public RelayCommand<DataGrid> DataGridLoadedCommand
         {

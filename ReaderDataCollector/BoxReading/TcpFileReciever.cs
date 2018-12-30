@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReaderDataCollector.Utils;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Sockets;
@@ -31,7 +32,7 @@ namespace ReaderDataCollector.BoxReading
                     return false;
 
                 nwStream.Read(bytesOfFile, 0, sizeOfFile);
-                Write(fileName, bytesOfFile);
+                Write(fileName, bytesOfFile, host);
                 client.Close();
 
                 return true;
@@ -43,11 +44,11 @@ namespace ReaderDataCollector.BoxReading
             }
         }
 
-        public static void Write(string fileName, byte[] bytes)
+        private static void Write(string fileName, byte[] bytes, string host)
         {
             try
             {
-                File.WriteAllBytes(fileName, bytes);
+                File.WriteAllBytes(PathUtil.GetReaderRecoveryFilePath(host, fileName), bytes);
             }
             catch(Exception ex)
             {
