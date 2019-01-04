@@ -1,7 +1,9 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ReaderDataCollector.BoxReading;
+using ReaderDataCollector.DataAccess;
 using ReaderDataCollector.Model;
+using ReaderDataCollector.Repository;
 using ReaderDataCollector.View;
 using System;
 using System.Collections.ObjectModel;
@@ -15,6 +17,10 @@ namespace ReaderDataCollector.ViewModel
     public class ReaderViewModel : ViewModelBase
     {
         #region fields
+        private readonly Context _context;
+        private readonly IReadRepository _readRepository;
+        private readonly IReaderRepository _readerRepository;
+        private readonly IReadingRepository _readingRepository;
         #endregion
 
         #region properties
@@ -29,10 +35,16 @@ namespace ReaderDataCollector.ViewModel
         #region constructor
         public ReaderViewModel()
         {
+            _context = new Context();
+            _readerRepository = new ReaderRepository(_context);
+            _readingRepository = new ReadingRepository(_context);
+            _readRepository = new ReadRepository(_context);
+
+            // mock data
             Readings = new ObservableCollection<Reading>()
             {
-                new Reading() { ID = 1, Reader = new Reader() { Host="127.0.0.1", Port = "10000" }, IsConnected = false },
-                new Reading() { ID = 2, Reader = new Reader() { Host="192.168.1.102", Port = "10000" }, IsConnected = false }
+                new Reading() { Number = 1, Reader = new Reader() { Host="127.0.0.1", Port = "10000" }, IsConnected = false },
+                new Reading() { Number = 2, Reader = new Reader() { Host="192.168.1.102", Port = "10000" }, IsConnected = false }
             };
         }
         #endregion
@@ -48,7 +60,7 @@ namespace ReaderDataCollector.ViewModel
                     var readingViewModel = new ReadingViewModel(reading);
                     var window = new Window
                     {
-                        Title = string.Format("Reads | Reader {0} - Event Chip Timing", reading.ID),
+                        Title = string.Format("Reads | Reader {0} - Event Chip Timing", reading.Number),
                         Content = new ReadingsControl(),
                         DataContext = readingViewModel
                     };
@@ -74,7 +86,7 @@ namespace ReaderDataCollector.ViewModel
 
                     var window = new Window
                     {
-                        Title = string.Format("Rewind | Reader {0} - Event Chip Timing", reading.ID),
+                        Title = string.Format("Rewind | Reader {0} - Event Chip Timing", reading.Number),
                         Height = 550,
                         Width = 820,
                         Content = new RewindControl(),
@@ -124,8 +136,8 @@ namespace ReaderDataCollector.ViewModel
             {
                 return _addNewReaderCommand ?? (_addNewReaderCommand = new RelayCommand(() =>
                 {
-                    int maxIndex = _readings.Max(x => x.ID);
-                    _readings.Add(new Reading() { IsConnected = false, ID = maxIndex + 1, Reader = new Reader(), StartedDateTime = null });
+                    int maxIndex = _readings.Max(x => x.Number);
+                    _readings.Add(new Reading() { IsConnected = false, Number = maxIndex + 1, Reader = new Reader(), StartedDateTime = null });
                 }));
             }
         }
@@ -140,7 +152,7 @@ namespace ReaderDataCollector.ViewModel
                     var pingViewModel = new PingViewModel(reading);
                     var window = new Window
                     {
-                        Title = string.Format("Ping | Reader {0} - Event Chip Timing", reading.ID),
+                        Title = string.Format("Ping | Reader {0} - Event Chip Timing", reading.Number),
                         Content = new PingControl(),
                         Height = 360,
                         Width = 340,
@@ -163,7 +175,7 @@ namespace ReaderDataCollector.ViewModel
                     var pingViewModel = new SetClockViewModel(reading);
                     var window = new Window
                     {
-                        Title = string.Format("Set Clock | Reader {0} - Event Chip Timing", reading.ID),
+                        Title = string.Format("Set Clock | Reader {0} - Event Chip Timing", reading.Number),
                         Width = 350,
                         Height = 350,
                         Content = new SetClockControl(),
@@ -175,6 +187,20 @@ namespace ReaderDataCollector.ViewModel
                 }));
             }
         }
+
+        private RelayCommand<Reading> _finishAndSaveCommand;
+        public RelayCommand<Reading> FinishAndSaveCommand
+        {
+            get
+            {
+                return _finishAndSaveCommand ?? (_finishAndSaveCommand = new RelayCommand<Reading>((reading) =>
+                {
+                    // TODO HERE
+                    reading.EndedDateTime = DateTime.UtcNow;
+                    _readingRepository.SaveReading(reading);
+                }));
+            }
+        }        
         #endregion
     }
 }

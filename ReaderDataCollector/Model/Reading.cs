@@ -49,6 +49,13 @@ namespace ReaderDataCollector.Model
             set { _startedDateTime = value; RaisePropertyChanged("StartedDateTime"); }
         } // Reading
 
+        public DateTime? _endedDateTime;
+        public DateTime? EndedDateTime
+        {
+            get { return _endedDateTime; }
+            set { _endedDateTime = value; RaisePropertyChanged("EndedDateTime"); }
+        }
+
         public int ReaderID { get; set; }
         public virtual Reader Reader { get; set; }
 
@@ -89,6 +96,14 @@ namespace ReaderDataCollector.Model
         {
             get { return _isConnected; }
             set { _isConnected = value; RaisePropertyChanged("IsConnected"); }
+        }
+
+        private int _number;
+        [NotMapped]
+        public int Number
+        {
+            get { return _number; }
+            set { _number = value; RaisePropertyChanged("Number"); }
         }
 
         [NotMapped]

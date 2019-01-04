@@ -8,7 +8,6 @@ namespace ReaderDataCollector.BoxReading
     public class TcpDateTime
     {
         static TcpClient client = new TcpClient();
-        public static string BoxTime { get; private set; }
 
         public static string GetBoxTime(string host, string action)
         {
@@ -19,7 +18,7 @@ namespace ReaderDataCollector.BoxReading
 
                 client = new TcpClient(host, Consts.TIME_PORT);
                 NetworkStream nwStream = client.GetStream();
-                byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(action);
+                byte[] bytesToSend = Encoding.ASCII.GetBytes(action);
                 nwStream.Write(bytesToSend, 0, bytesToSend.Length);
                 byte[] bytesToRead = new byte[client.ReceiveBufferSize];
                 int bytesReadLength = nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize);
@@ -43,7 +42,7 @@ namespace ReaderDataCollector.BoxReading
 
                 client = new TcpClient(host, Consts.TIME_PORT);
                 NetworkStream nwStream = client.GetStream();
-                byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(action);
+                byte[] bytesToSend = Encoding.ASCII.GetBytes(action);
                 nwStream.Write(bytesToSend, 0, bytesToSend.Length);
                 byte[] bytesToRead = new byte[client.ReceiveBufferSize];
                 int bytesReadLength = nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize);

@@ -114,7 +114,11 @@
     <Compile Include="BoxReading\TcpDateTime.cs" />
     <Compile Include="BoxReading\TcpFileReciever.cs" />
     <Compile Include="BoxReading\ReadingsListener.cs" />
+    <Compile Include="Repository\IReaderRepository.cs" />
+    <Compile Include="Repository\IReadingRepository.cs" />
     <Compile Include="Repository\IReadRepository.cs" />
+    <Compile Include="Repository\ReaderRepository.cs" />
+    <Compile Include="Repository\ReadingRepository.cs" />
     <Compile Include="Repository\ReadRepository.cs" />
     <Compile Include="Utils\PathUtil.cs" />
     <Compile Include="Utils\PingUtil.cs" />
