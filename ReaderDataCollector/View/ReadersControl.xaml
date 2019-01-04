@@ -136,7 +136,6 @@
                                                   CommandParameter="{Binding}"
                                                   Command="{Binding PlacementTarget.Tag.StartReaderCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                                         <MenuItem Header="Finish and Save"
-                                                  IsEnabled="{Binding IsConnected}"
                                                   CommandParameter="{Binding}"
                                                   Command="{Binding PlacementTarget.Tag.FinishAndSaveCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                                         <Separator />
