@@ -25,18 +25,24 @@ namespace ReaderDataCollector.Repository
 
         public async void SaveReading(Reading reading)
         {
-            var reader = _readerRepository
-                .Readers
-                .FirstOrDefault(r => r.Host == reading.Reader.Host && r.Port == reading.Reader.Port);
-
-            if (reader != null)
+            if (reading != null)
             {
-                reading.Reader = null;
-                reading.ReaderID = reader.ID;
-            }
+                if (reading.ID == 0)
+                {
+                    var reader = _readerRepository
+                        .Readers
+                        .FirstOrDefault(r => r.Host == reading.Reader.Host && r.Port == reading.Reader.Port);
 
-            _context.Readings.Add(reading);
-            await _context.SaveChangesAsync();
+                    if (reader != null)
+                    {
+                        reading.Reader = null;
+                        reading.ReaderID = reader.ID;
+                    }
+
+                    _context.Readings.Add(reading);
+                    await _context.SaveChangesAsync();
+                }
+            }
         }
     }
 }

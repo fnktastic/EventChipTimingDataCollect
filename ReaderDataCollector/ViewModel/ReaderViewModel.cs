@@ -43,9 +43,33 @@ namespace ReaderDataCollector.ViewModel
             // mock data
             Readings = new ObservableCollection<Reading>()
             {
-                new Reading() { Number = 1, Reader = new Reader() { Host="127.0.0.1", Port = "10000" }, IsConnected = false },
-                new Reading() { Number = 2, Reader = new Reader() { Host="192.168.1.102", Port = "10000" }, IsConnected = false }
+                new Reading() { Number = 1, Reader = new Reader() { Host="127.0.0.1", Port = "10000" }, IsConnected = false, IsFinished = false, },
+                new Reading() { Number = 2, Reader = new Reader() { Host="192.168.1.102", Port = "10000" }, IsConnected = false, IsFinished = false }
             };
+        }
+        #endregion
+
+        #region methods
+        private void StopReading(Reading reading)
+        {
+            reading.CancellationTokenSource.Cancel();
+            reading.IsConnected = false;
+        }
+
+        private void StartReading(Reading reading)
+        {
+            reading.CancellationTokenSource = new CancellationTokenSource();
+            reading.IsConnected = null;
+            reading.Task = new Task(() =>
+            {
+                var _readsListener = new ReadingsListener(reading.Reader.Host, int.Parse(reading.Reader.Port), reading.Reads, reading.CancellationTokenSource, reading);
+                _readsListener.StartReading();
+            });
+
+            if (reading.StartedDateTime == null)
+                reading.StartedDateTime = DateTime.UtcNow;
+
+            reading.Task.Start();
         }
         #endregion
 
@@ -107,23 +131,11 @@ namespace ReaderDataCollector.ViewModel
                 {
                     if (reading.IsConnected == false)
                     {
-                        reading.CancellationTokenSource = new CancellationTokenSource();
-                        reading.IsConnected = null;
-                        reading.Task = new Task(() =>
-                        {
-                            var _readsListener = new ReadingsListener(reading.Reader.Host, int.Parse(reading.Reader.Port), reading.Reads, reading.CancellationTokenSource, reading);
-                            _readsListener.StartReading();
-                        });
-
-                        if (reading.StartedDateTime == null)
-                            reading.StartedDateTime = DateTime.UtcNow;
-
-                        reading.Task.Start();
+                        StartReading(reading);
                     }
                     else
                     {
-                        reading.CancellationTokenSource.Cancel();
-                        reading.IsConnected = false;
+                        StopReading(reading);
                     }
                 }));
             }
@@ -137,7 +149,7 @@ namespace ReaderDataCollector.ViewModel
                 return _addNewReaderCommand ?? (_addNewReaderCommand = new RelayCommand(() =>
                 {
                     int maxIndex = _readings.Max(x => x.Number);
-                    _readings.Add(new Reading() { IsConnected = false, Number = maxIndex + 1, Reader = new Reader(), StartedDateTime = null });
+                    _readings.Add(new Reading() { IsConnected = false, IsFinished = false, Number = maxIndex + 1, Reader = new Reader(), StartedDateTime = null });
                 }));
             }
         }
@@ -197,6 +209,8 @@ namespace ReaderDataCollector.ViewModel
                 {
                     // TODO HERE
                     reading.EndedDateTime = DateTime.UtcNow;
+                    reading.IsFinished = true;
+                    StopReading(reading);
                     _readingRepository.SaveReading(reading);
                 }));
             }

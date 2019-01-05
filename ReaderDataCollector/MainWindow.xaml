@@ -8,10 +8,62 @@
         xmlns:views="clr-namespace:ReaderDataCollector.View"
         mc:Ignorable="d"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
-        Height="600" Width="525"
-        ResizeMode="NoResize"
+        Height="600" Width="{Binding WindowWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        ResizeMode="CanResize"
         Title="Read Collector - Event Chip Timing">
     <Grid Margin="5">
-        <views:ReadersControl />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="195" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Grid.Column="0" BorderBrush="LightGray" BorderThickness="0 1 1 1">
+            <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Command="{Binding OpenReadingsCollectorCommand}" Content="Readings Collector" Width="120" Height="35" />
+                <Separator Height="25" Width="0" />
+                <Button Command="{Binding OpenStoredReadingsCommand}" Content="Stored Readings" Width="120" Height="35" />
+                <Separator Height="25" Width="0" />
+                <Button Command="{Binding OpenStoredReadingsCommand}" Content="Reporting" Width="120" Height="35" />
+                <Separator Height="25" Width="0" />
+                <Button Command="{Binding OpenStoredReadingsCommand}" Content="Statistics" Width="120" Height="35" />
+            </StackPanel>
+        </Border>
+        <GridSplitter Grid.Row="0" Grid.Column="1" Width="5"
+                      BorderBrush="Gray" Background="LightGray"
+                      VerticalAlignment="Stretch" HorizontalAlignment="Center">
+        </GridSplitter>
+        <Border Grid.Row="0" Grid.Column="2" Margin="15 0 0 0">
+            <ContentControl>
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type views:ReadersControl}" x:Key="DefaultTemplate">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="Nothing Selected" FontSize="48" FontWeight="Light" />
+                        </StackPanel>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type views:ReadersControl}" x:Key="TemplateA">
+                        <views:ReadersControl />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type views:StoredReadings}" x:Key="TemplateB">
+                        <views:StoredReadings />
+                    </DataTemplate>
+                </ContentControl.Resources>
+                <ContentControl.Style>
+                    <Style TargetType="{x:Type ContentControl}">
+                        <Setter Property="ContentTemplate" Value="{StaticResource DefaultTemplate}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedView}" Value="A">
+                                <Setter Property="ContentTemplate" Value="{StaticResource TemplateA}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SelectedView}" Value="B">
+                                <Setter Property="ContentTemplate" Value="{StaticResource TemplateB}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+        </Border>
     </Grid>
 </Window>

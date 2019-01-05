@@ -98,6 +98,14 @@ namespace ReaderDataCollector.Model
             set { _isConnected = value; RaisePropertyChanged("IsConnected"); }
         }
 
+        private bool? _isFinished;
+        [NotMapped]
+        public bool? IsFinished
+        {
+            get { return _isFinished; }
+            set { _isFinished = value; RaisePropertyChanged("IsFinished"); }
+        }
+
         private int _number;
         [NotMapped]
         public int Number
