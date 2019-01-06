@@ -22,7 +22,7 @@ namespace ReaderDataCollector.ViewModel
         #region constructor
         public MainViewModel()
         {
-            WindowWidth = 750;
+            WindowWidth = 675;
         }
         #endregion
 
@@ -35,7 +35,7 @@ namespace ReaderDataCollector.ViewModel
                 return _openReadingsCollectorCommand ?? (_openReadingsCollectorCommand = new RelayCommand(() =>
                 {
                     SelectedView = "A";
-                    WindowWidth = 750;
+                    WindowWidth = 675;
                 }));
             }
         }

@@ -215,6 +215,12 @@
   <ItemGroup>
     <Resource Include="ico.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\white-logo.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

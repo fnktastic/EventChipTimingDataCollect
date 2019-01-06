@@ -9,31 +9,126 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="275" />
+            <ColumnDefinition Width="20" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="150" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="10" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Column="0" Grid.Row="0">
-            <ComboBox          
-                ItemsSource="{Binding Readers}" 
-                SelectedItem="{Binding SelectedReader}"
-                SelectedValue="ID" 
-                DisplayMemberPath="Host" />
-            <Rectangle Height="25" Width="0" />
-            <ListView ItemsSource="{Binding Readings}"
-                      SelectedItem="{Binding SelectedReading}">
-            </ListView>
-        </StackPanel>
-        <DataGrid ItemsSource="{Binding Reads}"
-                  AutoGenerateColumns="True" Grid.Column="1" Grid.Row="0">
+        <ComboBox   
+            Grid.Column="0"
+            Grid.Row="0"
+            ItemsSource="{Binding Readers}" 
+            SelectedIndex="0"
+            SelectedItem="{Binding SelectedReader}"
+            SelectedValue="ID" 
+            DisplayMemberPath="Host" />
+        <ListView
+            Grid.Column="0"
+            Grid.Row="2"
+            ItemsSource="{Binding Readings}"
+            SelectedItem="{Binding SelectedReading}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected"
+                         Value="True">
+                            <Setter Property="Background"
+                            Value="{x:Null}" />
+                            <Setter Property="BorderBrush"
+                            Value="{x:Null}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                 Color="Transparent"/>
+            </ListView.Resources>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="1" BorderBrush="Gray">
+                    <Grid Margin="5">
+                        <Image  Height="90"
+                                Opacity="0.75"
+                                VerticalAlignment="Stretch" 
+                                HorizontalAlignment="Stretch" 
+                                Grid.Column="0" 
+                                Grid.Row="0" 
+                                Grid.RowSpan="3" 
+                                Source="/ReaderDataCollector;component/Image/white-logo.jpg" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="15" />
+                                <RowDefinition Height="24" />
+                                <RowDefinition Height="18" />
+                                <RowDefinition Height="18" />
+                                <RowDefinition Height="15" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding ID}" HorizontalAlignment="Left" FontSize="12" FontWeight="ExtraBlack" />
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding TotalReadings}" HorizontalAlignment="Center" FontSize="18" FontWeight="Black" />
+                            <TextBlock Grid.Column="0" Grid.Row="3" Text="{Binding EndedDateTime}" HorizontalAlignment="Center" FontWeight="UltraLight" FontSize="12" />
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding StartedDateTime}" HorizontalAlignment="Center" FontWeight="UltraLight" FontSize="12" />
+                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding TimingPoint}" HorizontalAlignment="Right" FontWeight="SemiBold" FontSize="12" />
+                        </Grid>
+                    </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <DataGrid Grid.Column="2" Grid.Row="2"
+                  ItemsSource="{Binding Reads}"
+                  AutoGenerateColumns="False">
             <DataGrid.Columns>
+                <DataGridTemplateColumn Header="ID" Width="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ID}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="EPC" Width="75">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding EPC}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Time" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Time}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Reader №" Width="70">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ReaderNumber}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Antenna №" Width="75">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding AntennaNumber}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Peak Rss In DBm" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding PeakRssiInDbm}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Grid Grid.Column="2" Grid.Row="0">
-
-        </Grid>
     </Grid>
 </UserControl>

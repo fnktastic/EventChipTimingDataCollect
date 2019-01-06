@@ -13,22 +13,19 @@
         Title="Read Collector - Event Chip Timing">
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="195" />
+            <ColumnDefinition Width="125"  />
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Grid.Column="0" BorderBrush="LightGray" BorderThickness="0 1 1 1">
-            <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Command="{Binding OpenReadingsCollectorCommand}" Content="Readings Collector" Width="120" Height="35" />
-                <Separator Height="25" Width="0" />
-                <Button Command="{Binding OpenStoredReadingsCommand}" Content="Stored Readings" Width="120" Height="35" />
-                <Separator Height="25" Width="0" />
-                <Button Command="{Binding OpenStoredReadingsCommand}" Content="Reporting" Width="120" Height="35" />
-                <Separator Height="25" Width="0" />
-                <Button Command="{Binding OpenStoredReadingsCommand}" Content="Statistics" Width="120" Height="35" />
+        <Border Grid.Row="0" Grid.Column="0" Background="DarkGray" BorderBrush="LightGray" BorderThickness="0 1 1 1">
+            <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                <Button Command="{Binding OpenReadingsCollectorCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="#80ff80" Content="Readings Collector" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
+                <Button Command="{Binding OpenStoredReadingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="#afdafc" Content="Stored Readings" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
+                <Button Command="{Binding OpenStoredReadingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Content="Reporting" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
+                <Button Command="{Binding OpenStoredReadingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Content="Statistics" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
             </StackPanel>
         </Border>
         <GridSplitter Grid.Row="0" Grid.Column="1" Width="5"
@@ -40,7 +37,8 @@
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type views:ReadersControl}" x:Key="DefaultTemplate">
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="Nothing Selected" FontSize="48" FontWeight="Light" />
+                            <Image Source="/ReaderDataCollector;component/Image/logo.jpg" />
+                            <TextBlock Text="Nothing Selected" FontSize="32" FontWeight="Light" HorizontalAlignment="Center" />
                         </StackPanel>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type views:ReadersControl}" x:Key="TemplateA">
