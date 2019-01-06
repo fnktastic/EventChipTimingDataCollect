@@ -128,6 +128,7 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\RewindViewModel.cs" />
     <Compile Include="ViewModel\SetClockViewModel.cs" />
+    <Compile Include="ViewModel\StoredReadingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\PingControl.xaml.cs">
       <DependentUpon>PingControl.xaml</DependentUpon>

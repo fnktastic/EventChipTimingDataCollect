@@ -21,7 +21,9 @@ namespace ReaderDataCollector.Repository
             _readRepository = new ReadRepository(_context);
         }
 
-        public IEnumerable<Reading> Readings => _context.Readings;
+        public IEnumerable<Reading> Readings => _context
+            .Readings
+            .ToList();
 
         public async void SaveReading(Reading reading)
         {

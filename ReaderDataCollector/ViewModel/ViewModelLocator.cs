@@ -14,6 +14,7 @@ namespace ReaderDataCollector.ViewModel
             SimpleIoc.Default.Register<RewindViewModel>();
             SimpleIoc.Default.Register<PingViewModel>();
             SimpleIoc.Default.Register<SetClockViewModel>();
+            SimpleIoc.Default.Register<StoredReadingsViewModel>();
         }
 
         public MainViewModel Main
@@ -48,7 +49,7 @@ namespace ReaderDataCollector.ViewModel
             }
         }
 
-        public PingViewModel PingViewModel
+        public PingViewModel Ping
         {
             get
             {
@@ -56,11 +57,19 @@ namespace ReaderDataCollector.ViewModel
             }
         }
         
-        public SetClockViewModel SetClockViewModel
+        public SetClockViewModel SetClock
         {
             get
             {
                 return ServiceLocator.Current.GetInstance<SetClockViewModel>();
+            }
+        }
+
+        public StoredReadingsViewModel StoredReadings
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<StoredReadingsViewModel>();
             }
         }
 

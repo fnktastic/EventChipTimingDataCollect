@@ -1,6 +1,7 @@
 ﻿using ReaderDataCollector.DataAccess;
 using ReaderDataCollector.Model;
 using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,9 @@ namespace ReaderDataCollector.Repository
             _context = context;
         }
 
-        public IEnumerable<Reader> Readers => _context.Readers;
+        public IEnumerable<Reader> Readers => _context
+            .Readers
+            .ToList();
 
         public async void SaveReader(Reader reader)
         {

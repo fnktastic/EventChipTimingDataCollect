@@ -5,8 +5,35 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReaderDataCollector.View"
              mc:Ignorable="d" 
+             DataContext="{Binding StoredReadings, Source={StaticResource Locator}}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="150" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0">
+            <ComboBox          
+                ItemsSource="{Binding Readers}" 
+                SelectedItem="{Binding SelectedReader}"
+                SelectedValue="ID" 
+                DisplayMemberPath="Host" />
+            <Rectangle Height="25" Width="0" />
+            <ListView ItemsSource="{Binding Readings}"
+                      SelectedItem="{Binding SelectedReading}">
+            </ListView>
+        </StackPanel>
+        <DataGrid ItemsSource="{Binding Reads}"
+                  AutoGenerateColumns="True" Grid.Column="1" Grid.Row="0">
+            <DataGrid.Columns>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Column="2" Grid.Row="0">
+
+        </Grid>
     </Grid>
 </UserControl>
