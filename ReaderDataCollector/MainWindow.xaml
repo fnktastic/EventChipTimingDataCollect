@@ -24,8 +24,8 @@
             <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <Button Command="{Binding OpenReadingsCollectorCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="#80ff80" Content="Readings Collector" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
                 <Button Command="{Binding OpenStoredReadingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="#afdafc" Content="Stored Readings" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
-                <Button Command="{Binding OpenStoredReadingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Content="Reporting" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
-                <Button Command="{Binding OpenStoredReadingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Content="Statistics" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
+                <Button Command="{Binding OpenReportsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Content="Reporting" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
+                <Button Command="{Binding OpenStatisticssCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Content="Statistics" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
             </StackPanel>
         </Border>
         <GridSplitter Grid.Row="0" Grid.Column="1" Width="5"
@@ -38,7 +38,7 @@
                     <DataTemplate DataType="{x:Type views:ReadersControl}" x:Key="DefaultTemplate">
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Image Source="/ReaderDataCollector;component/Image/logo.jpg" />
-                            <TextBlock Text="Nothing Selected" FontSize="32" FontWeight="Light" HorizontalAlignment="Center" />
+                            <TextBlock Text="Event Chip Timing LTD" FontSize="32" FontWeight="Light" HorizontalAlignment="Center" />
                         </StackPanel>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type views:ReadersControl}" x:Key="TemplateA">
@@ -57,6 +57,12 @@
                             </DataTrigger>
                             <DataTrigger Binding="{Binding SelectedView}" Value="B">
                                 <Setter Property="ContentTemplate" Value="{StaticResource TemplateB}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SelectedView}" Value="C">
+                                <Setter Property="ContentTemplate" Value="{StaticResource DefaultTemplate}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SelectedView}" Value="D">
+                                <Setter Property="ContentTemplate" Value="{StaticResource DefaultTemplate}" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

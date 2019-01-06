@@ -14,7 +14,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
+            <RowDefinition Height="25" />
             <RowDefinition Height="10" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -29,6 +29,7 @@
         <ListView
             Grid.Column="0"
             Grid.Row="2"
+            ScrollViewer.VerticalScrollBarVisibility="Visible"
             ItemsSource="{Binding Readings}"
             SelectedItem="{Binding SelectedReading}">
             <ListView.ItemContainerStyle>
