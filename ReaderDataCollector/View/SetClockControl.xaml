@@ -15,7 +15,7 @@
             <RowDefinition Height="50" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25">
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30">
             <TextBlock Text="Current BOX Time:" VerticalAlignment="Center" Margin="0 0 15 0" FontSize="18" />
             <TextBox Text="{Binding CurrentBoxTime, FallbackValue=22:13:15}" Width="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="18" FontWeight="Black" />
         </StackPanel>

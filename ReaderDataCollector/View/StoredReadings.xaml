@@ -9,12 +9,12 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="275" />
+            <ColumnDefinition Width="265" />
             <ColumnDefinition Width="20" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="10" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>

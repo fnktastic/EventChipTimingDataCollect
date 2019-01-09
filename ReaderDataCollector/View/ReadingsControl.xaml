@@ -83,10 +83,11 @@
                         </Grid>
                     </GroupItem>
                 </GroupBox>
-                <StackPanel Orientation="Horizontal"  Height="25">
+                <StackPanel Orientation="Horizontal"  Height="26">
                     <Label Content="Recovery File:" />
                     <Button Command="{Binding OpenRecoveryFile}" Background="Transparent" BorderThickness="0">
                         <TextBlock Cursor="Hand" 
+                                   FontSize="12"
                                ToolTip="Recovery File for current Reading Session stores at the BOX and in special Folder on this PC"
                                Text="{Binding RecoveryFile, FallbackValue=Test}" FontWeight="Black" Foreground="Green" VerticalAlignment="Center"  />
                         <Button.ContextMenu>

@@ -13,7 +13,7 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="35" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="150" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
@@ -21,8 +21,8 @@
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Margin="0 5" Orientation="Horizontal">
-            <Label Content="Reader" />
-            <TextBox Text="{Binding Host, FallbackValue=localhost}" VerticalContentAlignment="Center" Width="125" IsReadOnly="True" Margin="5 0 0 0" />
+            <Label Content="Reader:" FontSize="14" FontWeight="DemiBold" />
+            <TextBox Text="{Binding Host, FallbackValue=localhost}" VerticalContentAlignment="Center" Width="125" IsReadOnly="True" Margin="5 0 0 0" FontWeight="DemiBold" />
         </StackPanel>
         <GroupBox Grid.Row="1" Grid.Column="0" Margin="0 5" Header="Data to retrieve" IsEnabled="{Binding IsDataExist}">
             <StackPanel Margin="0 5">
