@@ -1,9 +1,10 @@
-﻿<UserControl x:Class="ReaderDataCollector.View.RewindControl"
+﻿      <UserControl x:Class="ReaderDataCollector.View.RewindControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReaderDataCollector.View"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:converter="clr-namespace:ReaderDataCollector.Converter"
              mc:Ignorable="d" 
              Height="500" Width="800"
@@ -20,6 +21,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
+        <ContentControl Panel.ZIndex="5" Grid.Column="0" Grid.Row="2" Grid.RowSpan="3" Background="Black">
+            <Controls:ProgressRing IsActive="{Binding IsLoadingInProgress}" Visibility="Visible" Name="progress1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </ContentControl>
         <StackPanel Grid.Row="0" Grid.Column="0" Margin="0 5" Orientation="Horizontal">
             <Label Content="Reader:" FontSize="14" FontWeight="DemiBold" />
             <TextBox Text="{Binding Host, FallbackValue=localhost}" VerticalContentAlignment="Center" Width="125" IsReadOnly="True" Margin="5 0 0 0" FontWeight="DemiBold" />

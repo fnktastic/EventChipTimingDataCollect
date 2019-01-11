@@ -47,6 +47,7 @@ namespace ReaderDataCollector.ViewModel
             {
                 return _openStoredReadingsCommand ?? (_openStoredReadingsCommand = new RelayCommand(() =>
                 {
+
                     SelectedView = "B";
                     WindowWidth = 1000;
                 }));

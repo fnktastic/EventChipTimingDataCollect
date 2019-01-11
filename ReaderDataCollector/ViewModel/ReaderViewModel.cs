@@ -208,10 +208,15 @@ namespace ReaderDataCollector.ViewModel
                 return _finishAndSaveCommand ?? (_finishAndSaveCommand = new RelayCommand<Reading>((reading) =>
                 {
                     // TODO HERE
+                    StopReading(reading);
+                    reading.IsLoadingInProgress = true;
                     reading.EndedDateTime = DateTime.UtcNow;
                     reading.IsFinished = true;
-                    StopReading(reading);
-                    _readingRepository.SaveReading(reading);
+                    Task.Run(() =>
+                    {
+                        _readingRepository.SaveReading(reading);
+                        reading.IsLoadingInProgress = false;
+                    });
                 }));
             }
         }        

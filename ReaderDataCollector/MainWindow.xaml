@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReaderDataCollector"
         xmlns:converter="clr-namespace:ReaderDataCollector.Converter"
-         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:views="clr-namespace:ReaderDataCollector.View"
         x:Class="ReaderDataCollector.MainWindow"
         mc:Ignorable="d"
