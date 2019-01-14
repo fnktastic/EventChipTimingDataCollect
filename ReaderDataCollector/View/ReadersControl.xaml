@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
       xmlns:local="clr-namespace:ReaderDataCollector.View"
       mc:Ignorable="d" 
       xmlns:converter="clr-namespace:ReaderDataCollector.Converter"
@@ -34,33 +35,37 @@
                 <ItemsControl ItemsSource="{Binding Readings}" >
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border  IsEnabled="{Binding IsFinished, Converter={StaticResource InverseBooleanConverter}}"
+                            <Grid>
+                                <ContentControl Panel.ZIndex="5" Grid.Column="0" Grid.Row="2" Grid.RowSpan="3" Background="Black">
+                                    <Controls:ProgressRing IsActive="{Binding IsLoadingInProgress}" Visibility="Visible" Name="progress1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </ContentControl>
+                                <Border  IsEnabled="{Binding IsFinished, Converter={StaticResource InverseBooleanConverter}}"
                                      Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                      Background="WhiteSmoke" BorderThickness="1" BorderBrush="LightGray"  Margin="2" Padding="5">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="20" />
-                                        <ColumnDefinition Width="0" />
-                                        <ColumnDefinition Width="50" />
-                                        <ColumnDefinition Width="5" />
-                                        <ColumnDefinition Width="120" />
-                                        <ColumnDefinition Width="5" />
-                                        <ColumnDefinition Width="50" />
-                                        <ColumnDefinition Width="10" />
-                                        <ColumnDefinition Width="40" />
-                                        <ColumnDefinition Width="10" />
-                                        <ColumnDefinition Width="80" />
-                                        <ColumnDefinition Width="10" />
-                                        <ColumnDefinition Width="55" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="35"/>
-                                    </Grid.RowDefinitions>
-                                    <Border Grid.Column="0" Grid.Row="0" Cursor="Help" BorderBrush="Gray" CornerRadius="0" BorderThickness="1" Height="25" Width="20" Background="White" ToolTip="{Binding ToolTip}">
-                                        <TextBlock Text="{Binding Number}" FontWeight="Black" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" />
-                                    </Border>
-                                    <Border Grid.Column="2" Grid.Row="0" CornerRadius="20" Width="33" Height="33">
-                                        <Button 
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="20" />
+                                            <ColumnDefinition Width="0" />
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="5" />
+                                            <ColumnDefinition Width="120" />
+                                            <ColumnDefinition Width="5" />
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="40" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="55" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="35" />
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Column="0" Grid.Row="0" Cursor="Help" BorderBrush="Gray" CornerRadius="0" BorderThickness="1" Height="25" Width="20" Background="White" ToolTip="{Binding ToolTip}">
+                                            <TextBlock Text="{Binding Number}" FontWeight="Black" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <Border Grid.Column="2" Grid.Row="0" CornerRadius="20" Width="33" Height="33">
+                                            <Button 
                                             Command="{Binding DataContext.StartReaderCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}"
                                             CommandParameter="{Binding}"
                                             IsEnabled="{Binding IsFinished, Converter={StaticResource InverseBooleanConverter}}"
@@ -68,95 +73,96 @@
                                             VerticalAlignment="Center" 
                                             HorizontalAlignment="Center" 
                                             Width="30" Height="30">
-                                            <Ellipse>
-                                                <Ellipse.Style>
-                                                    <Style TargetType="Ellipse">
-                                                        <Setter Property="Height" Value="25" />
-                                                        <Setter Property="Width" Value="25" />
-                                                        <Setter Property="Fill" Value="Yellow" />
-                                                        <Setter Property="Cursor" Value="Hand" />
+                                                <Ellipse>
+                                                    <Ellipse.Style>
+                                                        <Style TargetType="Ellipse">
+                                                            <Setter Property="Height" Value="25" />
+                                                            <Setter Property="Width" Value="25" />
+                                                            <Setter Property="Fill" Value="Yellow" />
+                                                            <Setter Property="Cursor" Value="Hand" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsConnected}" Value="{x:Null}">
+                                                                    <Setter Property="Fill" Value="Yellow"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                                                    <Setter Property="Fill" Value="SpringGreen"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                                                                    <Setter Property="Fill" Value="OrangeRed"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Ellipse.Style>
+                                                </Ellipse>
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                        <Setter Property="BorderBrush" Value="Transparent"/>
+                                                        <Setter Property="BorderThickness" Value="0" />
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsConnected}" Value="{x:Null}">
-                                                                <Setter Property="Fill" Value="Yellow"/>
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
-                                                                <Setter Property="Fill" Value="SpringGreen"/>
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding IsConnected}" Value="False">
-                                                                <Setter Property="Fill" Value="OrangeRed"/>
-                                                            </DataTrigger>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="Transparent" />
+                                                                <Setter Property="BorderBrush" Value="Transparent" />
+                                                                <Setter Property="BorderThickness" Value="0" />
+                                                            </Trigger>
                                                         </Style.Triggers>
                                                     </Style>
-                                                </Ellipse.Style>
-                                            </Ellipse>
-                                            <Button.Style>
-                                                <Style TargetType="Button">
-                                                    <Setter Property="Background" Value="Transparent" />
-                                                    <Setter Property="BorderBrush" Value="Transparent"/>
-                                                    <Setter Property="BorderThickness" Value="0" />
+                                                </Button.Style>
+                                            </Button>
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="BorderBrush" Value="PowderBlue" />
+                                                    <Setter Property="BorderThickness" Value="1" />
                                                     <Style.Triggers>
                                                         <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Background" Value="Transparent" />
-                                                            <Setter Property="BorderBrush" Value="Transparent" />
-                                                            <Setter Property="BorderThickness" Value="0" />
+                                                            <Setter Property="BorderBrush" Value="LightBlue" />
+                                                            <Setter Property="BorderThickness" Value="4" />
                                                         </Trigger>
                                                     </Style.Triggers>
                                                 </Style>
-                                            </Button.Style>
-                                        </Button>
-                                        <Border.Style>
-                                            <Style TargetType="Border">
-                                                <Setter Property="BorderBrush" Value="PowderBlue" />
-                                                <Setter Property="BorderThickness" Value="1" />
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="BorderBrush" Value="LightBlue" />
-                                                        <Setter Property="BorderThickness" Value="4" />
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Border.Style>
-                                    </Border>
-                                    <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding Reader.Host, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Enter Host IP" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" Padding="2" />
-                                    <TextBox Grid.Column="6" Grid.Row="0" Text="{Binding Reader.Port, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Enter Port" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" HorizontalContentAlignment="Center" Padding="2" />
-                                    <TextBox Grid.Column="8" Grid.Row="0" Text="{Binding TotalReadings}" Cursor="Arrow" IsReadOnly="True" ToolTip="{Binding TotalReadings}" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" HorizontalContentAlignment="Center" Padding="2" />
-                                    <TextBox Grid.Column="10" Grid.Row="0" Text="{Binding LastRead}" Cursor="Arrow" IsReadOnly="True" ToolTip="{Binding LastReadToolTip}" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" HorizontalContentAlignment="Center" Padding="2" />
-                                    <Button Grid.Column="12" Grid.Row="0" ToolTip="{Binding ToolTip}" 
+                                            </Border.Style>
+                                        </Border>
+                                        <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding Reader.Host, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Enter Host IP" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" Padding="2" />
+                                        <TextBox Grid.Column="6" Grid.Row="0" Text="{Binding Reader.Port, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Enter Port" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" HorizontalContentAlignment="Center" Padding="2" />
+                                        <TextBox Grid.Column="8" Grid.Row="0" Text="{Binding TotalReadings}" Cursor="Arrow" IsReadOnly="True" ToolTip="{Binding TotalReadings}" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" HorizontalContentAlignment="Center" Padding="2" />
+                                        <TextBox Grid.Column="10" Grid.Row="0" Text="{Binding LastRead}" Cursor="Arrow" IsReadOnly="True" ToolTip="{Binding LastReadToolTip}" VerticalContentAlignment="Center" BorderBrush="LightSkyBlue" HorizontalContentAlignment="Center" Padding="2" />
+                                        <Button Grid.Column="12" Grid.Row="0" ToolTip="{Binding ToolTip}" 
                                     Command="{Binding DataContext.OpenReadsWindowCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}"
                                     CommandParameter="{Binding}"
                                     Content="Details" BorderBrush="LightSkyBlue" />
-                                </Grid>
-                                <Border.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem Header="Start Reading" 
+                                    </Grid>
+                                    <Border.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="Start Reading" 
                                                   IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBooleanConverter}}"
                                                   CommandParameter="{Binding}"
                                                   Command="{Binding PlacementTarget.Tag.StartReaderCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                                        <MenuItem Header="Stop Reading"
+                                            <MenuItem Header="Stop Reading"
                                                   IsEnabled="{Binding IsConnected}"
                                                   CommandParameter="{Binding}"
                                                   Command="{Binding PlacementTarget.Tag.StartReaderCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                                        <MenuItem Header="Finish and Save"
+                                            <MenuItem Header="Finish and Save"
                                                   CommandParameter="{Binding}"
                                                   Command="{Binding PlacementTarget.Tag.FinishAndSaveCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-                                        <Separator />
-                                        <MenuItem Header="Rewind" 
+                                            <Separator />
+                                            <MenuItem Header="Rewind" 
                                                   Command="{Binding PlacementTarget.Tag.OpenRewindWindowCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                                   CommandParameter="{Binding}"/>
-                                        <Separator />
-                                        <MenuItem Header="Ping" 
+                                            <Separator />
+                                            <MenuItem Header="Ping" 
                                                   Command="{Binding PlacementTarget.Tag.PingCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                                   CommandParameter="{Binding}"/>
-                                        <MenuItem Header="Set Clock" 
+                                            <MenuItem Header="Set Clock" 
                                                   Command="{Binding PlacementTarget.Tag.SetClockCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                                   CommandParameter="{Binding}"/>
-                                        <Separator/>
-                                        <MenuItem Header="Details" 
+                                            <Separator/>
+                                            <MenuItem Header="Details" 
                                                   Command="{Binding PlacementTarget.Tag.OpenReadsWindowCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                                   CommandParameter="{Binding}"/>
-                                    </ContextMenu>
-                                </Border.ContextMenu>
-                            </Border>
+                                        </ContextMenu>
+                                    </Border.ContextMenu>
+                                </Border>
+                            </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

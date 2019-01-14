@@ -98,6 +98,14 @@ namespace ReaderDataCollector.Model
             set { _isConnected = value; RaisePropertyChanged("IsConnected"); }
         }
 
+        private bool _isLoadingInProgress;
+        [NotMapped]
+        public bool IsLoadingInProgress
+        {
+            get { return _isLoadingInProgress; }
+            set { _isLoadingInProgress = value; RaisePropertyChanged("IsLoadingInProgress"); }
+        }
+
         private bool? _isFinished;
         [NotMapped]
         public bool? IsFinished

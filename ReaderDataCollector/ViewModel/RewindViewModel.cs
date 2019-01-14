@@ -57,6 +57,13 @@ namespace ReaderDataCollector.ViewModel
             set { _isDataExist = value; RaisePropertyChanged("IsDataExist"); }
         }
 
+        private bool _isLoadingInProgress;
+        public bool IsLoadingInProgress
+        {
+            get { return _isLoadingInProgress; }
+            set { _isLoadingInProgress = value; RaisePropertyChanged("IsLoadingInProgress"); }
+        }
+
         private string _host;
         public string Host
         {
@@ -258,10 +265,15 @@ namespace ReaderDataCollector.ViewModel
                 {
                     if (_reads.Count > 0)
                     {
-                        foreach (var read in _reads)
+                        IsLoadingInProgress = true;
+                        Task.Run(() =>
                         {
-                            RecievedReads.Add(read);
-                        }
+                            foreach (var read in _reads)
+                            {
+                                RecievedReads.Add(read);
+                            }
+                        }).Wait();
+                        IsLoadingInProgress = false;
                         MessageBox.Show(string.Format("{0} Reads has been accepted!", _reads.Count), "Complete!");
                         RetrievedReadsCount = string.Empty;
                         _reads.Clear();
