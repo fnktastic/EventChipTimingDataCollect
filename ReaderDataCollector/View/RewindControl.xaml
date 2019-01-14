@@ -78,7 +78,7 @@
                         <DataGridTemplateColumn Header="Unique ID" Width="0.3*" IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding UniqueReadingID}" />
+                                    <TextBlock Text="{Binding UniqueReadID}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

@@ -58,11 +58,11 @@ namespace ReaderDataCollector.Model
             set { _ipAddress = value; RaisePropertyChanged("IpAddress"); }
         }
 
-        private string _uniqueReadingID;
-        public string UniqueReadingID
+        private string _UniqueReadID;
+        public string UniqueReadID
         {
-            get { return _uniqueReadingID; }
-            set { _uniqueReadingID = value; RaisePropertyChanged("UniqueReadingID"); }
+            get { return _UniqueReadID; }
+            set { _UniqueReadID = value; RaisePropertyChanged("UniqueReadID"); }
         }
 
         private string _timingPoint; // Reading
@@ -77,7 +77,7 @@ namespace ReaderDataCollector.Model
 
         public override string ToString()
         {
-            return string.Format("{0}\n{1}\n{2}\n{3}\n{4}\n{5}\n{6}\n{7}\n{8}", ID, EPC, Time, PeakRssiInDbm, AntennaNumber, ReaderNumber, IpAddress, UniqueReadingID, TimingPoint);
+            return string.Format("{0}\n{1}\n{2}\n{3}\n{4}\n{5}\n{6}\n{7}\n{8}", ID, EPC, Time, PeakRssiInDbm, AntennaNumber, ReaderNumber, IpAddress, UniqueReadID, TimingPoint);
         }
     }
 }

@@ -85,7 +85,7 @@ namespace ReaderDataCollector.BoxReading
                         AntennaNumber = array[4],
                         ReaderNumber = array[5],
                         IpAddress = array[6],
-                        UniqueReadingID = array[7],
+                        UniqueReadID = array[7],
                         TimingPoint = array[8]
                     };
                 }

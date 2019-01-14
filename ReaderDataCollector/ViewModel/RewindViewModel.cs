@@ -145,7 +145,7 @@ namespace ReaderDataCollector.ViewModel
                     var lostReadings = new List<Read>();
                     _readingsFromFile.ForEach((x) =>
                     {
-                        if ((RecievedReads.FirstOrDefault(y => y.UniqueReadingID == x.UniqueReadingID)) == null)
+                        if ((RecievedReads.FirstOrDefault(y => y.UniqueReadID == x.UniqueReadID)) == null)
                             lostReadings.Add(x);
                     });
 
