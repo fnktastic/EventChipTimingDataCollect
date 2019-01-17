@@ -111,8 +111,7 @@ namespace ReaderDataCollector.ViewModel
 
         [PreferredConstructor]
         public ReadingViewModel()
-        {
-            Database.SetInitializer(new Initializer());
+        {            
             _context = new Context();
             _readRepository = new ReadRepository(_context);
             Reads = new ObservableCollection<Read>();

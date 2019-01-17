@@ -1,5 +1,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using ReaderDataCollector.DataAccess;
+using System.Data.Entity;
 
 namespace ReaderDataCollector.ViewModel
 {
@@ -22,6 +24,7 @@ namespace ReaderDataCollector.ViewModel
         #region constructor
         public MainViewModel()
         {
+            Database.SetInitializer(new Initializer());
             WindowWidth = 675;
         }
         #endregion
