@@ -20,7 +20,7 @@ namespace ReaderDataCollector.Utils
             }
             catch (SocketException ex)
             {
-                Debug.WriteLine("Error pinging host:'" + hostUri + ":" + portNumber.ToString() + "'");
+                Debug.WriteLine("Error pinging host:'" + hostUri + ":" + portNumber.ToString() + "'" + ex.Message);
                 return false;
             }
         }

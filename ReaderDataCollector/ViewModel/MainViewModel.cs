@@ -57,6 +57,19 @@ namespace ReaderDataCollector.ViewModel
             }
         }
 
+        private RelayCommand _openOnlineReadingsCommand;
+        public RelayCommand OpenOnlineReadingsCommand
+        {
+            get
+            {
+                return _openOnlineReadingsCommand ?? (_openOnlineReadingsCommand = new RelayCommand(() =>
+                {
+                    SelectedView = "E";
+                    WindowWidth = 1000;
+                }));
+            }
+        }
+
         private RelayCommand _openReportsCommand;
         public RelayCommand OpenReportsCommand
         {

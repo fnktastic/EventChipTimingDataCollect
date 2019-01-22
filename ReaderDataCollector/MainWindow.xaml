@@ -26,6 +26,7 @@
             <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <Button Command="{Binding OpenReadingsCollectorCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="#80ff80" Content="Readings Collector" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
                 <Button Command="{Binding OpenStoredReadingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="#afdafc" Content="Stored Readings" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
+                <Button Command="{Binding OpenOnlineReadingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="LightYellow" Content="Online Readings" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
                 <Button Command="{Binding OpenReportsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Content="Reporting" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
                 <Button Command="{Binding OpenStatisticssCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Content="Statistics" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
             </StackPanel>
@@ -48,6 +49,9 @@
                     <DataTemplate DataType="{x:Type views:StoredReadings}" x:Key="TemplateB">
                         <views:StoredReadings />
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type views:OnlineReadingsControl}" x:Key="TemplateE">
+                        <views:OnlineReadingsControl />
+                    </DataTemplate>
                 </ContentControl.Resources>
                 <ContentControl.Style>
                     <Style TargetType="{x:Type ContentControl}">
@@ -58,6 +62,9 @@
                             </DataTrigger>
                             <DataTrigger Binding="{Binding SelectedView}" Value="B">
                                 <Setter Property="ContentTemplate" Value="{StaticResource TemplateB}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SelectedView}" Value="E">
+                                <Setter Property="ContentTemplate" Value="{StaticResource TemplateE}" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding SelectedView}" Value="C">
                                 <Setter Property="ContentTemplate" Value="{StaticResource DefaultTemplate}" />

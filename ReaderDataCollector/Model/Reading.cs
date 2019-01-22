@@ -140,7 +140,8 @@ namespace ReaderDataCollector.Model
         #region methods
         public override string ToString()
         {
-            return string.Format("Reader {0}\nHost: {1}\nPort: {2}\nReads: {3}\nIs Connected: {4}\nLast Read: {5}", _id, Reader.Host, Reader.Port, _totalReadings, _isConnected, string.IsNullOrWhiteSpace(_lastRead) ? "<none>" : _lastRead);
+            return string.Empty;
+            //return string.Format("Reader {0}\nHost: {1}\nPort: {2}\nReads: {3}\nIs Connected: {4}\nLast Read: {5}", _id, Reader.Host, Reader.Port, _totalReadings, _isConnected, string.IsNullOrWhiteSpace(_lastRead) ? "<none>" : _lastRead);
         }
 
         public void ContentCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

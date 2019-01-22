@@ -74,6 +74,8 @@
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -113,6 +115,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Connected Services\AtwService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Converter\InverseBooleanConverter.cs" />
     <Compile Include="Converter\RadioBooleanToIntConverter.cs" />
     <Compile Include="DataAccess\Context.cs" />
@@ -131,6 +138,7 @@
     <Compile Include="Repository\ReadRepository.cs" />
     <Compile Include="Utils\PathUtil.cs" />
     <Compile Include="Utils\PingUtil.cs" />
+    <Compile Include="ViewModel\OnlineReadingsViewModel.cs" />
     <Compile Include="ViewModel\PingViewModel.cs" />
     <Compile Include="ViewModel\ReaderViewModel.cs" />
     <Compile Include="ViewModel\ReadingViewModel.cs" />
@@ -139,6 +147,9 @@
     <Compile Include="ViewModel\SetClockViewModel.cs" />
     <Compile Include="ViewModel\StoredReadingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\OnlineReadingsControl.xaml.cs">
+      <DependentUpon>OnlineReadingsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PingControl.xaml.cs">
       <DependentUpon>PingControl.xaml</DependentUpon>
     </Compile>
@@ -169,6 +180,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\OnlineReadingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\PingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -212,6 +227,28 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\AtwService\ReaderDataCollector.AtwService.RaceType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\AtwService\ReaderDataCollector.AtwService.ReaderType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\AtwService\ReaderDataCollector.AtwService.ReadingType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\AtwService\ReaderDataCollector.AtwService.ReadType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\AtwService\ReadingService.wsdl" />
+    <None Include="Connected Services\AtwService\ReadingService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AtwService\ReadingService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AtwService\ReadingService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -229,6 +266,27 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\white-logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\AtwService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AtwService\ReadingService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AtwService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AtwService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AtwService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

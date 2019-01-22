@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using System.ServiceModel;
 using GalaSoft.MvvmLight.Command;
 using ReaderDataCollector.DataAccess;
 using ReaderDataCollector.Model;
@@ -10,17 +11,20 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
+using ReaderDataCollector.AtwService;
+using ReaderDataCollector.BoxReading;
 
 namespace ReaderDataCollector.ViewModel
 {
-    public class StoredReadingsViewModel : ViewModelBase
+    public class OnlineReadingsViewModel : ViewModelBase
     {
         #region fields
         private readonly Context _context;
         private IReaderRepository _readerRepository;
         private IReadingRepository _readingRepository;
         private IReadRepository _readRepository;
+        private List<Read> reads = new List<Read>();
+        private List<Reading> readings = new List<Reading>();
         #endregion
         #region properies
         private Reading _selectedReading;
@@ -30,7 +34,8 @@ namespace ReaderDataCollector.ViewModel
             set
             {
                 _selectedReading = value;
-                Reads = new ObservableCollection<Read>(_readRepository.Reads.Where(x => x.ReadingID == _selectedReading.ID));
+                if (_selectedReading != null)
+                    Reads = new ObservableCollection<Read>(reads.Where(x => x.ReadingID == _selectedReading.ID));
                 RaisePropertyChanged("SelectedReading");
             }
         }
@@ -76,29 +81,58 @@ namespace ReaderDataCollector.ViewModel
         }
         #endregion
         #region constructor
-        public StoredReadingsViewModel()
+        public OnlineReadingsViewModel()
         {
-            IsLoadingInProgress = true;
+            IsLoadingInProgress = false;
             _context = new Context();
             _readerRepository = new ReaderRepository(_context);
             _readingRepository = new ReadingRepository(_context);
             _readRepository = new ReadRepository(_context);
-            UpdateStatements();
         }
         #endregion
         #region methods
         private void UpdateStatements()
         {
             IsLoadingInProgress = true;
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 try
                 {
-                    Readers = new ObservableCollection<Reader>(_readerRepository.Readers);
-                    if (Readings == null)
-                        Readings = new ObservableCollection<Reading>();
-                    if (_selectedReader != null)
-                        Readings = new ObservableCollection<Reading>(_readingRepository.Readings.Where(x => x.ReaderID == _selectedReader.ID));
+                    var binding = new WSHttpBinding(SecurityMode.None);
+                    var endpoint = new EndpointAddress(Consts.HttpUrl());
+
+                    using (var channelFactory = new ChannelFactory<IReadingService>(binding, endpoint))
+                    {
+                        channelFactory.Credentials.UserName.UserName = "test";
+                        channelFactory.Credentials.UserName.Password = "test123";
+
+                        IReadingService service = null;
+                        try
+                        {
+                            service = channelFactory.CreateChannel();
+                            var activeRaces = await service.GetActiveRacesAsync();
+
+                            var readers = new List<Reader>();
+                            var readings = new List<Reading>();
+                            reads = new List<Read>();
+                            foreach (var activeRace in activeRaces)
+                            {
+                                /*var reader = activeRace.Reader;
+                                readers.Add(new Reader() { Host = reader.Host, Port = reader.Port, ID = reader.ID });*/
+
+                                var reading = activeRace.Reading;
+                                readings.Add(new Reading() { ID = reading.ID, TotalReadings = activeRace.Reads.Count(), StartedDateTime = reading.StartedDateTime });
+
+                                reads.AddRange(new List<Read>(activeRace.Reads.Select(x => new Read() { ID = x.ID, EPC = x.Epc, Time = x.Time, IpAddress = reading.IPAddress, ReadingID = reading.ID })));
+                            }
+                            Readings = new ObservableCollection<Reading>(readings);
+                        }
+                        catch (Exception ex)
+                        {
+                            (service as ICommunicationObject)?.Abort();
+                            Debug.WriteLine(string.Format("{0}", ex.Message));
+                        }
+                    }
                     IsLoadingInProgress = false;
                 }
                 catch (Exception ex)
