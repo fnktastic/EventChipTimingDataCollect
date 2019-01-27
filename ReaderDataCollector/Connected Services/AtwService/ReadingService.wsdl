@@ -9,78 +9,68 @@
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://77.68.12.158/AtwService/ReadingService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://77.68.12.158/AtwService/ReadingService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://77.68.12.158/AtwService/ReadingService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ATWService.Model" />
+      <xsd:import schemaLocation="http://localhost/ATWService/ReadingService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/ATWService/ReadingService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/ATWService/ReadingService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ATWService.Model" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IReadingService_GetReadUsingDataContract_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetReadUsingDataContract" />
+  <wsdl:message name="IReadingService_SetRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetRead" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetReadUsingDataContract_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetReadUsingDataContractResponse" />
+  <wsdl:message name="IReadingService_SetRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetReadResponse" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetReadingUsingDataContract_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetReadingUsingDataContract" />
+  <wsdl:message name="IReadingService_SetReading_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetReading" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetReadingUsingDataContract_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetReadingUsingDataContractResponse" />
+  <wsdl:message name="IReadingService_SetReading_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetReadingResponse" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetReaderUsingDataContract_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetReaderUsingDataContract" />
+  <wsdl:message name="IReadingService_SetReader_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetReader" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetReaderUsingDataContract_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetReaderUsingDataContractResponse" />
+  <wsdl:message name="IReadingService_SetReader_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetReaderResponse" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetRaceUsingDataContract_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetRaceUsingDataContract" />
+  <wsdl:message name="IReadingService_GetReadingById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetReadingById" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetRaceUsingDataContract_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetRaceUsingDataContractResponse" />
+  <wsdl:message name="IReadingService_GetReadingById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetReadingByIdResponse" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetActiveReadings_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetActiveReadings" />
+  <wsdl:message name="IReadingService_GetReadings_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetReadings" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetActiveReadings_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetActiveReadingsResponse" />
-  </wsdl:message>
-  <wsdl:message name="IReadingService_GetActiveRaces_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetActiveRaces" />
-  </wsdl:message>
-  <wsdl:message name="IReadingService_GetActiveRaces_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetActiveRacesResponse" />
+  <wsdl:message name="IReadingService_GetReadings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetReadingsResponse" />
   </wsdl:message>
   <wsdl:portType name="IReadingService">
-    <wsdl:operation name="GetReadUsingDataContract">
-      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetReadUsingDataContract" message="tns:IReadingService_GetReadUsingDataContract_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetReadUsingDataContractResponse" message="tns:IReadingService_GetReadUsingDataContract_OutputMessage" />
+    <wsdl:operation name="SetRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/SetRead" message="tns:IReadingService_SetRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/SetReadResponse" message="tns:IReadingService_SetRead_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetReadingUsingDataContract">
-      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetReadingUsingDataContract" message="tns:IReadingService_GetReadingUsingDataContract_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetReadingUsingDataContractResponse" message="tns:IReadingService_GetReadingUsingDataContract_OutputMessage" />
+    <wsdl:operation name="SetReading">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/SetReading" message="tns:IReadingService_SetReading_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/SetReadingResponse" message="tns:IReadingService_SetReading_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetReaderUsingDataContract">
-      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetReaderUsingDataContract" message="tns:IReadingService_GetReaderUsingDataContract_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetReaderUsingDataContractResponse" message="tns:IReadingService_GetReaderUsingDataContract_OutputMessage" />
+    <wsdl:operation name="SetReader">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/SetReader" message="tns:IReadingService_SetReader_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/SetReaderResponse" message="tns:IReadingService_SetReader_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetRaceUsingDataContract">
-      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetRaceUsingDataContract" message="tns:IReadingService_GetRaceUsingDataContract_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetRaceUsingDataContractResponse" message="tns:IReadingService_GetRaceUsingDataContract_OutputMessage" />
+    <wsdl:operation name="GetReadingById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetReadingById" message="tns:IReadingService_GetReadingById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetReadingByIdResponse" message="tns:IReadingService_GetReadingById_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetActiveReadings">
-      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetActiveReadings" message="tns:IReadingService_GetActiveReadings_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetActiveReadingsResponse" message="tns:IReadingService_GetActiveReadings_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetActiveRaces">
-      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetActiveRaces" message="tns:IReadingService_GetActiveRaces_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetActiveRacesResponse" message="tns:IReadingService_GetActiveRaces_OutputMessage" />
+    <wsdl:operation name="GetReadings">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetReadings" message="tns:IReadingService_GetReadings_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetReadingsResponse" message="tns:IReadingService_GetReadings_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="UsernameEndpoint" type="tns:IReadingService">
     <wsp:PolicyReference URI="#UsernameEndpoint_policy" />
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetReadUsingDataContract">
-      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetReadUsingDataContract" style="document" />
+    <wsdl:operation name="SetRead">
+      <soap12:operation soapAction="http://tempuri.org/IReadingService/SetRead" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -88,8 +78,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetReadingUsingDataContract">
-      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetReadingUsingDataContract" style="document" />
+    <wsdl:operation name="SetReading">
+      <soap12:operation soapAction="http://tempuri.org/IReadingService/SetReading" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -97,8 +87,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetReaderUsingDataContract">
-      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetReaderUsingDataContract" style="document" />
+    <wsdl:operation name="SetReader">
+      <soap12:operation soapAction="http://tempuri.org/IReadingService/SetReader" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -106,8 +96,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetRaceUsingDataContract">
-      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetRaceUsingDataContract" style="document" />
+    <wsdl:operation name="GetReadingById">
+      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetReadingById" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -115,17 +105,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetActiveReadings">
-      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetActiveReadings" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetActiveRaces">
-      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetActiveRaces" style="document" />
+    <wsdl:operation name="GetReadings">
+      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetReadings" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -136,9 +117,9 @@
   </wsdl:binding>
   <wsdl:service name="ReadingService">
     <wsdl:port name="UsernameEndpoint" binding="tns:UsernameEndpoint">
-      <soap12:address location="http://77.68.12.158/AtwService/ReadingService.svc" />
+      <soap12:address location="http://localhost/ATWService/ReadingService.svc" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://77.68.12.158/AtwService/ReadingService.svc</wsa10:Address>
+        <wsa10:Address>http://localhost/ATWService/ReadingService.svc</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

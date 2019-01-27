@@ -13,6 +13,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ReaderDataCollector.AtwService;
 using ReaderDataCollector.BoxReading;
+using Reading = ReaderDataCollector.Model.Reading;
+using Read = ReaderDataCollector.Model.Read;
+using Reader = ReaderDataCollector.Model.Reader;
 
 namespace ReaderDataCollector.ViewModel
 {
@@ -94,7 +97,7 @@ namespace ReaderDataCollector.ViewModel
         private void UpdateStatements()
         {
             IsLoadingInProgress = true;
-            Task.Run(async () =>
+            Task.Run(() =>
             {
                 try
                 {
@@ -110,22 +113,7 @@ namespace ReaderDataCollector.ViewModel
                         try
                         {
                             service = channelFactory.CreateChannel();
-                            var activeRaces = await service.GetActiveRacesAsync();
-
-                            var readers = new List<Reader>();
-                            var readings = new List<Reading>();
-                            reads = new List<Read>();
-                            foreach (var activeRace in activeRaces)
-                            {
-                                /*var reader = activeRace.Reader;
-                                readers.Add(new Reader() { Host = reader.Host, Port = reader.Port, ID = reader.ID });*/
-
-                                var reading = activeRace.Reading;
-                                readings.Add(new Reading() { ID = reading.ID, TotalReadings = activeRace.Reads.Count(), StartedDateTime = reading.StartedDateTime });
-
-                                reads.AddRange(new List<Read>(activeRace.Reads.Select(x => new Read() { ID = x.ID, EPC = x.Epc, Time = x.Time, IpAddress = reading.IPAddress, ReadingID = reading.ID })));
-                            }
-                            Readings = new ObservableCollection<Reading>(readings);
+                            var readings = service.GetReadings();
                         }
                         catch (Exception ex)
                         {

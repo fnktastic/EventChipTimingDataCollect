@@ -15,30 +15,30 @@ namespace ReaderDataCollector.AtwService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ReadType", Namespace="http://schemas.datacontract.org/2004/07/ATWService.Model")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Read", Namespace="http://schemas.datacontract.org/2004/07/ATWService.Model")]
     [System.SerializableAttribute()]
-    public partial class ReadType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Read : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EpcField;
+        private string EPCField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IDField;
+        private System.Guid IDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PeakRssiInDbmField;
+        private ReaderDataCollector.AtwService.Reading ReadingField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ReadingIDField;
+        private System.Guid ReadingIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SignalField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime TimeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UniqueReadIDField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -51,20 +51,20 @@ namespace ReaderDataCollector.AtwService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Epc {
+        public string EPC {
             get {
-                return this.EpcField;
+                return this.EPCField;
             }
             set {
-                if ((object.ReferenceEquals(this.EpcField, value) != true)) {
-                    this.EpcField = value;
-                    this.RaisePropertyChanged("Epc");
+                if ((object.ReferenceEquals(this.EPCField, value) != true)) {
+                    this.EPCField = value;
+                    this.RaisePropertyChanged("EPC");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ID {
+        public System.Guid ID {
             get {
                 return this.IDField;
             }
@@ -77,20 +77,20 @@ namespace ReaderDataCollector.AtwService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PeakRssiInDbm {
+        public ReaderDataCollector.AtwService.Reading Reading {
             get {
-                return this.PeakRssiInDbmField;
+                return this.ReadingField;
             }
             set {
-                if ((object.ReferenceEquals(this.PeakRssiInDbmField, value) != true)) {
-                    this.PeakRssiInDbmField = value;
-                    this.RaisePropertyChanged("PeakRssiInDbm");
+                if ((object.ReferenceEquals(this.ReadingField, value) != true)) {
+                    this.ReadingField = value;
+                    this.RaisePropertyChanged("Reading");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ReadingID {
+        public System.Guid ReadingID {
             get {
                 return this.ReadingIDField;
             }
@@ -98,6 +98,19 @@ namespace ReaderDataCollector.AtwService {
                 if ((this.ReadingIDField.Equals(value) != true)) {
                     this.ReadingIDField = value;
                     this.RaisePropertyChanged("ReadingID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Signal {
+            get {
+                return this.SignalField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SignalField, value) != true)) {
+                    this.SignalField = value;
+                    this.RaisePropertyChanged("Signal");
                 }
             }
         }
@@ -115,19 +128,6 @@ namespace ReaderDataCollector.AtwService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UniqueReadID {
-            get {
-                return this.UniqueReadIDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UniqueReadIDField, value) != true)) {
-                    this.UniqueReadIDField = value;
-                    this.RaisePropertyChanged("UniqueReadID");
-                }
-            }
-        }
-        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -140,9 +140,9 @@ namespace ReaderDataCollector.AtwService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ReadingType", Namespace="http://schemas.datacontract.org/2004/07/ATWService.Model")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Reading", Namespace="http://schemas.datacontract.org/2004/07/ATWService.Model")]
     [System.SerializableAttribute()]
-    public partial class ReadingType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Reading : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -157,16 +157,22 @@ namespace ReaderDataCollector.AtwService {
         private string FileNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IDField;
+        private System.Guid IDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IPAddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ReaderDataCollector.AtwService.Reader ReaderField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int ReaderIDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ReaderNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<ReaderDataCollector.AtwService.Read> ReadsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> StartedDateTimeField;
@@ -227,7 +233,7 @@ namespace ReaderDataCollector.AtwService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ID {
+        public System.Guid ID {
             get {
                 return this.IDField;
             }
@@ -248,6 +254,19 @@ namespace ReaderDataCollector.AtwService {
                 if ((object.ReferenceEquals(this.IPAddressField, value) != true)) {
                     this.IPAddressField = value;
                     this.RaisePropertyChanged("IPAddress");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ReaderDataCollector.AtwService.Reader Reader {
+            get {
+                return this.ReaderField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReaderField, value) != true)) {
+                    this.ReaderField = value;
+                    this.RaisePropertyChanged("Reader");
                 }
             }
         }
@@ -274,6 +293,19 @@ namespace ReaderDataCollector.AtwService {
                 if ((object.ReferenceEquals(this.ReaderNumberField, value) != true)) {
                     this.ReaderNumberField = value;
                     this.RaisePropertyChanged("ReaderNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<ReaderDataCollector.AtwService.Read> Reads {
+            get {
+                return this.ReadsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReadsField, value) != true)) {
+                    this.ReadsField = value;
+                    this.RaisePropertyChanged("Reads");
                 }
             }
         }
@@ -329,9 +361,9 @@ namespace ReaderDataCollector.AtwService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ReaderType", Namespace="http://schemas.datacontract.org/2004/07/ATWService.Model")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Reader", Namespace="http://schemas.datacontract.org/2004/07/ATWService.Model")]
     [System.SerializableAttribute()]
-    public partial class ReaderType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Reader : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -344,6 +376,9 @@ namespace ReaderDataCollector.AtwService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PortField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<ReaderDataCollector.AtwService.Reading> ReadingsField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -394,79 +429,15 @@ namespace ReaderDataCollector.AtwService {
             }
         }
         
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RaceType", Namespace="http://schemas.datacontract.org/2004/07/ATWService.Model")]
-    [System.SerializableAttribute()]
-    public partial class RaceType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ReaderDataCollector.AtwService.ReaderType ReaderField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ReaderDataCollector.AtwService.ReadingType ReadingField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ReaderDataCollector.AtwService.ReadType[] ReadsField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public ReaderDataCollector.AtwService.ReaderType Reader {
+        public System.Collections.Generic.List<ReaderDataCollector.AtwService.Reading> Readings {
             get {
-                return this.ReaderField;
+                return this.ReadingsField;
             }
             set {
-                if ((object.ReferenceEquals(this.ReaderField, value) != true)) {
-                    this.ReaderField = value;
-                    this.RaisePropertyChanged("Reader");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public ReaderDataCollector.AtwService.ReadingType Reading {
-            get {
-                return this.ReadingField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ReadingField, value) != true)) {
-                    this.ReadingField = value;
-                    this.RaisePropertyChanged("Reading");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public ReaderDataCollector.AtwService.ReadType[] Reads {
-            get {
-                return this.ReadsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ReadsField, value) != true)) {
-                    this.ReadsField = value;
-                    this.RaisePropertyChanged("Reads");
+                if ((object.ReferenceEquals(this.ReadingsField, value) != true)) {
+                    this.ReadingsField = value;
+                    this.RaisePropertyChanged("Readings");
                 }
             }
         }
@@ -485,41 +456,35 @@ namespace ReaderDataCollector.AtwService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AtwService.IReadingService")]
     public interface IReadingService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReadUsingDataContract", ReplyAction="http://tempuri.org/IReadingService/GetReadUsingDataContractResponse")]
-        ReaderDataCollector.AtwService.ReadType GetReadUsingDataContract(ReaderDataCollector.AtwService.ReadType read);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/SetRead", ReplyAction="http://tempuri.org/IReadingService/SetReadResponse")]
+        ReaderDataCollector.AtwService.Read SetRead(ReaderDataCollector.AtwService.Read read);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReadUsingDataContract", ReplyAction="http://tempuri.org/IReadingService/GetReadUsingDataContractResponse")]
-        System.Threading.Tasks.Task<ReaderDataCollector.AtwService.ReadType> GetReadUsingDataContractAsync(ReaderDataCollector.AtwService.ReadType read);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/SetRead", ReplyAction="http://tempuri.org/IReadingService/SetReadResponse")]
+        System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Read> SetReadAsync(ReaderDataCollector.AtwService.Read read);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReadingUsingDataContract", ReplyAction="http://tempuri.org/IReadingService/GetReadingUsingDataContractResponse")]
-        ReaderDataCollector.AtwService.ReadingType GetReadingUsingDataContract(ReaderDataCollector.AtwService.ReadingType read);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/SetReading", ReplyAction="http://tempuri.org/IReadingService/SetReadingResponse")]
+        ReaderDataCollector.AtwService.Reading SetReading(ReaderDataCollector.AtwService.Reading reading);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReadingUsingDataContract", ReplyAction="http://tempuri.org/IReadingService/GetReadingUsingDataContractResponse")]
-        System.Threading.Tasks.Task<ReaderDataCollector.AtwService.ReadingType> GetReadingUsingDataContractAsync(ReaderDataCollector.AtwService.ReadingType read);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/SetReading", ReplyAction="http://tempuri.org/IReadingService/SetReadingResponse")]
+        System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Reading> SetReadingAsync(ReaderDataCollector.AtwService.Reading reading);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReaderUsingDataContract", ReplyAction="http://tempuri.org/IReadingService/GetReaderUsingDataContractResponse")]
-        ReaderDataCollector.AtwService.ReaderType GetReaderUsingDataContract(ReaderDataCollector.AtwService.ReaderType read);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/SetReader", ReplyAction="http://tempuri.org/IReadingService/SetReaderResponse")]
+        ReaderDataCollector.AtwService.Reader SetReader(ReaderDataCollector.AtwService.Reader reader);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReaderUsingDataContract", ReplyAction="http://tempuri.org/IReadingService/GetReaderUsingDataContractResponse")]
-        System.Threading.Tasks.Task<ReaderDataCollector.AtwService.ReaderType> GetReaderUsingDataContractAsync(ReaderDataCollector.AtwService.ReaderType read);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/SetReader", ReplyAction="http://tempuri.org/IReadingService/SetReaderResponse")]
+        System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Reader> SetReaderAsync(ReaderDataCollector.AtwService.Reader reader);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetRaceUsingDataContract", ReplyAction="http://tempuri.org/IReadingService/GetRaceUsingDataContractResponse")]
-        ReaderDataCollector.AtwService.RaceType GetRaceUsingDataContract(int readingID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReadingById", ReplyAction="http://tempuri.org/IReadingService/GetReadingByIdResponse")]
+        ReaderDataCollector.AtwService.Reading GetReadingById(System.Guid readingID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetRaceUsingDataContract", ReplyAction="http://tempuri.org/IReadingService/GetRaceUsingDataContractResponse")]
-        System.Threading.Tasks.Task<ReaderDataCollector.AtwService.RaceType> GetRaceUsingDataContractAsync(int readingID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReadingById", ReplyAction="http://tempuri.org/IReadingService/GetReadingByIdResponse")]
+        System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Reading> GetReadingByIdAsync(System.Guid readingID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetActiveReadings", ReplyAction="http://tempuri.org/IReadingService/GetActiveReadingsResponse")]
-        ReaderDataCollector.AtwService.ReadingType[] GetActiveReadings();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReadings", ReplyAction="http://tempuri.org/IReadingService/GetReadingsResponse")]
+        System.Collections.Generic.List<ReaderDataCollector.AtwService.Reading> GetReadings();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetActiveReadings", ReplyAction="http://tempuri.org/IReadingService/GetActiveReadingsResponse")]
-        System.Threading.Tasks.Task<ReaderDataCollector.AtwService.ReadingType[]> GetActiveReadingsAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetActiveRaces", ReplyAction="http://tempuri.org/IReadingService/GetActiveRacesResponse")]
-        ReaderDataCollector.AtwService.RaceType[] GetActiveRaces();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetActiveRaces", ReplyAction="http://tempuri.org/IReadingService/GetActiveRacesResponse")]
-        System.Threading.Tasks.Task<ReaderDataCollector.AtwService.RaceType[]> GetActiveRacesAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReadings", ReplyAction="http://tempuri.org/IReadingService/GetReadingsResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<ReaderDataCollector.AtwService.Reading>> GetReadingsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -549,52 +514,44 @@ namespace ReaderDataCollector.AtwService {
                 base(binding, remoteAddress) {
         }
         
-        public ReaderDataCollector.AtwService.ReadType GetReadUsingDataContract(ReaderDataCollector.AtwService.ReadType read) {
-            return base.Channel.GetReadUsingDataContract(read);
+        public ReaderDataCollector.AtwService.Read SetRead(ReaderDataCollector.AtwService.Read read) {
+            return base.Channel.SetRead(read);
         }
         
-        public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.ReadType> GetReadUsingDataContractAsync(ReaderDataCollector.AtwService.ReadType read) {
-            return base.Channel.GetReadUsingDataContractAsync(read);
+        public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Read> SetReadAsync(ReaderDataCollector.AtwService.Read read) {
+            return base.Channel.SetReadAsync(read);
         }
         
-        public ReaderDataCollector.AtwService.ReadingType GetReadingUsingDataContract(ReaderDataCollector.AtwService.ReadingType read) {
-            return base.Channel.GetReadingUsingDataContract(read);
+        public ReaderDataCollector.AtwService.Reading SetReading(ReaderDataCollector.AtwService.Reading reading) {
+            return base.Channel.SetReading(reading);
         }
         
-        public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.ReadingType> GetReadingUsingDataContractAsync(ReaderDataCollector.AtwService.ReadingType read) {
-            return base.Channel.GetReadingUsingDataContractAsync(read);
+        public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Reading> SetReadingAsync(ReaderDataCollector.AtwService.Reading reading) {
+            return base.Channel.SetReadingAsync(reading);
         }
         
-        public ReaderDataCollector.AtwService.ReaderType GetReaderUsingDataContract(ReaderDataCollector.AtwService.ReaderType read) {
-            return base.Channel.GetReaderUsingDataContract(read);
+        public ReaderDataCollector.AtwService.Reader SetReader(ReaderDataCollector.AtwService.Reader reader) {
+            return base.Channel.SetReader(reader);
         }
         
-        public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.ReaderType> GetReaderUsingDataContractAsync(ReaderDataCollector.AtwService.ReaderType read) {
-            return base.Channel.GetReaderUsingDataContractAsync(read);
+        public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Reader> SetReaderAsync(ReaderDataCollector.AtwService.Reader reader) {
+            return base.Channel.SetReaderAsync(reader);
         }
         
-        public ReaderDataCollector.AtwService.RaceType GetRaceUsingDataContract(int readingID) {
-            return base.Channel.GetRaceUsingDataContract(readingID);
+        public ReaderDataCollector.AtwService.Reading GetReadingById(System.Guid readingID) {
+            return base.Channel.GetReadingById(readingID);
         }
         
-        public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.RaceType> GetRaceUsingDataContractAsync(int readingID) {
-            return base.Channel.GetRaceUsingDataContractAsync(readingID);
+        public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Reading> GetReadingByIdAsync(System.Guid readingID) {
+            return base.Channel.GetReadingByIdAsync(readingID);
         }
         
-        public ReaderDataCollector.AtwService.ReadingType[] GetActiveReadings() {
-            return base.Channel.GetActiveReadings();
+        public System.Collections.Generic.List<ReaderDataCollector.AtwService.Reading> GetReadings() {
+            return base.Channel.GetReadings();
         }
         
-        public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.ReadingType[]> GetActiveReadingsAsync() {
-            return base.Channel.GetActiveReadingsAsync();
-        }
-        
-        public ReaderDataCollector.AtwService.RaceType[] GetActiveRaces() {
-            return base.Channel.GetActiveRaces();
-        }
-        
-        public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.RaceType[]> GetActiveRacesAsync() {
-            return base.Channel.GetActiveRacesAsync();
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<ReaderDataCollector.AtwService.Reading>> GetReadingsAsync() {
+            return base.Channel.GetReadingsAsync();
         }
     }
 }

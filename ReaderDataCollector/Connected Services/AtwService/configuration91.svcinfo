@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="00XnP1QJnvuXkA4QUCVEn2W5Dms=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="4yKzs25pY3Fn3VYbD775S0v7mNI=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="wsHttpBinding" name="UsernameEndpoint">
       <properties>
@@ -127,10 +127,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="UsernameEndpoint" contract="AtwService.IReadingService" bindingType="wsHttpBinding" address="http://77.68.12.158/AtwService/ReadingService.svc" bindingConfiguration="UsernameEndpoint">
+    <endpoint name="UsernameEndpoint" contract="AtwService.IReadingService" bindingType="wsHttpBinding" address="http://localhost/ATWService/ReadingService.svc" bindingConfiguration="UsernameEndpoint">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://77.68.12.158/AtwService/ReadingService.svc</serializedValue>
+          <serializedValue>http://localhost/ATWService/ReadingService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

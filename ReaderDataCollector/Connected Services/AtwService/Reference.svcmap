@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2e6745b7-56ab-4b94-9363-f93da8101058" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="13678b3d-5216-4717-ba86-d2957afc9036" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -9,7 +9,9 @@
     <GenerateInternalTypes>false</GenerateInternalTypes>
     <GenerateMessageContracts>false</GenerateMessageContracts>
     <NamespaceMappings />
-    <CollectionMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
     <GenerateSerializableTypes>true</GenerateSerializableTypes>
     <Serializer>Auto</Serializer>
     <UseSerializerForFaults>true</UseSerializerForFaults>
@@ -22,11 +24,11 @@
     <MetadataSource Address="http://77.68.12.158/AtwService/ReadingService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ReadingService.xsd" MetadataType="Schema" ID="794461c9-6820-45a0-bf62-ae157fff576f" SourceId="1" SourceUrl="http://77.68.12.158/AtwService/ReadingService.svc?xsd=xsd0" />
-    <MetadataFile FileName="ReadingService.disco" MetadataType="Disco" ID="08bdeb18-a9a4-4dd0-a865-ae3b755eeaa2" SourceId="1" SourceUrl="http://77.68.12.158/AtwService/ReadingService.svc?disco" />
-    <MetadataFile FileName="ReadingService1.xsd" MetadataType="Schema" ID="cda042f2-f8b6-483d-9ded-3d0b9b1fb888" SourceId="1" SourceUrl="http://77.68.12.158/AtwService/ReadingService.svc?xsd=xsd1" />
-    <MetadataFile FileName="ReadingService.wsdl" MetadataType="Wsdl" ID="2be0d165-40ac-4d6a-8c28-c27518bb2296" SourceId="1" SourceUrl="http://77.68.12.158/AtwService/ReadingService.svc?wsdl" />
-    <MetadataFile FileName="ReadingService2.xsd" MetadataType="Schema" ID="5c538d89-f1c5-48ac-a8dc-80111edb1582" SourceId="1" SourceUrl="http://77.68.12.158/AtwService/ReadingService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ReadingService.xsd" MetadataType="Schema" ID="bfa5c6ae-596a-4912-9e7d-884e8b7b6b45" SourceId="1" SourceUrl="http://localhost/ATWService/ReadingService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ReadingService.wsdl" MetadataType="Wsdl" ID="9c23d86c-be94-4985-b13e-785e6c61121e" SourceId="1" SourceUrl="http://localhost/ATWService/ReadingService.svc?wsdl" />
+    <MetadataFile FileName="ReadingService1.xsd" MetadataType="Schema" ID="27df0224-12b3-47c3-87b0-7cd939c6e037" SourceId="1" SourceUrl="http://localhost/ATWService/ReadingService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ReadingService2.xsd" MetadataType="Schema" ID="d7874952-4a10-49df-a31a-cb5034405b30" SourceId="1" SourceUrl="http://localhost/ATWService/ReadingService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ReadingService.disco" MetadataType="Disco" ID="692c37c7-73cb-4ab6-9e5b-f03f6cec30f8" SourceId="1" SourceUrl="http://localhost/ATWService/ReadingService.svc?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

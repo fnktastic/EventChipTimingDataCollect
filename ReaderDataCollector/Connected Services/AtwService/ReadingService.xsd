@@ -1,84 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://77.68.12.158/AtwService/ReadingService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ATWService.Model" />
-  <xs:element name="GetReadUsingDataContract">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ATWService.Model" minOccurs="0" name="read" nillable="true" type="q1:ReadType" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetReadUsingDataContractResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ATWService.Model" minOccurs="0" name="GetReadUsingDataContractResult" nillable="true" type="q2:ReadType" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetReadingUsingDataContract">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ATWService.Model" minOccurs="0" name="read" nillable="true" type="q3:ReadingType" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetReadingUsingDataContractResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ATWService.Model" minOccurs="0" name="GetReadingUsingDataContractResult" nillable="true" type="q4:ReadingType" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetReaderUsingDataContract">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ATWService.Model" minOccurs="0" name="read" nillable="true" type="q5:ReaderType" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetReaderUsingDataContractResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ATWService.Model" minOccurs="0" name="GetReaderUsingDataContractResult" nillable="true" type="q6:ReaderType" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetRaceUsingDataContract">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="readingID" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetRaceUsingDataContractResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ATWService.Model" minOccurs="0" name="GetRaceUsingDataContractResult" nillable="true" type="q7:RaceType" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetActiveReadings">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetActiveReadingsResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ATWService.Model" minOccurs="0" name="GetActiveReadingsResult" nillable="true" type="q8:ArrayOfReadingType" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetActiveRaces">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetActiveRacesResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ATWService.Model" minOccurs="0" name="GetActiveRacesResult" nillable="true" type="q9:ArrayOfRaceType" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/ATWService.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ATWService.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/ATWService/ReadingService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="Read">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EPC" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="ser:guid" />
+      <xs:element minOccurs="0" name="Reading" nillable="true" type="tns:Reading" />
+      <xs:element minOccurs="0" name="ReadingID" type="ser:guid" />
+      <xs:element minOccurs="0" name="Signal" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Time" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Read" nillable="true" type="tns:Read" />
+  <xs:complexType name="Reading">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AntennaNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EndedDateTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="ser:guid" />
+      <xs:element minOccurs="0" name="IPAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Reader" nillable="true" type="tns:Reader" />
+      <xs:element minOccurs="0" name="ReaderID" type="xs:int" />
+      <xs:element minOccurs="0" name="ReaderNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Reads" nillable="true" type="tns:ArrayOfRead" />
+      <xs:element minOccurs="0" name="StartedDateTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TimingPoint" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TotalReads" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Reading" nillable="true" type="tns:Reading" />
+  <xs:complexType name="Reader">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Host" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="Port" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Readings" nillable="true" type="tns:ArrayOfReading" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Reader" nillable="true" type="tns:Reader" />
+  <xs:complexType name="ArrayOfReading">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Reading" nillable="true" type="tns:Reading" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfReading" nillable="true" type="tns:ArrayOfReading" />
+  <xs:complexType name="ArrayOfRead">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Read" nillable="true" type="tns:Read" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRead" nillable="true" type="tns:ArrayOfRead" />
 </xs:schema>

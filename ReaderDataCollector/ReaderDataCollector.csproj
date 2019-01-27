@@ -227,16 +227,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Connected Services\AtwService\ReaderDataCollector.AtwService.RaceType.datasource">
+    <None Include="Connected Services\AtwService\ReaderDataCollector.AtwService.Read.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\AtwService\ReaderDataCollector.AtwService.ReaderType.datasource">
+    <None Include="Connected Services\AtwService\ReaderDataCollector.AtwService.Reader.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\AtwService\ReaderDataCollector.AtwService.ReadingType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\AtwService\ReaderDataCollector.AtwService.ReadType.datasource">
+    <None Include="Connected Services\AtwService\ReaderDataCollector.AtwService.Reading.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\AtwService\ReadingService.wsdl" />
