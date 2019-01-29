@@ -227,6 +227,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\AtwService\ReaderDataCollector.AtwService.Race.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\AtwService\ReaderDataCollector.AtwService.Read.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

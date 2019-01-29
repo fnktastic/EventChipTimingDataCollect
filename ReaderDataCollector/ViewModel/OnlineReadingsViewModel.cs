@@ -113,7 +113,8 @@ namespace ReaderDataCollector.ViewModel
                         try
                         {
                             service = channelFactory.CreateChannel();
-                            var readings = service.GetReadings();
+                            var races = service.GetAllRaces();
+                            var readings = service.GetAllReadings();
                         }
                         catch (Exception ex)
                         {
