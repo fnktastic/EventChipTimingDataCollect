@@ -102,6 +102,8 @@ namespace ReaderDataCollector.ViewModel
                 try
                 {
                     var binding = new WSHttpBinding(SecurityMode.None);
+                    binding.MaxReceivedMessageSize = 104857600;
+
                     var endpoint = new EndpointAddress(Consts.HttpUrl());
 
                     using (var channelFactory = new ChannelFactory<IReadingService>(binding, endpoint))
