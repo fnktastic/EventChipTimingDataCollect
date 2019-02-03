@@ -32,11 +32,11 @@
   <wsdl:message name="IReadingService_SetReader_OutputMessage">
     <wsdl:part name="parameters" element="tns:SetReaderResponse" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetReadingByID_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetReadingByID" />
+  <wsdl:message name="IReadingService_GetReadingById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetReadingById" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetReadingByID_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetReadingByIDResponse" />
+  <wsdl:message name="IReadingService_GetReadingById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetReadingByIdResponse" />
   </wsdl:message>
   <wsdl:message name="IReadingService_GetAllReadings_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAllReadings" />
@@ -50,17 +50,17 @@
   <wsdl:message name="IReadingService_GetAllRaces_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllRacesResponse" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetRaceByReadingID_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetRaceByReadingID" />
+  <wsdl:message name="IReadingService_GetRaceByReadingId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceByReadingId" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetRaceByReadingID_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetRaceByReadingIDResponse" />
+  <wsdl:message name="IReadingService_GetRaceByReadingId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRaceByReadingIdResponse" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetReadByID_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetReadByID" />
+  <wsdl:message name="IReadingService_GetReadById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetReadById" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetReadByID_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetReadByIDResponse" />
+  <wsdl:message name="IReadingService_GetReadById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetReadByIdResponse" />
   </wsdl:message>
   <wsdl:message name="IReadingService_GetAllReads_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAllReads" />
@@ -68,11 +68,11 @@
   <wsdl:message name="IReadingService_GetAllReads_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllReadsResponse" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetReaderByID_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetReaderByID" />
+  <wsdl:message name="IReadingService_GetReaderById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetReaderById" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetReaderByID_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetReaderByIDResponse" />
+  <wsdl:message name="IReadingService_GetReaderById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetReaderByIdResponse" />
   </wsdl:message>
   <wsdl:message name="IReadingService_GetAllReaders_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAllReaders" />
@@ -80,11 +80,11 @@
   <wsdl:message name="IReadingService_GetAllReaders_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllReadersResponse" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetAllReadsByReadingID_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllReadsByReadingID" />
+  <wsdl:message name="IReadingService_GetAllReadsByReadingId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllReadsByReadingId" />
   </wsdl:message>
-  <wsdl:message name="IReadingService_GetAllReadsByReadingID_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllReadsByReadingIDResponse" />
+  <wsdl:message name="IReadingService_GetAllReadsByReadingId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllReadsByReadingIdResponse" />
   </wsdl:message>
   <wsdl:portType name="IReadingService">
     <wsdl:operation name="SetRead">
@@ -99,9 +99,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/SetReader" message="tns:IReadingService_SetReader_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/SetReaderResponse" message="tns:IReadingService_SetReader_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetReadingByID">
-      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetReadingByID" message="tns:IReadingService_GetReadingByID_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetReadingByIDResponse" message="tns:IReadingService_GetReadingByID_OutputMessage" />
+    <wsdl:operation name="GetReadingById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetReadingById" message="tns:IReadingService_GetReadingById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetReadingByIdResponse" message="tns:IReadingService_GetReadingById_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetAllReadings">
       <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetAllReadings" message="tns:IReadingService_GetAllReadings_InputMessage" />
@@ -111,29 +111,29 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetAllRaces" message="tns:IReadingService_GetAllRaces_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetAllRacesResponse" message="tns:IReadingService_GetAllRaces_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetRaceByReadingID">
-      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetRaceByReadingID" message="tns:IReadingService_GetRaceByReadingID_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetRaceByReadingIDResponse" message="tns:IReadingService_GetRaceByReadingID_OutputMessage" />
+    <wsdl:operation name="GetRaceByReadingId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetRaceByReadingId" message="tns:IReadingService_GetRaceByReadingId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetRaceByReadingIdResponse" message="tns:IReadingService_GetRaceByReadingId_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetReadByID">
-      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetReadByID" message="tns:IReadingService_GetReadByID_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetReadByIDResponse" message="tns:IReadingService_GetReadByID_OutputMessage" />
+    <wsdl:operation name="GetReadById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetReadById" message="tns:IReadingService_GetReadById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetReadByIdResponse" message="tns:IReadingService_GetReadById_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetAllReads">
       <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetAllReads" message="tns:IReadingService_GetAllReads_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetAllReadsResponse" message="tns:IReadingService_GetAllReads_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetReaderByID">
-      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetReaderByID" message="tns:IReadingService_GetReaderByID_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetReaderByIDResponse" message="tns:IReadingService_GetReaderByID_OutputMessage" />
+    <wsdl:operation name="GetReaderById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetReaderById" message="tns:IReadingService_GetReaderById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetReaderByIdResponse" message="tns:IReadingService_GetReaderById_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetAllReaders">
       <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetAllReaders" message="tns:IReadingService_GetAllReaders_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetAllReadersResponse" message="tns:IReadingService_GetAllReaders_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetAllReadsByReadingID">
-      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetAllReadsByReadingID" message="tns:IReadingService_GetAllReadsByReadingID_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetAllReadsByReadingIDResponse" message="tns:IReadingService_GetAllReadsByReadingID_OutputMessage" />
+    <wsdl:operation name="GetAllReadsByReadingId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReadingService/GetAllReadsByReadingId" message="tns:IReadingService_GetAllReadsByReadingId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReadingService/GetAllReadsByReadingIdResponse" message="tns:IReadingService_GetAllReadsByReadingId_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="UsernameEndpoint" type="tns:IReadingService">
@@ -166,8 +166,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetReadingByID">
-      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetReadingByID" style="document" />
+    <wsdl:operation name="GetReadingById">
+      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetReadingById" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -193,8 +193,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetRaceByReadingID">
-      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetRaceByReadingID" style="document" />
+    <wsdl:operation name="GetRaceByReadingId">
+      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetRaceByReadingId" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -202,8 +202,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetReadByID">
-      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetReadByID" style="document" />
+    <wsdl:operation name="GetReadById">
+      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetReadById" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -220,8 +220,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetReaderByID">
-      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetReaderByID" style="document" />
+    <wsdl:operation name="GetReaderById">
+      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetReaderById" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -238,8 +238,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetAllReadsByReadingID">
-      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetAllReadsByReadingID" style="document" />
+    <wsdl:operation name="GetAllReadsByReadingId">
+      <soap12:operation soapAction="http://tempuri.org/IReadingService/GetAllReadsByReadingId" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

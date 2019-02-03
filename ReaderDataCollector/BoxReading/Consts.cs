@@ -20,7 +20,7 @@ namespace ReaderDataCollector.BoxReading
         public const string STOP = "!STOP!";
         public static string RECOVERY_PATH = Path.Combine(Path.Combine(Environment.CurrentDirectory, "recovery"));
 
-        private const string HTTP_SERVICE_PATH = "ReadingService.svc";
+        private const string HTTP_SERVICE_PATH = "ReadingService.svc"; //ReadingService.svc
         public static string HttpUrl(int port = 81, string host = "77.68.12.158")
         {
             return string.Format("http://{0}/{2}", host, port, HTTP_SERVICE_PATH);

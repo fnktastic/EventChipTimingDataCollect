@@ -28,6 +28,7 @@ namespace ReaderDataCollector.ViewModel
         private IReadRepository _readRepository;
         private List<Read> reads = new List<Read>();
         private List<Reading> readings = new List<Reading>();
+        private int interval = 1000;
         #endregion
         #region properies
         private Reading _selectedReading;
@@ -94,43 +95,63 @@ namespace ReaderDataCollector.ViewModel
         }
         #endregion
         #region methods
-        private void UpdateStatements()
+        private async Task UpdateStatementsAsync()
         {
-            IsLoadingInProgress = true;
-            Task.Run(() =>
-            {
-                try
-                {
-                    var binding = new WSHttpBinding(SecurityMode.None);
-                    binding.MaxReceivedMessageSize = 104857600;
+            await GetDataFromServer();
+        }
 
-                    var endpoint = new EndpointAddress(Consts.HttpUrl());
+        private async Task GetDataFromServer()
+        {
+            await Task.Run(async () =>
+             {
+                 try
+                 {
+                     var binding = new WSHttpBinding(SecurityMode.None);
+                     binding.MaxReceivedMessageSize = 104857600;
 
-                    using (var channelFactory = new ChannelFactory<IReadingService>(binding, endpoint))
-                    {
-                        channelFactory.Credentials.UserName.UserName = "test";
-                        channelFactory.Credentials.UserName.Password = "test123";
+                     var endpoint = new EndpointAddress(Consts.HttpUrl());
 
-                        IReadingService service = null;
-                        try
-                        {
-                            service = channelFactory.CreateChannel();
-                            var races = service.GetAllRaces();
-                            var readings = service.GetAllReadings();
-                        }
-                        catch (Exception ex)
-                        {
-                            (service as ICommunicationObject)?.Abort();
-                            Debug.WriteLine(string.Format("{0}", ex.Message));
-                        }
-                    }
-                    IsLoadingInProgress = false;
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                }
-            });
+                     using (var channelFactory = new ChannelFactory<IReadingService>(binding, endpoint))
+                     {
+                         channelFactory.Credentials.UserName.UserName = "test";
+                         channelFactory.Credentials.UserName.Password = "test123";
+
+                         IReadingService service = null;
+                         try
+                         {
+                             service = channelFactory.CreateChannel();                   
+                            while (true)
+                             {
+                                 IsLoadingInProgress = true;
+                                 var allReaders = service.GetAllReaders();
+                                 var asyncReadings = await service.GetAllReadingsAsync();
+                                 Readings = new ObservableCollection<Reading>(asyncReadings.Select(x =>
+                                 {
+                                     return new Reading()
+                                     {
+                                         StartedDateTime = x.StartedDateTime,
+                                         TotalReadings = x.TotalReads
+                                     };
+                                 }).OrderByDescending(x => x.StartedDateTime));
+
+                                 await Task.Delay(interval);
+                                 IsLoadingInProgress = false;
+                             }
+                         }
+                         catch (Exception ex)
+                         {
+                             (service as ICommunicationObject)?.Abort();
+                             Debug.WriteLine(string.Format("{0}", ex.Message));
+                             IsLoadingInProgress = false;
+                         }
+                     }
+                     IsLoadingInProgress = false;
+                 }
+                 catch (Exception ex)
+                 {
+                     Debug.WriteLine(ex.Message);
+                 }
+             });
         }
         #endregion
         #region commands
@@ -139,9 +160,9 @@ namespace ReaderDataCollector.ViewModel
         {
             get
             {
-                return _refreshDataCommand ?? (_refreshDataCommand = new RelayCommand(() =>
+                return _refreshDataCommand ?? (_refreshDataCommand = new RelayCommand(async () =>
                 {
-                    UpdateStatements();
+                    await UpdateStatementsAsync();
                 }));
             }
         }
