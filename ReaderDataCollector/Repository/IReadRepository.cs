@@ -10,6 +10,6 @@ namespace ReaderDataCollector.Repository
     public interface IReadRepository
     {
         IEnumerable<Read> Reads { get; }
-        void SaveRead(Read read);
+        Task SaveRead(Read read);
     }
 }

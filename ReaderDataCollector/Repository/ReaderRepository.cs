@@ -22,7 +22,7 @@ namespace ReaderDataCollector.Repository
             .Readers
             .ToList();
 
-        public async void SaveReader(Reader reader)
+        public async Task SaveReader(Reader reader)
         {
             _context.Readers.Add(reader);
             await _context.SaveChangesAsync();

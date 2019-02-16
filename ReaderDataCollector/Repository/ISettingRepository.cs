@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ReaderDataCollector.Repository
 {
-    public interface IReadingRepository
+    public interface ISettingRepository
     {
-        IEnumerable<Reading> Readings { get; }
-        Task SaveReading(Reading reading);
+        IEnumerable<Setting> Settings { get; }
+        Task SaveSetting(Setting setting);
     }
 }

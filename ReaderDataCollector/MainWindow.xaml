@@ -29,6 +29,7 @@
                 <Button Command="{Binding OpenOnlineReadingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="LightYellow" Content="Online Readings" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
                 <Button Command="{Binding OpenReportsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Content="Reporting" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
                 <Button Command="{Binding OpenStatisticssCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Content="Statistics" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
+                <Button Command="{Binding OpenSettingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="LightSlateGray" Content="Settings" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
             </StackPanel>
         </Border>
         <GridSplitter Grid.Row="0" Grid.Column="1" Width="5"
@@ -52,6 +53,9 @@
                     <DataTemplate DataType="{x:Type views:OnlineReadingsControl}" x:Key="TemplateE">
                         <views:OnlineReadingsControl />
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type views:SettingsControl}" x:Key="TemplateF">
+                        <views:SettingsControl />
+                    </DataTemplate>
                 </ContentControl.Resources>
                 <ContentControl.Style>
                     <Style TargetType="{x:Type ContentControl}">
@@ -71,6 +75,9 @@
                             </DataTrigger>
                             <DataTrigger Binding="{Binding SelectedView}" Value="D">
                                 <Setter Property="ContentTemplate" Value="{StaticResource DefaultTemplate}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SelectedView}" Value="F">
+                                <Setter Property="ContentTemplate" Value="{StaticResource TemplateF}" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

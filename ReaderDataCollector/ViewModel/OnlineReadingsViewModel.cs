@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ReaderDataCollector.AtwService;
 using ReaderDataCollector.BoxReading;
+using ReaderDataCollector.Utils;
 using Reading = ReaderDataCollector.Model.Reading;
 using Read = ReaderDataCollector.Model.Read;
 using Reader = ReaderDataCollector.Model.Reader;
@@ -28,7 +29,6 @@ namespace ReaderDataCollector.ViewModel
         private IReadRepository _readRepository;
         private List<Read> reads = new List<Read>();
         private List<Reading> readings = new List<Reading>();
-        private int interval = 1000;
         #endregion
         #region properies
         private Reading _selectedReading;
@@ -113,8 +113,8 @@ namespace ReaderDataCollector.ViewModel
 
                      using (var channelFactory = new ChannelFactory<IReadingService>(binding, endpoint))
                      {
-                         channelFactory.Credentials.UserName.UserName = "test";
-                         channelFactory.Credentials.UserName.Password = "test123";
+                         channelFactory.Credentials.UserName.UserName = string.Empty;
+                         channelFactory.Credentials.UserName.Password = string.Empty;
 
                          IReadingService service = null;
                          try
@@ -129,12 +129,15 @@ namespace ReaderDataCollector.ViewModel
                                  {
                                      return new Reading()
                                      {
+                                         Reader = new Reader() { Host = x.IPAddress },
+                                         TimingPoint = x.TimingPoint,
                                          StartedDateTime = x.StartedDateTime,
+                                         EndedDateTime = x.EndedDateTime,
                                          TotalReadings = x.TotalReads
                                      };
                                  }).OrderByDescending(x => x.StartedDateTime));
 
-                                 await Task.Delay(interval);
+                                 await Task.Delay(TimeSpan.FromSeconds(SettingUtil.UpdatePeriod));
                                  IsLoadingInProgress = false;
                              }
                          }

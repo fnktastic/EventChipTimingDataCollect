@@ -130,14 +130,18 @@
     <Compile Include="BoxReading\TcpDateTime.cs" />
     <Compile Include="BoxReading\TcpFileReciever.cs" />
     <Compile Include="BoxReading\ReadingsListener.cs" />
+    <Compile Include="Model\Setting.cs" />
     <Compile Include="Repository\IReaderRepository.cs" />
     <Compile Include="Repository\IReadingRepository.cs" />
     <Compile Include="Repository\IReadRepository.cs" />
+    <Compile Include="Repository\ISettingRepository.cs" />
     <Compile Include="Repository\ReaderRepository.cs" />
     <Compile Include="Repository\ReadingRepository.cs" />
     <Compile Include="Repository\ReadRepository.cs" />
+    <Compile Include="Repository\SettingRepository.cs" />
     <Compile Include="Utils\PathUtil.cs" />
     <Compile Include="Utils\PingUtil.cs" />
+    <Compile Include="Utils\SettingUtil.cs" />
     <Compile Include="ViewModel\OnlineReadingsViewModel.cs" />
     <Compile Include="ViewModel\PingViewModel.cs" />
     <Compile Include="ViewModel\ReaderViewModel.cs" />
@@ -145,6 +149,7 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\RewindViewModel.cs" />
     <Compile Include="ViewModel\SetClockViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\StoredReadingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\OnlineReadingsControl.xaml.cs">
@@ -164,6 +169,9 @@
     </Compile>
     <Compile Include="View\SetClockControl.xaml.cs">
       <DependentUpon>SetClockControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsControl.xaml.cs">
+      <DependentUpon>SettingsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StoredReadings.xaml.cs">
       <DependentUpon>StoredReadings.xaml</DependentUpon>
@@ -201,6 +209,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SetClockControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

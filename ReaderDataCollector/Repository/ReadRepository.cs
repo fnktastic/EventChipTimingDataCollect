@@ -19,7 +19,7 @@ namespace ReaderDataCollector.Repository
 
         public IEnumerable<Read> Reads => _context.Reads;
 
-        public async void SaveRead(Read read)
+        public async Task SaveRead(Read read)
         {
             _context.Reads.Add(read);
             await _context.SaveChangesAsync();

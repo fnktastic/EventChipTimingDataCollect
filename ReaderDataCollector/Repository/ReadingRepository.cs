@@ -25,7 +25,7 @@ namespace ReaderDataCollector.Repository
             .Readings
             .ToList();
 
-        public async void SaveReading(Reading reading)
+        public async Task SaveReading(Reading reading)
         {
             if (reading != null)
             {
