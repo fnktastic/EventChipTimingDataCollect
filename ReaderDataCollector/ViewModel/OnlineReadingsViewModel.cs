@@ -2,7 +2,6 @@
 using System.ServiceModel;
 using GalaSoft.MvvmLight.Command;
 using ReaderDataCollector.DataAccess;
-using ReaderDataCollector.Model;
 using ReaderDataCollector.Repository;
 using System;
 using System.Collections.Generic;
@@ -17,12 +16,18 @@ using ReaderDataCollector.Utils;
 using Reading = ReaderDataCollector.Model.Reading;
 using Read = ReaderDataCollector.Model.Read;
 using Reader = ReaderDataCollector.Model.Reader;
+using System.Windows;
+using ReaderDataCollector.View;
 
 namespace ReaderDataCollector.ViewModel
 {
     public class OnlineReadingsViewModel : ViewModelBase
     {
         #region fields
+        WSHttpBinding binding = null;
+        EndpointAddress endpoint = null;
+        ChannelFactory<IReadingService> channelFactory = null;
+        IReadingService service = null;
         private readonly Context _context;
         private IReaderRepository _readerRepository;
         private IReadingRepository _readingRepository;
@@ -92,9 +97,37 @@ namespace ReaderDataCollector.ViewModel
             _readerRepository = new ReaderRepository(_context);
             _readingRepository = new ReadingRepository(_context);
             _readRepository = new ReadRepository(_context);
+
+            InitService();
         }
         #endregion
         #region methods
+        private void InitService()
+        {
+            binding = new WSHttpBinding(SecurityMode.None)
+            {
+                MaxReceivedMessageSize = 104857600
+            };
+
+            endpoint = new EndpointAddress(Consts.HttpUrl());
+
+            try
+            {
+                channelFactory = new ChannelFactory<IReadingService>(binding, endpoint);
+
+                channelFactory.Credentials.UserName.UserName = string.Empty;
+                channelFactory.Credentials.UserName.Password = string.Empty;
+
+                service = channelFactory.CreateChannel();
+            }
+            catch (Exception ex)
+            {
+                (service as ICommunicationObject)?.Abort();
+                Debug.WriteLine(string.Format("{0}", ex.Message));
+                IsLoadingInProgress = false;
+            }
+        }
+
         private async Task UpdateStatementsAsync()
         {
             await GetDataFromServer();
@@ -106,54 +139,35 @@ namespace ReaderDataCollector.ViewModel
              {
                  try
                  {
-                     var binding = new WSHttpBinding(SecurityMode.None);
-                     binding.MaxReceivedMessageSize = 104857600;
-
-                     var endpoint = new EndpointAddress(Consts.HttpUrl());
-
-                     using (var channelFactory = new ChannelFactory<IReadingService>(binding, endpoint))
+                     while (true)
                      {
-                         channelFactory.Credentials.UserName.UserName = string.Empty;
-                         channelFactory.Credentials.UserName.Password = string.Empty;
-
-                         IReadingService service = null;
-                         try
+                         IsLoadingInProgress = true;
+                         var allReaders = service.GetAllReaders();
+                         var asyncReadings = await service.GetAllReadingsAsync();
+                         Readings = new ObservableCollection<Reading>(asyncReadings.Select(x =>
                          {
-                             service = channelFactory.CreateChannel();                   
-                            while (true)
+                             return new Reading()
                              {
-                                 IsLoadingInProgress = true;
-                                 var allReaders = service.GetAllReaders();
-                                 var asyncReadings = await service.GetAllReadingsAsync();
-                                 Readings = new ObservableCollection<Reading>(asyncReadings.Select(x =>
-                                 {
-                                     return new Reading()
-                                     {
-                                         Reader = new Reader() { Host = x.IPAddress },
-                                         TimingPoint = x.TimingPoint,
-                                         StartedDateTime = x.StartedDateTime,
-                                         EndedDateTime = x.EndedDateTime,
-                                         TotalReadings = x.TotalReads
-                                     };
-                                 }).OrderByDescending(x => x.StartedDateTime));
+                                 Reader = new Reader() { Host = x.IPAddress },
+                                 TimingPoint = x.TimingPoint,
+                                 StartedDateTime = x.StartedDateTime,
+                                 EndedDateTime = x.EndedDateTime,
+                                 TotalReadings = x.TotalReads
+                             };
+                         }).OrderByDescending(x => x.StartedDateTime));
 
-                                 await Task.Delay(TimeSpan.FromSeconds(SettingUtil.UpdatePeriod));
-                                 IsLoadingInProgress = false;
-                             }
-                         }
-                         catch (Exception ex)
-                         {
-                             (service as ICommunicationObject)?.Abort();
-                             Debug.WriteLine(string.Format("{0}", ex.Message));
-                             IsLoadingInProgress = false;
-                         }
+                         await Task.Delay(TimeSpan.FromSeconds(SettingUtil.UpdatePeriod));
+                         IsLoadingInProgress = false;
                      }
-                     IsLoadingInProgress = false;
                  }
                  catch (Exception ex)
                  {
-                     Debug.WriteLine(ex.Message);
+                     (service as ICommunicationObject)?.Abort();
+                     Debug.WriteLine(string.Format("{0}", ex.Message));
+                     IsLoadingInProgress = false;
                  }
+
+                 IsLoadingInProgress = false;
              });
         }
         #endregion
@@ -166,6 +180,29 @@ namespace ReaderDataCollector.ViewModel
                 return _refreshDataCommand ?? (_refreshDataCommand = new RelayCommand(async () =>
                 {
                     await UpdateStatementsAsync();
+                }));
+            }
+        }
+
+        private RelayCommand<Reading> _readingDetailsCommand;
+        public RelayCommand<Reading> ReadingDetailsCommand
+        {
+            get
+            {
+                return _readingDetailsCommand ?? (_readingDetailsCommand = new RelayCommand<Reading>((reading) =>
+                {                    
+                    var onlineReadingDetailsViewModel = new OnlineReadingDetailsViewModel(null);
+                    var window = new Window
+                    {
+                        Title = string.Format("Reading Details"),
+                        Width = 450,
+                        Height = 650,
+                        Content = new OnlineReadingDetailsControl(),
+                        ResizeMode = ResizeMode.NoResize,
+                        DataContext = onlineReadingDetailsViewModel
+                    };
+
+                    window.ShowDialog();
                 }));
             }
         }
