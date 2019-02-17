@@ -20,9 +20,9 @@ namespace ReaderDataCollector.Data.DataAccess
         public DbSet<Reader> Readers { get; set; }
     }
 
-    public class Initializer : DropCreateDatabaseIfModelChanges<Context>
+    public class DataInitializer : DropCreateDatabaseIfModelChanges<Context>
     {
-        public Initializer()
+        public DataInitializer()
         {
             using (var context = new Context())
             {

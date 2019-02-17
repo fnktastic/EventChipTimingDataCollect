@@ -1,23 +1,25 @@
 ﻿using GalaSoft.MvvmLight;
-using System.ServiceModel;
 using GalaSoft.MvvmLight.Command;
-using ReaderDataCollector.DataAccess;
-using ReaderDataCollector.Repository;
 using System;
+using System.ServiceModel;
+using System.Windows;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ReaderDataCollector.Data.DataAccess;
+using ReaderDataCollector.Data.Repository;
 using ReaderDataCollector.AtwService;
 using ReaderDataCollector.BoxReading;
 using ReaderDataCollector.Utils;
-using Reading = ReaderDataCollector.Model.Reading;
-using Read = ReaderDataCollector.Model.Read;
-using Reader = ReaderDataCollector.Model.Reader;
-using System.Windows;
+using Reading = ReaderDataCollector.Data.Model.Reading;
+using Read = ReaderDataCollector.Data.Model.Read;
+using Reader = ReaderDataCollector.Data.Model.Reader;
+
 using ReaderDataCollector.View;
+using AutoMapper;
 
 namespace ReaderDataCollector.ViewModel
 {
@@ -44,20 +46,8 @@ namespace ReaderDataCollector.ViewModel
             {
                 _selectedReading = value;
                 if (_selectedReading != null)
-                    Reads = new ObservableCollection<Read>(reads.Where(x => x.ReadingID == _selectedReading.ID));
+                    Reads = new ObservableCollection<Read>(reads.Where(x => x.Id == _selectedReading.Id));
                 RaisePropertyChanged("SelectedReading");
-            }
-        }
-
-        private Reader _selectedReader;
-        public Reader SelectedReader
-        {
-            get { return _selectedReader; }
-            set
-            {
-                _selectedReader = value;
-                Readings = new ObservableCollection<Reading>(_readingRepository.Readings.Where(x => x.ReaderID == _selectedReader.ID));
-                RaisePropertyChanged("SelectedReader");
             }
         }
 
@@ -144,17 +134,9 @@ namespace ReaderDataCollector.ViewModel
                          IsLoadingInProgress = true;
                          var allReaders = service.GetAllReaders();
                          var asyncReadings = await service.GetAllReadingsAsync();
-                         Readings = new ObservableCollection<Reading>(asyncReadings.Select(x =>
-                         {
-                             return new Reading()
-                             {
-                                 Reader = new Reader() { Host = x.IPAddress },
-                                 TimingPoint = x.TimingPoint,
-                                 StartedDateTime = x.StartedDateTime,
-                                 EndedDateTime = x.EndedDateTime,
-                                 TotalReadings = x.TotalReads
-                             };
-                         }).OrderByDescending(x => x.StartedDateTime));
+                         Readings = new ObservableCollection<Reading>(asyncReadings
+                             .Select(x => Mapper.Map<Reading>(x))
+                             .OrderByDescending(x => x.StartedDateTime));
 
                          await Task.Delay(TimeSpan.FromSeconds(SettingUtil.UpdatePeriod));
                          IsLoadingInProgress = false;

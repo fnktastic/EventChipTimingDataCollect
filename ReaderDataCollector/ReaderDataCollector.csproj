@@ -311,6 +311,12 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ReaderDataCollector.Data\ReaderDataCollector.Data.csproj">
+      <Project>{bbf5f1b6-74c5-4014-9a78-4ce5655cb857}</Project>
+      <Name>ReaderDataCollector.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
