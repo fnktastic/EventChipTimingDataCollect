@@ -162,4 +162,54 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetLastSeenLogs">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLastSeenLogsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/ATWService.Model" minOccurs="0" name="GetLastSeenLogsResult" nillable="true" type="q20:ArrayOfLastSeenLog" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLastSeenLogByReadingId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="readingId" type="q21:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLastSeenLogByReadingIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/ATWService.Model" minOccurs="0" name="GetLastSeenLogByReadingIdResult" nillable="true" type="q22:LastSeenLog" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllAliveLastSyncLogs">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllAliveLastSyncLogsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/ATWService.Model" minOccurs="0" name="GetAllAliveLastSyncLogsResult" nillable="true" type="q23:ArrayOfLastSeenLog" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllPastLastSyncLogs">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllPastLastSyncLogsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/ATWService.Model" minOccurs="0" name="GetAllPastLastSyncLogsResult" nillable="true" type="q24:ArrayOfLastSeenLog" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

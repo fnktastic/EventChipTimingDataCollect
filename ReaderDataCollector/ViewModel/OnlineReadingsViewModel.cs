@@ -36,8 +36,10 @@ namespace ReaderDataCollector.ViewModel
         private IReadRepository _readRepository;
         private List<Read> reads = new List<Read>();
         private List<Reading> readings = new List<Reading>();
+        private List<LastSeenLog> aliveLastSeenLogs = new List<LastSeenLog>();
+        private List<LastSeenLog> pastLastSeenLogs = new List<LastSeenLog>();
         #endregion
-        #region properies
+        #region properties
         private Reading _selectedReading;
         public Reading SelectedReading
         {
@@ -78,6 +80,18 @@ namespace ReaderDataCollector.ViewModel
             get { return _isLoadingInProgress; }
             set { _isLoadingInProgress = value; RaisePropertyChanged("IsLoadingInProgress"); }
         }
+
+        private bool _isShowLiveReadings;
+        public bool IsShowLiveReadings
+        {
+            get { return _isShowLiveReadings; }
+            set
+            {
+                _isShowLiveReadings = value;
+                RaisePropertyChanged("IsShowLiveReadings");
+            }
+        }
+
         #endregion
         #region constructor
         public OnlineReadingsViewModel()
@@ -100,6 +114,15 @@ namespace ReaderDataCollector.ViewModel
             };
 
             endpoint = new EndpointAddress(Consts.HttpUrl());
+        }
+
+        private async Task UpdateLastSeenLogAsync(IService service)
+        {
+            if (_isShowLiveReadings == true)
+                aliveLastSeenLogs = (await service.GetAllAliveLastSyncLogsAsync()).ToList();
+
+            if (_isShowLiveReadings == false)
+                pastLastSeenLogs = (await service.GetAllPastLastSyncLogsAsync()).ToList();
         }
 
         private async Task UpdateStatementsAsync()
@@ -125,14 +148,18 @@ namespace ReaderDataCollector.ViewModel
                              while (true)
                              {
                                  IsLoadingInProgress = true;
+
                                  var allReaders = service.GetAllReaders();
                                  var asyncReadings = await service.GetAllReadingsAsync();
+
                                  Readings = new ObservableCollection<Reading>(asyncReadings
                                      .Select(x => Mapper.Map<Reading>(x))
                                      .OrderByDescending(x => x.StartedDateTime));
 
-                                 await Task.Delay(TimeSpan.FromSeconds(SettingUtil.UpdatePeriod));
+                                 await UpdateLastSeenLogAsync(service);
+
                                  IsLoadingInProgress = false;
+                                 await Task.Delay(TimeSpan.FromSeconds(SettingUtil.UpdatePeriod));
                              }
                          }
                      }

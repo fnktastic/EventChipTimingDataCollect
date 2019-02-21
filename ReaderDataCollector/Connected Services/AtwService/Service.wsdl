@@ -86,6 +86,30 @@
   <wsdl:message name="IService_GetAllReadsByReadingId_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllReadsByReadingIdResponse" />
   </wsdl:message>
+  <wsdl:message name="IService_GetLastSeenLogs_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLastSeenLogs" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetLastSeenLogs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLastSeenLogsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetLastSeenLogByReadingId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLastSeenLogByReadingId" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetLastSeenLogByReadingId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLastSeenLogByReadingIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllAliveLastSyncLogs_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAliveLastSyncLogs" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllAliveLastSyncLogs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAliveLastSyncLogsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllPastLastSyncLogs_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPastLastSyncLogs" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllPastLastSyncLogs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPastLastSyncLogsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IService">
     <wsdl:operation name="SetRead">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/SetRead" message="tns:IService_SetRead_InputMessage" />
@@ -134,6 +158,22 @@
     <wsdl:operation name="GetAllReadsByReadingId">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/GetAllReadsByReadingId" message="tns:IService_GetAllReadsByReadingId_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService/GetAllReadsByReadingIdResponse" message="tns:IService_GetAllReadsByReadingId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSeenLogs">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetLastSeenLogs" message="tns:IService_GetLastSeenLogs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetLastSeenLogsResponse" message="tns:IService_GetLastSeenLogs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSeenLogByReadingId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetLastSeenLogByReadingId" message="tns:IService_GetLastSeenLogByReadingId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetLastSeenLogByReadingIdResponse" message="tns:IService_GetLastSeenLogByReadingId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAliveLastSyncLogs">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetAllAliveLastSyncLogs" message="tns:IService_GetAllAliveLastSyncLogs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetAllAliveLastSyncLogsResponse" message="tns:IService_GetAllAliveLastSyncLogs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPastLastSyncLogs">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetAllPastLastSyncLogs" message="tns:IService_GetAllPastLastSyncLogs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetAllPastLastSyncLogsResponse" message="tns:IService_GetAllPastLastSyncLogs_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="UsernameEndpoint" type="tns:IService">
@@ -240,6 +280,42 @@
     </wsdl:operation>
     <wsdl:operation name="GetAllReadsByReadingId">
       <soap12:operation soapAction="http://tempuri.org/IService/GetAllReadsByReadingId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSeenLogs">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetLastSeenLogs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSeenLogByReadingId">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetLastSeenLogByReadingId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAliveLastSyncLogs">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllAliveLastSyncLogs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPastLastSyncLogs">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllPastLastSyncLogs" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

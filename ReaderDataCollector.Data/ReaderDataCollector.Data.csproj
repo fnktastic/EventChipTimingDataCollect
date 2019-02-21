@@ -78,17 +78,16 @@
     <Compile Include="Repository\ReaderRepository.cs" />
     <Compile Include="Repository\ReadingRepository.cs" />
     <Compile Include="Repository\ReadRepository.cs" />
+    <Compile Include="Services\Race\RaceService.cs" />
+    <Compile Include="Services\Reader\ReaderService.cs" />
+    <Compile Include="Services\Reading\ReadingService.cs" />
+    <Compile Include="Services\Read\ReadService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\Race\" />
-    <Folder Include="Services\Reader\" />
-    <Folder Include="Services\Reading\" />
-    <Folder Include="Services\Read\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -70,4 +70,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfReader" nillable="true" type="tns:ArrayOfReader" />
+  <xs:complexType name="ArrayOfLastSeenLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LastSeenLog" nillable="true" type="tns:LastSeenLog" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLastSeenLog" nillable="true" type="tns:ArrayOfLastSeenLog" />
+  <xs:complexType name="LastSeenLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="LastSeenAt" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ReadingId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LastSeenLog" nillable="true" type="tns:LastSeenLog" />
 </xs:schema>

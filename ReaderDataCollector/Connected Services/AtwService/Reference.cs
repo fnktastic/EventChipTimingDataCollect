@@ -529,6 +529,83 @@ namespace ReaderDataCollector.AtwService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LastSeenLog", Namespace="http://schemas.datacontract.org/2004/07/ATWService.Model")]
+    [System.SerializableAttribute()]
+    public partial class LastSeenLog : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime LastSeenAtField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid ReadingIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime LastSeenAt {
+            get {
+                return this.LastSeenAtField;
+            }
+            set {
+                if ((this.LastSeenAtField.Equals(value) != true)) {
+                    this.LastSeenAtField = value;
+                    this.RaisePropertyChanged("LastSeenAt");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid ReadingId {
+            get {
+                return this.ReadingIdField;
+            }
+            set {
+                if ((this.ReadingIdField.Equals(value) != true)) {
+                    this.ReadingIdField = value;
+                    this.RaisePropertyChanged("ReadingId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AtwService.IService")]
     public interface IService {
@@ -604,6 +681,30 @@ namespace ReaderDataCollector.AtwService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllReadsByReadingId", ReplyAction="http://tempuri.org/IService/GetAllReadsByReadingIdResponse")]
         System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Read[]> GetAllReadsByReadingIdAsync(System.Guid readingId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetLastSeenLogs", ReplyAction="http://tempuri.org/IService/GetLastSeenLogsResponse")]
+        ReaderDataCollector.AtwService.LastSeenLog[] GetLastSeenLogs();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetLastSeenLogs", ReplyAction="http://tempuri.org/IService/GetLastSeenLogsResponse")]
+        System.Threading.Tasks.Task<ReaderDataCollector.AtwService.LastSeenLog[]> GetLastSeenLogsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetLastSeenLogByReadingId", ReplyAction="http://tempuri.org/IService/GetLastSeenLogByReadingIdResponse")]
+        ReaderDataCollector.AtwService.LastSeenLog GetLastSeenLogByReadingId(System.Guid readingId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetLastSeenLogByReadingId", ReplyAction="http://tempuri.org/IService/GetLastSeenLogByReadingIdResponse")]
+        System.Threading.Tasks.Task<ReaderDataCollector.AtwService.LastSeenLog> GetLastSeenLogByReadingIdAsync(System.Guid readingId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllAliveLastSyncLogs", ReplyAction="http://tempuri.org/IService/GetAllAliveLastSyncLogsResponse")]
+        ReaderDataCollector.AtwService.LastSeenLog[] GetAllAliveLastSyncLogs();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllAliveLastSyncLogs", ReplyAction="http://tempuri.org/IService/GetAllAliveLastSyncLogsResponse")]
+        System.Threading.Tasks.Task<ReaderDataCollector.AtwService.LastSeenLog[]> GetAllAliveLastSyncLogsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllPastLastSyncLogs", ReplyAction="http://tempuri.org/IService/GetAllPastLastSyncLogsResponse")]
+        ReaderDataCollector.AtwService.LastSeenLog[] GetAllPastLastSyncLogs();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllPastLastSyncLogs", ReplyAction="http://tempuri.org/IService/GetAllPastLastSyncLogsResponse")]
+        System.Threading.Tasks.Task<ReaderDataCollector.AtwService.LastSeenLog[]> GetAllPastLastSyncLogsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -727,6 +828,38 @@ namespace ReaderDataCollector.AtwService {
         
         public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Read[]> GetAllReadsByReadingIdAsync(System.Guid readingId) {
             return base.Channel.GetAllReadsByReadingIdAsync(readingId);
+        }
+        
+        public ReaderDataCollector.AtwService.LastSeenLog[] GetLastSeenLogs() {
+            return base.Channel.GetLastSeenLogs();
+        }
+        
+        public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.LastSeenLog[]> GetLastSeenLogsAsync() {
+            return base.Channel.GetLastSeenLogsAsync();
+        }
+        
+        public ReaderDataCollector.AtwService.LastSeenLog GetLastSeenLogByReadingId(System.Guid readingId) {
+            return base.Channel.GetLastSeenLogByReadingId(readingId);
+        }
+        
+        public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.LastSeenLog> GetLastSeenLogByReadingIdAsync(System.Guid readingId) {
+            return base.Channel.GetLastSeenLogByReadingIdAsync(readingId);
+        }
+        
+        public ReaderDataCollector.AtwService.LastSeenLog[] GetAllAliveLastSyncLogs() {
+            return base.Channel.GetAllAliveLastSyncLogs();
+        }
+        
+        public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.LastSeenLog[]> GetAllAliveLastSyncLogsAsync() {
+            return base.Channel.GetAllAliveLastSyncLogsAsync();
+        }
+        
+        public ReaderDataCollector.AtwService.LastSeenLog[] GetAllPastLastSyncLogs() {
+            return base.Channel.GetAllPastLastSyncLogs();
+        }
+        
+        public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.LastSeenLog[]> GetAllPastLastSyncLogsAsync() {
+            return base.Channel.GetAllPastLastSyncLogsAsync();
         }
     }
 }
