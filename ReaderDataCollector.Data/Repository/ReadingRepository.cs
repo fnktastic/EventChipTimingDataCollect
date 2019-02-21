@@ -8,6 +8,15 @@ using ReaderDataCollector.Data.Model;
 
 namespace ReaderDataCollector.Data.Repository
 {
+    public interface IReadingRepository
+    {
+        Task<IEnumerable<Reading>> ReadingsAsync();
+
+        Task SaveReading(Reading reading);
+
+        Reading GetById(Guid Id);
+    }
+
     public class ReadingRepository : IReadingRepository
     {
         private readonly Context _context;

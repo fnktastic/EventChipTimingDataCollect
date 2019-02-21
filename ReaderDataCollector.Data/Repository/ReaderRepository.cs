@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace ReaderDataCollector.Data.Repository
 {
+    public interface IReaderRepository
+    {
+        IEnumerable<Reader> Readers { get; }
+
+        Task SaveReader(Reader reader);
+    }
+
     public class ReaderRepository : IReaderRepository
     {
         private readonly Context _context;

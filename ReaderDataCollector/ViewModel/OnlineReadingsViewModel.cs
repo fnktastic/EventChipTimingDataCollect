@@ -99,7 +99,7 @@ namespace ReaderDataCollector.ViewModel
                 MaxReceivedMessageSize = 104857600
             };
 
-            endpoint = new EndpointAddress(Consts.HttpUrl());          
+            endpoint = new EndpointAddress(Consts.HttpUrl());
         }
 
         private async Task UpdateStatementsAsync()
@@ -134,14 +134,14 @@ namespace ReaderDataCollector.ViewModel
                                  await Task.Delay(TimeSpan.FromSeconds(SettingUtil.UpdatePeriod));
                                  IsLoadingInProgress = false;
                              }
-                         }                          
+                         }
                      }
                      catch (Exception ex)
                      {
                          (service as ICommunicationObject)?.Abort();
                          Debug.WriteLine(string.Format("{0}", ex.Message));
                          IsLoadingInProgress = false;
-                     }                   
+                     }
                  }
                  catch (Exception ex)
                  {
@@ -173,23 +173,47 @@ namespace ReaderDataCollector.ViewModel
             get
             {
                 return _readingDetailsCommand ?? (_readingDetailsCommand = new RelayCommand<Reading>((reading) =>
-                {                    
-                    var onlineReadingDetailsViewModel = new OnlineReadingDetailsViewModel(null);
-                    var window = new Window
+                {
+                    using (channelFactory = new ChannelFactory<IService>(binding, endpoint))
                     {
-                        Title = string.Format("Reading Details"),
-                        Width = 450,
-                        Height = 650,
-                        Content = new OnlineReadingDetailsControl(),
-                        ResizeMode = ResizeMode.NoResize,
-                        DataContext = onlineReadingDetailsViewModel
-                    };
+                        channelFactory.Credentials.UserName.UserName = string.Empty;
+                        channelFactory.Credentials.UserName.Password = string.Empty;
 
-                    window.ShowDialog();
+                        service = channelFactory.CreateChannel();
+
+                        var reads = service
+                                    .GetAllReadsByReadingId(reading.Id)
+                                    .Select(x => { return Mapper.Map<Read>(x); });
+
+                        var onlineReadingDetailsViewModel = new OnlineReadingDetailsViewModel(reads);
+
+                        var window = new Window
+                        {
+                            Title = string.Format("Reading Details"),
+                            Width = 450,
+                            Height = 650,
+                            Content = new OnlineReadingDetailsControl(),
+                            ResizeMode = ResizeMode.NoResize,
+                            DataContext = onlineReadingDetailsViewModel
+                        };
+
+                        window.ShowDialog();
+                    }
                 }));
             }
         }
 
+        private RelayCommand<Reading> _saveReadingCommand;
+        public RelayCommand<Reading> SaveReadingCommand
+        {
+            get
+            {
+                return _saveReadingCommand ?? (_saveReadingCommand = new RelayCommand<Reading>((reading) =>
+                {
+
+                }));
+            }
+        }
         #endregion
     }
 }

@@ -6,6 +6,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Reading = ReaderDataCollector.Data.Model.Reading;
+using Read = ReaderDataCollector.Data.Model.Read;
+using Reader = ReaderDataCollector.Data.Model.Reader;
 
 namespace ReaderDataCollector.ViewModel
 {
@@ -18,9 +21,9 @@ namespace ReaderDataCollector.ViewModel
             set { _reads = value; RaisePropertyChanged("Reads"); }
         }
 
-        public OnlineReadingDetailsViewModel(ObservableCollection<Read> reads)
+        public OnlineReadingDetailsViewModel(IEnumerable<Read> reads)
         {
-            Reads = reads;
+            Reads = new ObservableCollection<Read>(reads);
         }
     }
 }

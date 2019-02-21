@@ -75,9 +75,6 @@
     <Compile Include="Model\Reader.cs" />
     <Compile Include="Model\Reading.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\IReaderRepository.cs" />
-    <Compile Include="Repository\IReadingRepository.cs" />
-    <Compile Include="Repository\IReadRepository.cs" />
     <Compile Include="Repository\ReaderRepository.cs" />
     <Compile Include="Repository\ReadingRepository.cs" />
     <Compile Include="Repository\ReadRepository.cs" />
@@ -85,6 +82,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\Race\" />
+    <Folder Include="Services\Reader\" />
+    <Folder Include="Services\Reading\" />
+    <Folder Include="Services\Read\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
