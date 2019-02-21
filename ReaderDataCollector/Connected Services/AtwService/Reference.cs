@@ -530,106 +530,106 @@ namespace ReaderDataCollector.AtwService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AtwService.IReadingService")]
-    public interface IReadingService {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AtwService.IService")]
+    public interface IService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/SetRead", ReplyAction="http://tempuri.org/IReadingService/SetReadResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/SetRead", ReplyAction="http://tempuri.org/IService/SetReadResponse")]
         ReaderDataCollector.AtwService.Read SetRead(ReaderDataCollector.AtwService.Read read);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/SetRead", ReplyAction="http://tempuri.org/IReadingService/SetReadResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/SetRead", ReplyAction="http://tempuri.org/IService/SetReadResponse")]
         System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Read> SetReadAsync(ReaderDataCollector.AtwService.Read read);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/SetReading", ReplyAction="http://tempuri.org/IReadingService/SetReadingResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/SetReading", ReplyAction="http://tempuri.org/IService/SetReadingResponse")]
         ReaderDataCollector.AtwService.Reading SetReading(ReaderDataCollector.AtwService.Reading reading);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/SetReading", ReplyAction="http://tempuri.org/IReadingService/SetReadingResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/SetReading", ReplyAction="http://tempuri.org/IService/SetReadingResponse")]
         System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Reading> SetReadingAsync(ReaderDataCollector.AtwService.Reading reading);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/SetReader", ReplyAction="http://tempuri.org/IReadingService/SetReaderResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/SetReader", ReplyAction="http://tempuri.org/IService/SetReaderResponse")]
         ReaderDataCollector.AtwService.Reader SetReader(ReaderDataCollector.AtwService.Reader reader);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/SetReader", ReplyAction="http://tempuri.org/IReadingService/SetReaderResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/SetReader", ReplyAction="http://tempuri.org/IService/SetReaderResponse")]
         System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Reader> SetReaderAsync(ReaderDataCollector.AtwService.Reader reader);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReadingById", ReplyAction="http://tempuri.org/IReadingService/GetReadingByIdResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetReadingById", ReplyAction="http://tempuri.org/IService/GetReadingByIdResponse")]
         ReaderDataCollector.AtwService.Reading GetReadingById(System.Guid readingId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReadingById", ReplyAction="http://tempuri.org/IReadingService/GetReadingByIdResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetReadingById", ReplyAction="http://tempuri.org/IService/GetReadingByIdResponse")]
         System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Reading> GetReadingByIdAsync(System.Guid readingId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetAllReadings", ReplyAction="http://tempuri.org/IReadingService/GetAllReadingsResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllReadings", ReplyAction="http://tempuri.org/IService/GetAllReadingsResponse")]
         ReaderDataCollector.AtwService.Reading[] GetAllReadings();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetAllReadings", ReplyAction="http://tempuri.org/IReadingService/GetAllReadingsResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllReadings", ReplyAction="http://tempuri.org/IService/GetAllReadingsResponse")]
         System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Reading[]> GetAllReadingsAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetAllRaces", ReplyAction="http://tempuri.org/IReadingService/GetAllRacesResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllRaces", ReplyAction="http://tempuri.org/IService/GetAllRacesResponse")]
         ReaderDataCollector.AtwService.Race[] GetAllRaces();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetAllRaces", ReplyAction="http://tempuri.org/IReadingService/GetAllRacesResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllRaces", ReplyAction="http://tempuri.org/IService/GetAllRacesResponse")]
         System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Race[]> GetAllRacesAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetRaceByReadingId", ReplyAction="http://tempuri.org/IReadingService/GetRaceByReadingIdResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetRaceByReadingId", ReplyAction="http://tempuri.org/IService/GetRaceByReadingIdResponse")]
         ReaderDataCollector.AtwService.Race GetRaceByReadingId(System.Guid readingId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetRaceByReadingId", ReplyAction="http://tempuri.org/IReadingService/GetRaceByReadingIdResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetRaceByReadingId", ReplyAction="http://tempuri.org/IService/GetRaceByReadingIdResponse")]
         System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Race> GetRaceByReadingIdAsync(System.Guid readingId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReadById", ReplyAction="http://tempuri.org/IReadingService/GetReadByIdResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetReadById", ReplyAction="http://tempuri.org/IService/GetReadByIdResponse")]
         ReaderDataCollector.AtwService.Read GetReadById(System.Guid readId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReadById", ReplyAction="http://tempuri.org/IReadingService/GetReadByIdResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetReadById", ReplyAction="http://tempuri.org/IService/GetReadByIdResponse")]
         System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Read> GetReadByIdAsync(System.Guid readId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetAllReads", ReplyAction="http://tempuri.org/IReadingService/GetAllReadsResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllReads", ReplyAction="http://tempuri.org/IService/GetAllReadsResponse")]
         ReaderDataCollector.AtwService.Read[] GetAllReads();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetAllReads", ReplyAction="http://tempuri.org/IReadingService/GetAllReadsResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllReads", ReplyAction="http://tempuri.org/IService/GetAllReadsResponse")]
         System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Read[]> GetAllReadsAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReaderById", ReplyAction="http://tempuri.org/IReadingService/GetReaderByIdResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetReaderById", ReplyAction="http://tempuri.org/IService/GetReaderByIdResponse")]
         ReaderDataCollector.AtwService.Reader GetReaderById(int readerId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetReaderById", ReplyAction="http://tempuri.org/IReadingService/GetReaderByIdResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetReaderById", ReplyAction="http://tempuri.org/IService/GetReaderByIdResponse")]
         System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Reader> GetReaderByIdAsync(int readerId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetAllReaders", ReplyAction="http://tempuri.org/IReadingService/GetAllReadersResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllReaders", ReplyAction="http://tempuri.org/IService/GetAllReadersResponse")]
         ReaderDataCollector.AtwService.Reader[] GetAllReaders();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetAllReaders", ReplyAction="http://tempuri.org/IReadingService/GetAllReadersResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllReaders", ReplyAction="http://tempuri.org/IService/GetAllReadersResponse")]
         System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Reader[]> GetAllReadersAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetAllReadsByReadingId", ReplyAction="http://tempuri.org/IReadingService/GetAllReadsByReadingIdResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllReadsByReadingId", ReplyAction="http://tempuri.org/IService/GetAllReadsByReadingIdResponse")]
         ReaderDataCollector.AtwService.Read[] GetAllReadsByReadingId(System.Guid readingId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReadingService/GetAllReadsByReadingId", ReplyAction="http://tempuri.org/IReadingService/GetAllReadsByReadingIdResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllReadsByReadingId", ReplyAction="http://tempuri.org/IService/GetAllReadsByReadingIdResponse")]
         System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Read[]> GetAllReadsByReadingIdAsync(System.Guid readingId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IReadingServiceChannel : ReaderDataCollector.AtwService.IReadingService, System.ServiceModel.IClientChannel {
+    public interface IServiceChannel : ReaderDataCollector.AtwService.IService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ReadingServiceClient : System.ServiceModel.ClientBase<ReaderDataCollector.AtwService.IReadingService>, ReaderDataCollector.AtwService.IReadingService {
+    public partial class ServiceClient : System.ServiceModel.ClientBase<ReaderDataCollector.AtwService.IService>, ReaderDataCollector.AtwService.IService {
         
-        public ReadingServiceClient() {
+        public ServiceClient() {
         }
         
-        public ReadingServiceClient(string endpointConfigurationName) : 
+        public ServiceClient(string endpointConfigurationName) : 
                 base(endpointConfigurationName) {
         }
         
-        public ReadingServiceClient(string endpointConfigurationName, string remoteAddress) : 
+        public ServiceClient(string endpointConfigurationName, string remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public ReadingServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public ServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public ReadingServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public ServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         

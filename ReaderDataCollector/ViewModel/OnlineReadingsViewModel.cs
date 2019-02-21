@@ -28,8 +28,8 @@ namespace ReaderDataCollector.ViewModel
         #region fields
         WSHttpBinding binding = null;
         EndpointAddress endpoint = null;
-        ChannelFactory<IReadingService> channelFactory = null;
-        IReadingService service = null;
+        ChannelFactory<IService> channelFactory = null;
+        IService service = null;
         private readonly Context _context;
         private IReaderRepository _readerRepository;
         private IReadingRepository _readingRepository;
@@ -115,7 +115,7 @@ namespace ReaderDataCollector.ViewModel
                  {
                      try
                      {
-                         using (channelFactory = new ChannelFactory<IReadingService>(binding, endpoint))
+                         using (channelFactory = new ChannelFactory<IService>(binding, endpoint))
                          {
                              channelFactory.Credentials.UserName.UserName = string.Empty;
                              channelFactory.Credentials.UserName.Password = string.Empty;

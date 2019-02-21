@@ -262,14 +262,14 @@
     <None Include="Connected Services\AtwService\ReaderDataCollector.AtwService.Reading.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\AtwService\ReadingService.wsdl" />
-    <None Include="Connected Services\AtwService\ReadingService.xsd">
+    <None Include="Connected Services\AtwService\Service.wsdl" />
+    <None Include="Connected Services\AtwService\Service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\AtwService\ReadingService1.xsd">
+    <None Include="Connected Services\AtwService\Service1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\AtwService\ReadingService2.xsd">
+    <None Include="Connected Services\AtwService\Service2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
@@ -279,7 +279,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ico.ico" />
@@ -294,10 +296,16 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ReaderDataCollector.Data\ReaderDataCollector.Data.csproj">
+      <Project>{bbf5f1b6-74c5-4014-9a78-4ce5655cb857}</Project>
+      <Name>ReaderDataCollector.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\AtwService\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\AtwService\ReadingService.disco" />
+    <None Include="Connected Services\AtwService\Service.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\AtwService\configuration91.svcinfo" />
@@ -310,12 +318,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ReaderDataCollector.Data\ReaderDataCollector.Data.csproj">
-      <Project>{bbf5f1b6-74c5-4014-9a78-4ce5655cb857}</Project>
-      <Name>ReaderDataCollector.Data</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
