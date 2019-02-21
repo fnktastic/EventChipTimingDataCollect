@@ -99,23 +99,7 @@ namespace ReaderDataCollector.ViewModel
                 MaxReceivedMessageSize = 104857600
             };
 
-            endpoint = new EndpointAddress(Consts.HttpUrl());
-
-            try
-            {
-                channelFactory = new ChannelFactory<IReadingService>(binding, endpoint);
-
-                channelFactory.Credentials.UserName.UserName = string.Empty;
-                channelFactory.Credentials.UserName.Password = string.Empty;
-
-                service = channelFactory.CreateChannel();
-            }
-            catch (Exception ex)
-            {
-                (service as ICommunicationObject)?.Abort();
-                Debug.WriteLine(string.Format("{0}", ex.Message));
-                IsLoadingInProgress = false;
-            }
+            endpoint = new EndpointAddress(Consts.HttpUrl());          
         }
 
         private async Task UpdateStatementsAsync()
@@ -129,18 +113,35 @@ namespace ReaderDataCollector.ViewModel
              {
                  try
                  {
-                     while (true)
+                     try
                      {
-                         IsLoadingInProgress = true;
-                         var allReaders = service.GetAllReaders();
-                         var asyncReadings = await service.GetAllReadingsAsync();
-                         Readings = new ObservableCollection<Reading>(asyncReadings
-                             .Select(x => Mapper.Map<Reading>(x))
-                             .OrderByDescending(x => x.StartedDateTime));
+                         using (channelFactory = new ChannelFactory<IReadingService>(binding, endpoint))
+                         {
+                             channelFactory.Credentials.UserName.UserName = string.Empty;
+                             channelFactory.Credentials.UserName.Password = string.Empty;
 
-                         await Task.Delay(TimeSpan.FromSeconds(SettingUtil.UpdatePeriod));
-                         IsLoadingInProgress = false;
+                             service = channelFactory.CreateChannel();
+
+                             while (true)
+                             {
+                                 IsLoadingInProgress = true;
+                                 var allReaders = service.GetAllReaders();
+                                 var asyncReadings = await service.GetAllReadingsAsync();
+                                 Readings = new ObservableCollection<Reading>(asyncReadings
+                                     .Select(x => Mapper.Map<Reading>(x))
+                                     .OrderByDescending(x => x.StartedDateTime));
+
+                                 await Task.Delay(TimeSpan.FromSeconds(SettingUtil.UpdatePeriod));
+                                 IsLoadingInProgress = false;
+                             }
+                         }                          
                      }
+                     catch (Exception ex)
+                     {
+                         (service as ICommunicationObject)?.Abort();
+                         Debug.WriteLine(string.Format("{0}", ex.Message));
+                         IsLoadingInProgress = false;
+                     }                   
                  }
                  catch (Exception ex)
                  {

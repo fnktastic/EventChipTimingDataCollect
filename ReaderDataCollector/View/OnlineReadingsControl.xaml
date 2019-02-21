@@ -110,5 +110,20 @@
                 </Grid>
             </Button>
         </StackPanel>
+        <Controls:ToggleSwitch Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Controls:ToggleSwitch.Style>
+                <Style TargetType="{x:Type Controls:ToggleSwitch}">
+                    <Setter Property="Content" Value="Live / Saved"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Content" Value="Live Readings"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Content" Value="Past Readings"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Controls:ToggleSwitch.Style>
+        </Controls:ToggleSwitch>
     </Grid>
 </UserControl>
