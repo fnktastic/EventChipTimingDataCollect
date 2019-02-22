@@ -74,14 +74,17 @@
     <Compile Include="Model\Read.cs" />
     <Compile Include="Model\Reader.cs" />
     <Compile Include="Model\Reading.cs" />
+    <Compile Include="Model\Setting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ReaderRepository.cs" />
     <Compile Include="Repository\ReadingRepository.cs" />
     <Compile Include="Repository\ReadRepository.cs" />
+    <Compile Include="Repository\SettingRepository.cs" />
     <Compile Include="Services\Race\RaceService.cs" />
     <Compile Include="Services\Reader\ReaderService.cs" />
     <Compile Include="Services\Reading\ReadingService.cs" />
     <Compile Include="Services\Read\ReadService.cs" />
+    <Compile Include="Services\Setting\SettingService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

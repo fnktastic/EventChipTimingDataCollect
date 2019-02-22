@@ -20,12 +20,14 @@ using Reader = ReaderDataCollector.Data.Model.Reader;
 
 using ReaderDataCollector.View;
 using AutoMapper;
+using System.Threading;
 
 namespace ReaderDataCollector.ViewModel
 {
     public class OnlineReadingsViewModel : ViewModelBase
     {
         #region fields
+        CancellationTokenSource cts = new CancellationTokenSource();
         WSHttpBinding binding = null;
         EndpointAddress endpoint = null;
         ChannelFactory<IService> channelFactory = null;
@@ -116,13 +118,21 @@ namespace ReaderDataCollector.ViewModel
             endpoint = new EndpointAddress(Consts.HttpUrl());
         }
 
-        private async Task UpdateLastSeenLogAsync(IService service)
+        private async Task<List<LastSeenLog>> GetActualReadingsToShow(IService service)
         {
             if (_isShowLiveReadings == true)
+            {
                 aliveLastSeenLogs = (await service.GetAllAliveLastSyncLogsAsync()).ToList();
+                return aliveLastSeenLogs;
+            }
 
             if (_isShowLiveReadings == false)
+            {
                 pastLastSeenLogs = (await service.GetAllPastLastSyncLogsAsync()).ToList();
+                return pastLastSeenLogs;
+            }
+
+            return null;
         }
 
         private async Task UpdateStatementsAsync()
@@ -133,41 +143,33 @@ namespace ReaderDataCollector.ViewModel
         private async Task GetDataFromServer()
         {
             await Task.Run(async () =>
-             {
+            {
                  try
                  {
-                     try
+                     using (channelFactory = new ChannelFactory<IService>(binding, endpoint))
                      {
-                         using (channelFactory = new ChannelFactory<IService>(binding, endpoint))
+                         channelFactory.Credentials.UserName.UserName = string.Empty;
+                         channelFactory.Credentials.UserName.Password = string.Empty;
+
+                         service = channelFactory.CreateChannel();
+
+                         while (cts.IsCancellationRequested == false)
                          {
-                             channelFactory.Credentials.UserName.UserName = string.Empty;
-                             channelFactory.Credentials.UserName.Password = string.Empty;
+                            cts.Token.ThrowIfCancellationRequested();
 
-                             service = channelFactory.CreateChannel();
+                             IsLoadingInProgress = true;
 
-                             while (true)
-                             {
-                                 IsLoadingInProgress = true;
+                             var readingsToShow = await GetActualReadingsToShow(service);
 
-                                 var allReaders = service.GetAllReaders();
-                                 var asyncReadings = await service.GetAllReadingsAsync();
+                             var readings = await service.GetReadingsByIdsAsync(readingsToShow.Select(x => x.ReadingId).ToArray());
 
-                                 Readings = new ObservableCollection<Reading>(asyncReadings
-                                     .Select(x => Mapper.Map<Reading>(x))
-                                     .OrderByDescending(x => x.StartedDateTime));
+                             Readings = new ObservableCollection<Reading>(readings
+                                 .Select(x => Mapper.Map<Reading>(x))
+                                 .OrderByDescending(x => x.StartedDateTime));
 
-                                 await UpdateLastSeenLogAsync(service);
-
-                                 IsLoadingInProgress = false;
-                                 await Task.Delay(TimeSpan.FromSeconds(SettingUtil.UpdatePeriod));
-                             }
+                             IsLoadingInProgress = false;
+                             await Task.Delay(TimeSpan.FromSeconds(SettingUtil.UpdatePeriod));
                          }
-                     }
-                     catch (Exception ex)
-                     {
-                         (service as ICommunicationObject)?.Abort();
-                         Debug.WriteLine(string.Format("{0}", ex.Message));
-                         IsLoadingInProgress = false;
                      }
                  }
                  catch (Exception ex)
@@ -176,9 +178,7 @@ namespace ReaderDataCollector.ViewModel
                      Debug.WriteLine(string.Format("{0}", ex.Message));
                      IsLoadingInProgress = false;
                  }
-
-                 IsLoadingInProgress = false;
-             });
+             }, cts.Token);
         }
         #endregion
         #region commands

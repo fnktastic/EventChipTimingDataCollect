@@ -705,6 +705,12 @@ namespace ReaderDataCollector.AtwService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAllPastLastSyncLogs", ReplyAction="http://tempuri.org/IService/GetAllPastLastSyncLogsResponse")]
         System.Threading.Tasks.Task<ReaderDataCollector.AtwService.LastSeenLog[]> GetAllPastLastSyncLogsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetReadingsByIds", ReplyAction="http://tempuri.org/IService/GetReadingsByIdsResponse")]
+        ReaderDataCollector.AtwService.Reading[] GetReadingsByIds(System.Guid[] readingIds);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetReadingsByIds", ReplyAction="http://tempuri.org/IService/GetReadingsByIdsResponse")]
+        System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Reading[]> GetReadingsByIdsAsync(System.Guid[] readingIds);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -860,6 +866,14 @@ namespace ReaderDataCollector.AtwService {
         
         public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.LastSeenLog[]> GetAllPastLastSyncLogsAsync() {
             return base.Channel.GetAllPastLastSyncLogsAsync();
+        }
+        
+        public ReaderDataCollector.AtwService.Reading[] GetReadingsByIds(System.Guid[] readingIds) {
+            return base.Channel.GetReadingsByIds(readingIds);
+        }
+        
+        public System.Threading.Tasks.Task<ReaderDataCollector.AtwService.Reading[]> GetReadingsByIdsAsync(System.Guid[] readingIds) {
+            return base.Channel.GetReadingsByIdsAsync(readingIds);
         }
     }
 }

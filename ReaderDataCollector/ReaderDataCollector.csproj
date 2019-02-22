@@ -275,6 +275,9 @@
     <None Include="Connected Services\AtwService\Service2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\AtwService\Service3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
