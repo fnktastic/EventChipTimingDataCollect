@@ -17,10 +17,12 @@ using ReaderDataCollector.Utils;
 using Reading = ReaderDataCollector.Data.Model.Reading;
 using Read = ReaderDataCollector.Data.Model.Read;
 using Reader = ReaderDataCollector.Data.Model.Reader;
+using Race = ReaderDataCollector.Data.Model.Race;
 
 using ReaderDataCollector.View;
 using AutoMapper;
 using System.Threading;
+using ReaderDataCollector.Data.Services;
 
 namespace ReaderDataCollector.ViewModel
 {
@@ -30,12 +32,10 @@ namespace ReaderDataCollector.ViewModel
         CancellationTokenSource cts = new CancellationTokenSource();
         WSHttpBinding binding = null;
         EndpointAddress endpoint = null;
-        ChannelFactory<IService> channelFactory = null;
-        IService service = null;
+
         private readonly Context _context;
-        private IReaderRepository _readerRepository;
-        private IReadingRepository _readingRepository;
-        private IReadRepository _readRepository;
+        private readonly IRaceService _raceService;
+
         private List<Read> reads = new List<Read>();
         private List<Reading> readings = new List<Reading>();
         private List<LastSeenLog> aliveLastSeenLogs = new List<LastSeenLog>();
@@ -100,10 +100,7 @@ namespace ReaderDataCollector.ViewModel
         {
             IsLoadingInProgress = false;
             _context = new Context();
-            _readerRepository = new ReaderRepository(_context);
-            _readingRepository = new ReadingRepository(_context);
-            _readRepository = new ReadRepository(_context);
-
+            _raceService = new RaceService(_context);
             InitService();
         }
         #endregion
@@ -144,9 +141,11 @@ namespace ReaderDataCollector.ViewModel
         {
             await Task.Run(async () =>
             {
-                 try
-                 {
-                     using (channelFactory = new ChannelFactory<IService>(binding, endpoint))
+                IService service = null;
+
+                try
+                 {                   
+                     using (var channelFactory = new ChannelFactory<IService>(binding, endpoint))
                      {
                          channelFactory.Credentials.UserName.UserName = string.Empty;
                          channelFactory.Credentials.UserName.Password = string.Empty;
@@ -201,12 +200,12 @@ namespace ReaderDataCollector.ViewModel
             {
                 return _readingDetailsCommand ?? (_readingDetailsCommand = new RelayCommand<Reading>((reading) =>
                 {
-                    using (channelFactory = new ChannelFactory<IService>(binding, endpoint))
+                    using (var channelFactory = new ChannelFactory<IService>(binding, endpoint))
                     {
                         channelFactory.Credentials.UserName.UserName = string.Empty;
                         channelFactory.Credentials.UserName.Password = string.Empty;
 
-                        service = channelFactory.CreateChannel();
+                        IService service = channelFactory.CreateChannel();
 
                         var reads = service
                                     .GetAllReadsByReadingId(reading.Id)
@@ -237,7 +236,17 @@ namespace ReaderDataCollector.ViewModel
             {
                 return _saveReadingCommand ?? (_saveReadingCommand = new RelayCommand<Reading>((reading) =>
                 {
+                    using (var channelFactory = new ChannelFactory<IService>(binding, endpoint))
+                    {
+                        channelFactory.Credentials.UserName.UserName = string.Empty;
+                        channelFactory.Credentials.UserName.Password = string.Empty;
 
+                        IService service = channelFactory.CreateChannel();
+
+                        var race = service.GetRaceByReadingId(reading.Id);
+
+                        _raceService.SaveRaceAsync(Mapper.Map<Race>(race));
+                    }
                 }));
             }
         }

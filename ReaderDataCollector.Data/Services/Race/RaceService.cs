@@ -1,16 +1,13 @@
 ﻿using ReaderDataCollector.Data.DataAccess;
 using ReaderDataCollector.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using ReaderDataCollector.Data.Model;
 using System.Threading.Tasks;
 
-namespace ReaderDataCollector.Data.Services.Race
+namespace ReaderDataCollector.Data.Services
 {
     public interface IRaceService
     {
-
+        Task SaveRaceAsync(Race race);
     }
 
     public class RaceService : IRaceService
@@ -26,6 +23,13 @@ namespace ReaderDataCollector.Data.Services.Race
             _readerRepository = new ReaderRepository(_context);
             _readingRepository = new ReadingRepository(_context);
             _readRepository = new ReadRepository(_context);
+        }
+
+        public async Task SaveRaceAsync(Race race)
+        {
+            await _readerRepository.SaveReader(race.Reader);
+            await _readingRepository.SaveReading(race.Reading);
+            await _readRepository.SaveReadRangeAsync(race.Reads);
         }
     }
 }

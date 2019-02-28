@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReaderDataCollector.Data.Services.Reader
+namespace ReaderDataCollector.Data.Services
 {
     public interface IReaderService
     {

@@ -8,7 +8,7 @@ namespace ReaderDataCollector.Data.Model
 {
     public class Reading
     {
-        public Guid Id { get; set; } = new Guid();
+        public Guid Id { get; set; }
 
         public string AntennaNumber { get; set; }
 
@@ -28,8 +28,8 @@ namespace ReaderDataCollector.Data.Model
 
         public int ReaderId { get; set; }
 
-        public virtual Reader Reader { get; set; }
+        public Reader Reader { get; set; }
 
-        public virtual ICollection<Read> Reads { get; set; }
+        public ICollection<Read> Reads { get; set; }
     }
 }

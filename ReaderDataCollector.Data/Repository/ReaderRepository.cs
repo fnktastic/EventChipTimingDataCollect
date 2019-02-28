@@ -40,8 +40,14 @@ namespace ReaderDataCollector.Data.Repository
                 {
                     var dbEntry = _context.Readers.FirstOrDefault(x => x.Id == reader.Id);
 
-                    dbEntry.Host = reader.Host;
-                    dbEntry.Port = reader.Port;
+                    if (dbEntry != null)
+                    {
+                        dbEntry.Host = reader.Host;
+                        dbEntry.Port = reader.Port;
+                    }
+
+                    if(dbEntry == null)
+                        _context.Readers.Add(reader);
                 }
 
                 await _context.SaveChangesAsync();

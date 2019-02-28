@@ -37,7 +37,7 @@
                 SelectedItem="{Binding SelectedReading}">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="3" />
+                    <UniformGrid Columns="3" VerticalAlignment="Top" />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
             <ListView.ItemContainerStyle>
@@ -45,21 +45,18 @@
                     <Style.Triggers>
                         <Trigger Property="IsSelected"
                          Value="True">
-                            <Setter Property="Background"
-                            Value="{x:Null}" />
-                            <Setter Property="BorderBrush"
-                            Value="{x:Null}" />
+                            <Setter Property="Background" Value="{x:Null}" />
+                            <Setter Property="BorderBrush" Value="{x:Null}" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.Resources>
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
-                 Color="Transparent"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
             </ListView.Resources>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderThickness="1" BorderBrush="Gray"
+                    <Border BorderThickness="1" BorderBrush="Gray" VerticalAlignment="Top"
                             Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}" >
                         <Grid Margin="5">
                             <Image  Height="90"

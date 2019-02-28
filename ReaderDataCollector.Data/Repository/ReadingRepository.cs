@@ -59,13 +59,6 @@ namespace ReaderDataCollector.Data.Repository
         {
             if (reading != null)
             {
-                reading.StartedDateTime = DateTime.UtcNow;
-
-                if (reading.Id == Guid.Empty)
-                {
-                    reading.Id = Guid.NewGuid();
-                }
-
                 _context.Readings.Add(reading);
                 await _context.SaveChangesAsync();
             }

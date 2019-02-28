@@ -12,6 +12,8 @@ namespace ReaderDataCollector.Data.Repository
         IEnumerable<Read> Reads { get; }
 
         Task SaveReadAsync(Read readType);
+
+        Task SaveReadRangeAsync(IEnumerable<Read> reads);
     }
 
     public class ReadRepository : IReadRepository
@@ -40,6 +42,24 @@ namespace ReaderDataCollector.Data.Repository
                 _context.Reads.Add(read);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task SaveReadRangeAsync(IEnumerable<Read> reads)
+        {
+            foreach (var read in reads)
+            {
+                if (read != null)
+                {
+                    if (read.Id == Guid.Empty)
+                    {
+                        read.Id = Guid.NewGuid();
+                    }
+
+                    _context.Reads.Add(read);
+                }
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }
