@@ -24,7 +24,11 @@ namespace ReaderDataCollector.Utils
 
         private static string GetUpdatePeriod()
         {
-            return _settingRepository.Settings.FirstOrDefault(x => x.Name == "Update Period").Value;
+            var period = _settingRepository.Settings.FirstOrDefault(x => x.Name == "Update Period");
+            if (period == null)
+                return "10";
+
+            return period?.Value;
         }
     }
 }
