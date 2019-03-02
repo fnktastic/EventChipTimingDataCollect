@@ -29,6 +29,8 @@ namespace ReaderDataCollector.Data.Services
         {
             await _readerRepository.SaveReader(race.Reader);
             await _readingRepository.SaveReading(race.Reading);
+
+            await _readRepository.DeleteByReadingId(race.Reading.Id);
             await _readRepository.SaveReadRangeAsync(race.Reads);
         }
     }

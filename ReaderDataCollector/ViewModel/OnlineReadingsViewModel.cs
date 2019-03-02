@@ -42,6 +42,17 @@ namespace ReaderDataCollector.ViewModel
         private List<LastSeenLog> pastLastSeenLogs = new List<LastSeenLog>();
         #endregion
         #region properties
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                _isBusy = value;
+                RaisePropertyChanged("IsBusy");
+            }
+        }
+
         private Reading _selectedReading;
         public Reading SelectedReading
         {
@@ -234,19 +245,24 @@ namespace ReaderDataCollector.ViewModel
         {
             get
             {
-                return _saveReadingCommand ?? (_saveReadingCommand = new RelayCommand<Reading>((reading) =>
+                return _saveReadingCommand ?? (_saveReadingCommand = new RelayCommand<Reading>(async (reading) =>
                 {
-                    using (var channelFactory = new ChannelFactory<IService>(binding, endpoint))
+                    await Task.Run(async () =>
                     {
-                        channelFactory.Credentials.UserName.UserName = string.Empty;
-                        channelFactory.Credentials.UserName.Password = string.Empty;
+                        IsBusy = true;
+                        using (var channelFactory = new ChannelFactory<IService>(binding, endpoint))
+                        {
+                            channelFactory.Credentials.UserName.UserName = string.Empty;
+                            channelFactory.Credentials.UserName.Password = string.Empty;
 
-                        IService service = channelFactory.CreateChannel();
+                            IService service = channelFactory.CreateChannel();
 
-                        var race = service.GetRaceByReadingId(reading.Id);
+                            var race = await service.GetRaceByReadingIdAsync(reading.Id);
 
-                        _raceService.SaveRaceAsync(Mapper.Map<Race>(race));
-                    }
+                            await _raceService.SaveRaceAsync(Mapper.Map<Race>(race));
+                        }
+                        IsBusy = false;
+                    }).ConfigureAwait(false);
                 }));
             }
         }

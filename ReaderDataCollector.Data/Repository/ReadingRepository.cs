@@ -31,7 +31,7 @@ namespace ReaderDataCollector.Data.Repository
             try
             {
                 var readings = await _context
-                    .Readings        
+                    .Readings
                     .AsNoTracking()
                     .ToListAsync();
 
@@ -59,7 +59,25 @@ namespace ReaderDataCollector.Data.Repository
         {
             if (reading != null)
             {
-                _context.Readings.Add(reading);
+                var dbEntry = await _context.Readings.FirstOrDefaultAsync(x => x.Id == reading.Id);
+
+                if (dbEntry != null)
+                {
+                    dbEntry.AntennaNumber = reading.AntennaNumber;
+                    dbEntry.EndedDateTime = reading.EndedDateTime;
+                    dbEntry.FileName = reading.FileName;
+                    dbEntry.IPAddress = reading.IPAddress;
+                    dbEntry.ReaderId = reading.ReaderId;
+                    dbEntry.ReaderNumber = reading.ReaderNumber;
+                    dbEntry.StartedDateTime = reading.StartedDateTime;
+                    dbEntry.TimingPoint = reading.TimingPoint;
+                    dbEntry.TotalReads = reading.TotalReads;
+                }
+                else
+                {
+                    _context.Readings.Add(reading);
+                }
+
                 await _context.SaveChangesAsync();
             }
         }
