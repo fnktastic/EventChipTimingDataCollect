@@ -5,10 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReaderDataCollector.View"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:converter="clr-namespace:ReaderDataCollector.Converter"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              DataContext="{Binding OnlineReadings, Source={StaticResource Locator}}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -100,7 +104,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Width="50" Command="{Binding RefreshDataCommand}" BorderBrush="LightBlue" Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}" >
+            <Button Width="50" IsEnabled="{Binding IsLoadingInProgress,  Converter={StaticResource InverseBooleanConverter}}" Command="{Binding RefreshDataCommand}" BorderBrush="LightBlue" Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}" >
                 <Grid>
                     <iconPacks:PackIconModern Kind="Refresh" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <Controls:ProgressRing IsActive="{Binding IsLoadingInProgress}" Visibility="Visible" Height="45" Width="45" VerticalAlignment="Center" HorizontalAlignment="Center" />

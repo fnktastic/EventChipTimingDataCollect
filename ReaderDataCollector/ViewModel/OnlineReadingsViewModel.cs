@@ -155,40 +155,40 @@ namespace ReaderDataCollector.ViewModel
                 IService service = null;
 
                 try
-                 {                   
-                     using (var channelFactory = new ChannelFactory<IService>(binding, endpoint))
-                     {
-                         channelFactory.Credentials.UserName.UserName = string.Empty;
-                         channelFactory.Credentials.UserName.Password = string.Empty;
+                {
+                    using (var channelFactory = new ChannelFactory<IService>(binding, endpoint))
+                    {
+                        channelFactory.Credentials.UserName.UserName = string.Empty;
+                        channelFactory.Credentials.UserName.Password = string.Empty;
 
-                         service = channelFactory.CreateChannel();
+                        service = channelFactory.CreateChannel();
 
-                         while (cts.IsCancellationRequested == false)
-                         {
+                        IsLoadingInProgress = true;
+                        while (cts.IsCancellationRequested == false)
+                        {
                             cts.Token.ThrowIfCancellationRequested();
 
-                             IsLoadingInProgress = true;
+                            var readingsToShow = await GetActualReadingsToShow(service);
 
-                             var readingsToShow = await GetActualReadingsToShow(service);
+                            var readings = await service.GetReadingsByIdsAsync(readingsToShow.Select(x => x.ReadingId).ToArray());
 
-                             var readings = await service.GetReadingsByIdsAsync(readingsToShow.Select(x => x.ReadingId).ToArray());
+                            Readings = new ObservableCollection<Reading>(readings
+                                .Select(x => Mapper.Map<Reading>(x))
+                                .OrderByDescending(x => x.StartedDateTime));
 
-                             Readings = new ObservableCollection<Reading>(readings
-                                 .Select(x => Mapper.Map<Reading>(x))
-                                 .OrderByDescending(x => x.StartedDateTime));
+                            await Task.Delay(TimeSpan.FromSeconds(SettingUtil.UpdatePeriod));
+                        }
+                    }
 
-                             IsLoadingInProgress = false;
-                             await Task.Delay(TimeSpan.FromSeconds(SettingUtil.UpdatePeriod));
-                         }
-                     }
-                 }
-                 catch (Exception ex)
-                 {
-                     (service as ICommunicationObject)?.Abort();
-                     Debug.WriteLine(string.Format("{0}", ex.Message));
-                     IsLoadingInProgress = false;
-                 }
-             }, cts.Token);
+                    IsLoadingInProgress = false;
+                }
+                catch (Exception ex)
+                {
+                    (service as ICommunicationObject)?.Abort();
+                    Debug.WriteLine(string.Format("{0}", ex.Message));
+                    IsLoadingInProgress = false;
+                }
+            }, cts.Token);
         }
         #endregion
         #region commands
