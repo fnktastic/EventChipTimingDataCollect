@@ -209,20 +209,23 @@ namespace ReaderDataCollector.ViewModel
         {
             get
             {
-                return _readingDetailsCommand ?? (_readingDetailsCommand = new RelayCommand<Reading>((reading) =>
+                return _readingDetailsCommand ?? (_readingDetailsCommand = new RelayCommand<Reading>(async (reading) =>
                 {
                     using (var channelFactory = new ChannelFactory<IService>(binding, endpoint))
                     {
-                        channelFactory.Credentials.UserName.UserName = string.Empty;
-                        channelFactory.Credentials.UserName.Password = string.Empty;
+                        var onlineReadingDetailsViewModel = await Task.Run(async () =>
+                        {
+                            channelFactory.Credentials.UserName.UserName = string.Empty;
+                            channelFactory.Credentials.UserName.Password = string.Empty;
 
-                        IService service = channelFactory.CreateChannel();
+                            IService service = channelFactory.CreateChannel();
 
-                        var reads = service
-                                    .GetAllReadsByReadingId(reading.Id)
-                                    .Select(x => { return Mapper.Map<Read>(x); });
+                            var reads = (await service
+                                        .GetAllReadsByReadingIdAsync(reading.Id))
+                                        .Select(x => { return Mapper.Map<Read>(x); });
 
-                        var onlineReadingDetailsViewModel = new OnlineReadingDetailsViewModel(reads);
+                            return new OnlineReadingDetailsViewModel(reads);
+                        });
 
                         var window = new Window
                         {
