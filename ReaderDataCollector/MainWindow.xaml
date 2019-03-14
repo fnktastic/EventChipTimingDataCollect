@@ -24,9 +24,10 @@
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Grid.Column="0" Background="DarkGray" BorderBrush="LightGray" BorderThickness="0 1 1 1">
             <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                <Button Command="{Binding OpenReadingsCollectorCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="#80ff80" Content="Readings Collector" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
-                <Button Command="{Binding OpenStoredReadingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="#afdafc" Content="Stored Readings" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
-                <Button Command="{Binding OpenOnlineReadingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="LightYellow" Content="Online Readings" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
+                <Button Visibility="Collapsed" Command="{Binding OpenReadingsCollectorCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="#80ff80" Content="Readings Collector" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
+                <Button Visibility="Collapsed" Command="{Binding OpenStoredReadingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="#afdafc" Content="Stored Readings" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
+                <Button Command="{Binding OpenOnlineReadingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="#FFC1F79B" Content="Online Readings" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
+                <Button Command="{Binding OpenLocalReadingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="#FFCDBFFD" Content="Local Readings" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
                 <Button Command="{Binding OpenReportsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Content="Reporting" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
                 <Button Command="{Binding OpenStatisticssCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Content="Statistics" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
                 <Button Command="{Binding OpenSettingsCommand}" FontWeight="Bold" HorizontalContentAlignment="Left" Padding="5 0 0 0" Background="LightSlateGray" Content="Settings" Height="50" BorderBrush="Black" BorderThickness="0 0 0 1" />
@@ -56,6 +57,9 @@
                     <DataTemplate DataType="{x:Type views:SettingsControl}" x:Key="TemplateF">
                         <views:SettingsControl />
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type views:LocalReadingsControl}" x:Key="TemplateG">
+                        <views:LocalReadingsControl />
+                    </DataTemplate>
                 </ContentControl.Resources>
                 <ContentControl.Style>
                     <Style TargetType="{x:Type ContentControl}">
@@ -78,6 +82,9 @@
                             </DataTrigger>
                             <DataTrigger Binding="{Binding SelectedView}" Value="F">
                                 <Setter Property="ContentTemplate" Value="{StaticResource TemplateF}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SelectedView}" Value="G">
+                                <Setter Property="ContentTemplate" Value="{StaticResource TemplateG}" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

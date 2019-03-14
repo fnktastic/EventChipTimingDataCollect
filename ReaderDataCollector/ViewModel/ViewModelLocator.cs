@@ -17,6 +17,7 @@ namespace ReaderDataCollector.ViewModel
             SimpleIoc.Default.Register<StoredReadingsViewModel>();
             SimpleIoc.Default.Register<OnlineReadingsViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
+            SimpleIoc.Default.Register<LocalReadingsViewModel>();
         }
 
         public MainViewModel Main
@@ -88,6 +89,14 @@ namespace ReaderDataCollector.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<SettingsViewModel>();
+            }
+        }
+
+        public LocalReadingsViewModel LocalReadings
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<LocalReadingsViewModel>();
             }
         }
 

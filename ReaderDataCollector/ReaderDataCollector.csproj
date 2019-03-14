@@ -145,6 +145,7 @@
     <Compile Include="Utils\PathUtil.cs" />
     <Compile Include="Utils\PingUtil.cs" />
     <Compile Include="Utils\SettingUtil.cs" />
+    <Compile Include="ViewModel\LocalReadingsViewModel.cs" />
     <Compile Include="ViewModel\OnlineReadingDetailsViewModel.cs" />
     <Compile Include="ViewModel\OnlineReadingsViewModel.cs" />
     <Compile Include="ViewModel\PingViewModel.cs" />
@@ -156,6 +157,9 @@
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\StoredReadingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\LocalReadingsControl.xaml.cs">
+      <DependentUpon>LocalReadingsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OnlineReadingDetailsControl.xaml.cs">
       <DependentUpon>OnlineReadingDetailsControl.xaml</DependentUpon>
     </Compile>
@@ -195,6 +199,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\LocalReadingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\OnlineReadingDetailsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
