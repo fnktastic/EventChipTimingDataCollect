@@ -119,7 +119,7 @@ namespace ReaderDataCollector.ViewModel
                 return _openLocalReadingsCommand ?? (_openLocalReadingsCommand = new RelayCommand(() =>
                 {
                     SelectedView = "G";
-                    WindowWidth = 775;
+                    WindowWidth = 925;
                 }));
             }
         }
