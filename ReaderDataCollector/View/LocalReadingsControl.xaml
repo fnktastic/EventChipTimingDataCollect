@@ -13,7 +13,7 @@
                 ItemsSource="{Binding Readings}">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Rows="2" VerticalAlignment="Top" />
+                    <UniformGrid Columns="3" VerticalAlignment="Top" />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
             <ListView.ItemContainerStyle>
