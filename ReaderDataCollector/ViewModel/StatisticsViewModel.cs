@@ -59,6 +59,9 @@ namespace ReaderDataCollector.ViewModel
         #endregion
 
         #region methods
+        #endregion
+
+        #region commands
         private RelayCommand _refreshDataCommand;
         public RelayCommand RefreshDataCommand
         {
@@ -75,9 +78,6 @@ namespace ReaderDataCollector.ViewModel
                 }));
             }
         }
-        #endregion
-
-        #region commands
         #endregion
     }
 }
