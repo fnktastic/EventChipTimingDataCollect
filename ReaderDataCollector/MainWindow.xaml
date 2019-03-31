@@ -60,6 +60,9 @@
                     <DataTemplate DataType="{x:Type views:LocalReadingsControl}" x:Key="TemplateG">
                         <views:LocalReadingsControl />
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type views:StatisticsControl}" x:Key="TemplateD">
+                        <views:StatisticsControl />
+                    </DataTemplate>
                 </ContentControl.Resources>
                 <ContentControl.Style>
                     <Style TargetType="{x:Type ContentControl}">
@@ -78,7 +81,7 @@
                                 <Setter Property="ContentTemplate" Value="{StaticResource DefaultTemplate}" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding SelectedView}" Value="D">
-                                <Setter Property="ContentTemplate" Value="{StaticResource DefaultTemplate}" />
+                                <Setter Property="ContentTemplate" Value="{StaticResource TemplateD}" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding SelectedView}" Value="F">
                                 <Setter Property="ContentTemplate" Value="{StaticResource TemplateF}" />

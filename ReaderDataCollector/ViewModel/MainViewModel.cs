@@ -123,6 +123,19 @@ namespace ReaderDataCollector.ViewModel
                 }));
             }
         }
+
+        private RelayCommand _openStatisticsCommand;
+        public RelayCommand OpenStatisticsCommand
+        {
+            get
+            {
+                return _openStatisticsCommand ?? (_openStatisticsCommand = new RelayCommand(() =>
+                {
+                    SelectedView = "D";
+                    WindowWidth = 675;
+                }));
+            }
+        }
         #endregion
     }
 }

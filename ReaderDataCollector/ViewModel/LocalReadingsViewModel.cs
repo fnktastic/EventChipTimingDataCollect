@@ -66,6 +66,18 @@ namespace ReaderDataCollector.ViewModel
                 }));
             }
         }
+
+        private RelayCommand<Reading> _readingRemoveCommand;
+        public RelayCommand<Reading> ReadingRemoveCommand
+        {
+            get
+            {
+                return _readingRemoveCommand ?? (_readingRemoveCommand = new RelayCommand<Reading>(async (reading) =>
+                {
+                    await Task.Delay(1000);
+                }));
+            }
+        }
         #endregion
     }
 }
