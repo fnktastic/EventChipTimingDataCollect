@@ -8,9 +8,10 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <DataGrid Grid.Row="3" Grid.Column="2"
                   ItemsSource="{Binding Reads}"
+                  CanUserSortColumns="True"
                   AutoGenerateColumns="False">
         <DataGrid.Columns>
-            <DataGridTemplateColumn Header="ID" Width="50">
+            <DataGridTemplateColumn Header="ID" Width="250">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Id}" />
@@ -24,7 +25,7 @@
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
-            <DataGridTemplateColumn Header="Time" Width="*">
+            <DataGridTemplateColumn Header="Time" Width="*" SortMemberPath="Time">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Time, StringFormat=\{0:dd.MM.yy HH:mm:ss:fff\}}" />
@@ -35,6 +36,13 @@
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Signal}" />
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="Antenna" Width="80">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding AntennaNumber}" />
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>

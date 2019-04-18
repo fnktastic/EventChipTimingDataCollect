@@ -16,6 +16,12 @@ namespace ReaderDataCollector.Data.Model
 
         public string Signal { get; set; }
 
+        public string AntennaNumber { get; set; }
+
+        public int SeenCount { get; set; } 
+
+        public int Rank { get; set; } 
+
         public Guid ReadingId { get; set; }
 
         public virtual Reading Reading { get; set; }

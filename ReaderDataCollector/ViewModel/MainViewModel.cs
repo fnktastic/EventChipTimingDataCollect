@@ -25,8 +25,8 @@ namespace ReaderDataCollector.ViewModel
         #region constructor
         public MainViewModel()
         {
-            Database.SetInitializer(new Initializer());
-            Database.SetInitializer(new DataInitializer());
+            //Database.SetInitializer(new Initializer());
+            //Database.SetInitializer(new DataInitializer());
             WindowWidth = 675;
         }
         #endregion

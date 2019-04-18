@@ -63,7 +63,6 @@ namespace ReaderDataCollector.Data.Repository
 
                 if (dbEntry != null)
                 {
-                    dbEntry.AntennaNumber = reading.AntennaNumber;
                     dbEntry.EndedDateTime = reading.EndedDateTime;
                     dbEntry.FileName = reading.FileName;
                     dbEntry.IPAddress = reading.IPAddress;

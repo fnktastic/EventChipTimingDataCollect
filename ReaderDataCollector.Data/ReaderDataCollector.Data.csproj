@@ -70,6 +70,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\Context.cs" />
+    <Compile Include="Migrations\201904181550173_Init.cs" />
+    <Compile Include="Migrations\201904181550173_Init.Designer.cs">
+      <DependentUpon>201904181550173_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Race.cs" />
     <Compile Include="Model\Read.cs" />
     <Compile Include="Model\Reader.cs" />
@@ -90,7 +95,11 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201904181550173_Init.resx">
+      <DependentUpon>201904181550173_Init.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

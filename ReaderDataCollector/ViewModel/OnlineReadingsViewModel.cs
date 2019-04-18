@@ -230,7 +230,7 @@ namespace ReaderDataCollector.ViewModel
                         var window = new Window
                         {
                             Title = string.Format("Reading Details"),
-                            Width = 450,
+                            Width = 750,
                             Height = 650,
                             Content = new OnlineReadingDetailsControl(),
                             ResizeMode = ResizeMode.NoResize,

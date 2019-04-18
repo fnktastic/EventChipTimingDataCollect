@@ -38,7 +38,7 @@ namespace ReaderDataCollector.Model
         }
 
         private string _antennaNumber;
-        public string AntennaNumber // Reading
+        public string AntennaNumber 
         {
             get { return _antennaNumber; }
             set { _antennaNumber = value; RaisePropertyChanged("AntennaNumber"); }
@@ -70,6 +70,21 @@ namespace ReaderDataCollector.Model
         {
             get { return _timingPoint; }
             set { _timingPoint = value; RaisePropertyChanged("TimingPoint"); }
+        }
+
+
+        public int _seenCount;
+        public int SeenCount
+        {
+            get { return _seenCount; }
+            set { _seenCount = value; RaisePropertyChanged("SeenCount"); }
+        }
+
+        private int _rank;
+        public int Rank
+        {
+            get { return _rank; }
+            set { _rank = value; RaisePropertyChanged("Rank"); }
         }
 
         public int ReadingID { get; set; }

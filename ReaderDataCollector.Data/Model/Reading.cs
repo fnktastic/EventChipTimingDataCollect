@@ -10,8 +10,6 @@ namespace ReaderDataCollector.Data.Model
     {
         public Guid Id { get; set; }
 
-        public string AntennaNumber { get; set; }
-
         public string ReaderNumber { get; set; }
 
         public string IPAddress { get; set; }
