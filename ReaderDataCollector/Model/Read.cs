@@ -73,7 +73,7 @@ namespace ReaderDataCollector.Model
         }
 
 
-        public int _seenCount;
+        private int _seenCount;
         public int SeenCount
         {
             get { return _seenCount; }

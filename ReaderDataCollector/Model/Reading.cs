@@ -49,7 +49,7 @@ namespace ReaderDataCollector.Model
             set { _startedDateTime = value; RaisePropertyChanged("StartedDateTime"); }
         } // Reading
 
-        public DateTime? _endedDateTime;
+        private DateTime? _endedDateTime;
         public DateTime? EndedDateTime
         {
             get { return _endedDateTime; }
