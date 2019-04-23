@@ -10,7 +10,7 @@ namespace ReaderDataCollector.DataAccess
 {
     public class Context : DbContext
     {
-        public Context() : base("AtwDB") { }
+        public Context() : base("LocalAtwDB") { }
 
         public DbSet<Read> Reads { get; set; }
         public DbSet<Reading> Readings { get; set; }
