@@ -72,7 +72,6 @@ namespace ReaderDataCollector.Model
             set { _timingPoint = value; RaisePropertyChanged("TimingPoint"); }
         }
 
-
         private int _seenCount;
         public int SeenCount
         {

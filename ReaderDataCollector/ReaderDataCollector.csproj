@@ -123,13 +123,9 @@
     <Compile Include="Converter\InverseBooleanConverter.cs" />
     <Compile Include="Converter\RadioBooleanToIntConverter.cs" />
     <Compile Include="DataAccess\Context.cs" />
-    <Compile Include="Migrations\201904181545066_Init.cs" />
-    <Compile Include="Migrations\201904181545066_Init.Designer.cs">
-      <DependentUpon>201904181545066_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904191048232_Changed Accessors.cs" />
-    <Compile Include="Migrations\201904191048232_Changed Accessors.Designer.cs">
-      <DependentUpon>201904191048232_Changed Accessors.cs</DependentUpon>
+    <Compile Include="Migrations\201904231129206_Init.cs" />
+    <Compile Include="Migrations\201904231129206_Init.Designer.cs">
+      <DependentUpon>201904231129206_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Read.cs" />
@@ -268,11 +264,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201904181545066_Init.resx">
-      <DependentUpon>201904181545066_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904191048232_Changed Accessors.resx">
-      <DependentUpon>201904191048232_Changed Accessors.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201904231129206_Init.resx">
+      <DependentUpon>201904231129206_Init.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

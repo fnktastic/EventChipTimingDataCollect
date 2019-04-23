@@ -14,10 +14,6 @@ namespace ReaderDataCollector.Model
 {
     public class Reading : ViewModelBase
     {
-        #region fields
-
-        #endregion
-
         #region properties
         private int _id;
         public int ID
@@ -31,23 +27,23 @@ namespace ReaderDataCollector.Model
         {
             get { return _totalReadings; }
             set { _totalReadings = value; RaisePropertyChanged("TotalReadings"); }
-        } // Reading
+        } 
 
         private string _timingPoint;
         public string TimingPoint
         {
             get { return _timingPoint; }
             set { _timingPoint = value; RaisePropertyChanged("TimingPoint"); }
-        } // Reading
+        }
 
-        public string FileName { get; set; } = string.Empty; // Reading
+        public string FileName { get; set; } = string.Empty;
 
         private DateTime? _startedDateTime;
         public DateTime? StartedDateTime
         {
             get { return _startedDateTime; }
             set { _startedDateTime = value; RaisePropertyChanged("StartedDateTime"); }
-        } // Reading
+        } 
 
         private DateTime? _endedDateTime;
         public DateTime? EndedDateTime
@@ -64,7 +60,7 @@ namespace ReaderDataCollector.Model
         {
             get { return _reads; }
             set { _reads = value; RaisePropertyChanged("Reads"); }
-        } // Reading
+        } 
 
         private string _lastRead;
         [NotMapped]

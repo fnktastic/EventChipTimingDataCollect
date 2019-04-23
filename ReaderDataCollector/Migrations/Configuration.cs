@@ -9,7 +9,7 @@ namespace ReaderDataCollector.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(ReaderDataCollector.DataAccess.Context context)

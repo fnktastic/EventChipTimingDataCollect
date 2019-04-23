@@ -7,13 +7,13 @@ namespace ReaderDataCollector.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class ChangedAccessors : IMigrationMetadata
+    public sealed partial class Init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangedAccessors));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201904191048232_Changed Accessors"; }
+            get { return "201904231129206_Init"; }
         }
         
         string IMigrationMetadata.Source
