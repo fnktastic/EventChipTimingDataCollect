@@ -72,20 +72,6 @@ namespace ReaderDataCollector.Model
             set { _timingPoint = value; RaisePropertyChanged("TimingPoint"); }
         }
 
-        private int _seenCount;
-        public int SeenCount
-        {
-            get { return _seenCount; }
-            set { _seenCount = value; RaisePropertyChanged("SeenCount"); }
-        }
-
-        private int _rank;
-        public int Rank
-        {
-            get { return _rank; }
-            set { _rank = value; RaisePropertyChanged("Rank"); }
-        }
-
         public int ReadingID { get; set; }
         public virtual Reading Reader { get; set; }
 

@@ -24,6 +24,10 @@ namespace ReaderDataCollector.Data.Model
 
         public DateTime? EndedDateTime { get; set; }
 
+        public string RaceName { get; set; }
+
+        public string UserName { get; set; }
+
         public int ReaderId { get; set; }
 
         public Reader Reader { get; set; }

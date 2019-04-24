@@ -52,6 +52,21 @@ namespace ReaderDataCollector.Model
             set { _endedDateTime = value; RaisePropertyChanged("EndedDateTime"); }
         }
 
+        private string _raceName;
+        public string RaceName
+        {
+            get { return _raceName; }
+            set { _raceName = value; RaisePropertyChanged("RaceName"); }
+        }
+
+        private string _userName;
+        public string UserName
+        {
+            get { return _userName; }
+            set { _userName = value; RaisePropertyChanged("UserName"); }
+        }
+
+
         public int ReaderID { get; set; }
         public virtual Reader Reader { get; set; }
 
