@@ -73,7 +73,8 @@
                                 Source="/ReaderDataCollector;component/Image/white-logo.jpg" />
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="0.5*" />
+                                    <ColumnDefinition Width="0.5*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="15" />
@@ -83,10 +84,18 @@
                                     <RowDefinition Height="15" />
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding IPAddress}" HorizontalAlignment="Left" FontSize="10" FontWeight="ExtraBlack" />
-                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding TotalReads}" HorizontalAlignment="Center" FontSize="18" FontWeight="Black" />
-                                <TextBlock Grid.Column="0" Grid.Row="3" Text="{Binding ReaderNumber}" HorizontalAlignment="Center" FontWeight="UltraLight" FontSize="12" />
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding StartedDateTime}" HorizontalAlignment="Center" FontWeight="UltraLight" FontSize="12" />
-                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding TimingPoint}" HorizontalAlignment="Right" FontWeight="SemiBold" FontSize="12" />
+                                <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding TimingPoint}" HorizontalAlignment="Right" FontSize="10" FontWeight="ExtraBlack" />
+                                <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding TotalReads}" HorizontalAlignment="Center" FontSize="18" FontWeight="Black" />
+                                <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding ReaderNumber}" HorizontalAlignment="Center" FontWeight="UltraLight" FontSize="12" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding StartedDateTime}" HorizontalAlignment="Center" FontWeight="UltraLight" FontSize="12" />
+                                <TextBlock Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" FontSize="12">
+                                    <Run Text="User ID:" FontWeight="Light" />
+                                    <Run Text="{Binding UserName}" FontWeight="SemiBold" />
+                                </TextBlock>
+                                <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right" FontSize="12">
+                                   <Run Text="Race ID: " FontWeight="Light" />
+                                    <Run Text="{Binding RaceName}" FontWeight="SemiBold" />
+                                </TextBlock>
                             </Grid>
                         </Grid>
                         <Border.ContextMenu>

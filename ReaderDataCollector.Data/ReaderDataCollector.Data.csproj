@@ -82,6 +82,7 @@
     <Compile Include="Model\Reading.cs" />
     <Compile Include="Model\Setting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\ReportViewModel.cs" />
     <Compile Include="Repository\ReaderRepository.cs" />
     <Compile Include="Repository\ReadingRepository.cs" />
     <Compile Include="Repository\ReadRepository.cs" />
