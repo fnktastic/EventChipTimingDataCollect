@@ -127,6 +127,10 @@
     <Compile Include="Migrations\201904231129206_Init.Designer.cs">
       <DependentUpon>201904231129206_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904241229078_Read and Reading Model Changed.cs" />
+    <Compile Include="Migrations\201904241229078_Read and Reading Model Changed.Designer.cs">
+      <DependentUpon>201904241229078_Read and Reading Model Changed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Read.cs" />
     <Compile Include="Model\Reader.cs" />
@@ -266,6 +270,9 @@
     </Compile>
     <EmbeddedResource Include="Migrations\201904231129206_Init.resx">
       <DependentUpon>201904231129206_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904241229078_Read and Reading Model Changed.resx">
+      <DependentUpon>201904241229078_Read and Reading Model Changed.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

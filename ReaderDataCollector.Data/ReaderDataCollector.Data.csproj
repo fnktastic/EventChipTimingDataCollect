@@ -71,6 +71,10 @@
     <Compile Include="Migrations\201904181550173_Init.Designer.cs">
       <DependentUpon>201904181550173_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904241229278_Read and Reading Model Changed.cs" />
+    <Compile Include="Migrations\201904241229278_Read and Reading Model Changed.Designer.cs">
+      <DependentUpon>201904241229278_Read and Reading Model Changed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Race.cs" />
     <Compile Include="Model\Read.cs" />
@@ -95,6 +99,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201904181550173_Init.resx">
       <DependentUpon>201904181550173_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904241229278_Read and Reading Model Changed.resx">
+      <DependentUpon>201904241229278_Read and Reading Model Changed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

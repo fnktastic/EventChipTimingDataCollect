@@ -71,6 +71,8 @@ namespace ReaderDataCollector.Data.Repository
                     dbEntry.StartedDateTime = reading.StartedDateTime;
                     dbEntry.TimingPoint = reading.TimingPoint;
                     dbEntry.TotalReads = reading.TotalReads;
+                    dbEntry.RaceName = reading.RaceName;
+                    dbEntry.UserName = reading.UserName;
                 }
                 else
                 {
