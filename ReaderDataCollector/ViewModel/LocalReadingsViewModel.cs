@@ -78,6 +78,19 @@ namespace ReaderDataCollector.ViewModel
                 }));
             }
         }
+
+        private RelayCommand<Reading> _exportToExcelCommand;
+        public RelayCommand<Reading> ExportToExcelCommand
+        {
+            get
+            {
+                return _exportToExcelCommand ?? (_exportToExcelCommand = new RelayCommand<Reading>(async (reading) =>
+                {
+                    await Task.Delay(1000);
+                }));
+            }
+        }
+        
         #endregion
     }
 }

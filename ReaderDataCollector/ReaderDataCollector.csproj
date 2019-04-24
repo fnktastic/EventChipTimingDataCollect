@@ -68,6 +68,10 @@
     <Reference Include="MahApps.Metro.IconPacks.Modern, Version=2.3.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.Modern.2.3.0\lib\net46\MahApps.Metro.IconPacks.Modern.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -140,6 +144,7 @@
     <Compile Include="BoxReading\TcpFileReciever.cs" />
     <Compile Include="BoxReading\ReadingsListener.cs" />
     <Compile Include="Model\Setting.cs" />
+    <Compile Include="Report\ReportViewModel.cs" />
     <Compile Include="Repository\IReaderRepository.cs" />
     <Compile Include="Repository\IReadingRepository.cs" />
     <Compile Include="Repository\IReadRepository.cs" />
@@ -148,6 +153,7 @@
     <Compile Include="Repository\ReadingRepository.cs" />
     <Compile Include="Repository\ReadRepository.cs" />
     <Compile Include="Repository\SettingRepository.cs" />
+    <Compile Include="Utils\ExcelUtil.cs" />
     <Compile Include="Utils\PathUtil.cs" />
     <Compile Include="Utils\PingUtil.cs" />
     <Compile Include="Utils\SettingUtil.cs" />

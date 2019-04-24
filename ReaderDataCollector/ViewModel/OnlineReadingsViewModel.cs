@@ -23,6 +23,7 @@ using ReaderDataCollector.View;
 using AutoMapper;
 using System.Threading;
 using ReaderDataCollector.Data.Services;
+using ReaderDataCollector.Report;
 
 namespace ReaderDataCollector.ViewModel
 {
@@ -229,7 +230,7 @@ namespace ReaderDataCollector.ViewModel
 
                         var window = new Window
                         {
-                            Title = string.Format("Reading Details"),
+                            Title = string.Format("Box: {0} | Race: {1} | Timing Point: {2} | Started At: {3}", reading.IPAddress, reading.RaceName, reading.TimingPoint, reading.StartedDateTime),
                             Width = 750,
                             Height = 650,
                             Content = new OnlineReadingDetailsControl(),
@@ -263,6 +264,41 @@ namespace ReaderDataCollector.ViewModel
                             var race = await service.GetRaceByReadingIdAsync(reading.Id);
 
                             await _raceService.SaveRaceAsync(Mapper.Map<Race>(race));
+                        }
+                        IsBusy = false;
+                    }).ConfigureAwait(false);
+                }));
+            }
+        }
+
+        private RelayCommand<Reading> _exportToExcelCommand;
+        public RelayCommand<Reading> ExportToExcelCommand
+        {
+            get
+            {
+                return _exportToExcelCommand ?? (_exportToExcelCommand = new RelayCommand<Reading>(async (reading) =>
+                {
+                    await Task.Run(async () =>
+                    {
+                        IsBusy = true;
+                        using (var channelFactory = new ChannelFactory<IService>(binding, endpoint))
+                        {
+                            channelFactory.Credentials.UserName.UserName = string.Empty;
+                            channelFactory.Credentials.UserName.Password = string.Empty;
+
+                            IService service = channelFactory.CreateChannel();
+
+                            var race = Mapper.Map<Race>(await service.GetRaceByReadingIdAsync(reading.Id));
+
+                            await _raceService.SaveRaceAsync(race);
+
+                            var reportViewModel = new ReportViewModel()
+                            {
+                                Reading = race.Reading,
+                                Reads = race.Reads
+                            };
+
+                            ExcelUtil.Save(reportViewModel);
                         }
                         IsBusy = false;
                     }).ConfigureAwait(false);

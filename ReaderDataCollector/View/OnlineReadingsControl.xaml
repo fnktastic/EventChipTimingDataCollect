@@ -106,6 +106,10 @@
                                 <MenuItem Header="Save" 
                                                   CommandParameter="{Binding}"
                                                   Command="{Binding PlacementTarget.Tag.SaveReadingCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                <MenuItem Header="Export To Excel" Visibility="Collapsed"
+                                                  CommandParameter="{Binding}"
+                                                  Command="{Binding PlacementTarget.Tag.ExportToExcelCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+
                             </ContextMenu>
                         </Border.ContextMenu>
                     </Border>
